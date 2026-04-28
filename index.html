@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel · Progetto Unico Group</title>
+    <title>Progetto Unico Group | EdilCost · Galleria delle Idee</title>
+    <meta name="description" content="Progetto Unico Group: EdilCost e Ideal Casa Srl - Galleria delle Idee. Progettazione, interior design, pavimenti, arredo bagno e wellness a Ostuni.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Chart.js per statistiche -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* Dynamic styles will be injected from localStorage */
+        :root {
+            --primary-color: #c17b4c;
+            --nav-bg: #2c2418;
+            --hero-text: #ffffff;
+            --contact-bg: #2c2418;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Inter', sans-serif;
+            --card-radius: 15px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,636 +26,546 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f2f5;
-            color: #1a1a2e;
+            font-family: var(--body-font);
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d4 100%);
+            color: #2c2418;
+            line-height: 1.6;
         }
 
-        /* Login Overlay */
-        .login-overlay {
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e8e0d4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .navbar {
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f5e6d3;
+        }
+        .logo p {
+            font-size: 0.8rem;
+            color: #e6a57e;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #f5e6d3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #e6a57e; }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600');
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
-            transition: 0.3s;
-        }
-        .login-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             text-align: center;
-        }
-        .login-card h2 {
-            margin-bottom: 1.5rem;
-            color: #c17b4c;
-        }
-        .login-card input {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-        .login-card button {
-            width: 100%;
-            padding: 1rem;
-            background: #c17b4c;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-        .login-error {
-            color: red;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            color: var(--hero-text);
         }
 
-        /* Admin Dashboard */
-        .admin-container {
-            display: none;
-        }
-        .admin-nav {
-            background: #1a1a2e;
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .admin-nav h2 {
-            font-size: 1.3rem;
-        }
-        .logout-btn {
-            background: #e94560;
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            color: white;
-            font-weight: 600;
-        }
-        .admin-tabs {
-            display: flex;
-            gap: 0.5rem;
-            background: white;
-            padding: 0 2rem;
-            border-bottom: 2px solid #e0e0e0;
-        }
-        .tab-btn {
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .tab-btn.active {
-            color: #c17b4c;
-            border-bottom: 3px solid #c17b4c;
-        }
-        .tab-content {
-            display: none;
-            padding: 2rem;
-            background: #f8f9fa;
-            min-height: 80vh;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .admin-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .admin-card h3 {
+        .hero-content h1 {
+            font-size: 4rem;
+            font-family: var(--heading-font);
             margin-bottom: 1rem;
-            border-left: 4px solid #c17b4c;
-            padding-left: 1rem;
+            animation: fadeInUp 1s ease;
         }
-        .upload-area {
-            border: 2px dashed #ccc;
-            padding: 2rem;
-            text-align: center;
-            border-radius: 15px;
-            margin: 1rem 0;
-            cursor: pointer;
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
         }
-        .image-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
+        .hero-badge {
+            background: rgba(230, 165, 126, 0.9);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.1s both;
         }
-        .image-preview img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 10px;
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
         }
-        input, select, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        button {
-            background: #c17b4c;
-            color: white;
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: #2c2418;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
             cursor: pointer;
+        }
+        .btn:hover {
+            background: #a5663a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: var(--heading-font);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 1rem auto;
+        }
+
+        .group-badge {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .group-badge span {
+            background: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
+            color: #c17b4c;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        button.danger {
-            background: #e94560;
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
         }
-        .style-option {
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #4a3e2e;
+        }
+        .company-name {
+            font-family: var(--heading-font);
+            font-size: 1.8rem;
+            color: #c17b4c;
             margin: 1rem 0;
         }
-        .style-option label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.3rem;
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
-        .projects-list, .images-list {
-            max-height: 300px;
-            overflow-y: auto;
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--card-radius);
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
-        .project-item, .image-item {
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .service-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects section - dynamic */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .project-card {
+            background: white;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-card h3 {
+            padding: 1rem 1rem 0.5rem;
+        }
+        .project-card p {
+            padding: 0 1rem 1rem;
+            color: #666;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--card-radius);
+            transition: transform 0.3s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.03);
+        }
+
+        .contact-section {
+            background: var(--contact-bg);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        .contact-info p {
+            margin: 1rem 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0.8rem;
-            border-bottom: 1px solid #eee;
+            gap: 1rem;
         }
-        .delete-btn {
-            background: #e94560;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.8rem;
+        .contact-info i {
+            width: 30px;
+            color: var(--primary-color);
         }
-        .toast-msg {
+        .contact-form input, .contact-form textarea, .contact-form select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-family: var(--body-font);
+        }
+        .contact-form option { color: #2c2418; }
+        .contact-form input::placeholder, .contact-form textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer {
+            background: #1a1510;
+            color: #9e9182;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .admin-link {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #2c3e50;
+            background: #2c2418;
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            z-index: 2000;
-            display: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            z-index: 100;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
+        .admin-link:hover {
+            opacity: 1;
+        }
+        
         @media (max-width: 768px) {
-            .admin-tabs { flex-wrap: wrap; }
-            .tab-btn { padding: 0.8rem 1rem; }
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2rem; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
-<!-- LOGIN OVERLAY -->
-<div id="loginOverlay" class="login-overlay">
-    <div class="login-card">
-        <i class="fas fa-lock" style="font-size: 3rem; color: #c17b4c;"></i>
-        <h2>Admin Accesso</h2>
-        <input type="text" id="adminUser" placeholder="Username" value="admin">
-        <input type="password" id="adminPass" placeholder="Password" value="admin123">
-        <button onclick="attemptLogin()">Accedi</button>
-        <div id="loginError" class="login-error"></div>
-        <p style="margin-top: 1rem; font-size: 0.8rem; color: #888;">demo: admin / admin123</p>
-    </div>
-</div>
-
-<!-- ADMIN DASHBOARD -->
-<div id="adminContainer" class="admin-container">
-    <div class="admin-nav">
-        <h2><i class="fas fa-crown"></i> Progetto Unico · Admin Panel</h2>
-        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Esci</button>
-    </div>
-    <div class="admin-tabs">
-        <button class="tab-btn active" onclick="showTab('media')"><i class="fas fa-images"></i> Media & Progetti</button>
-        <button class="tab-btn" onclick="showTab('appearance')"><i class="fas fa-palette"></i> Layout & Stile</button>
-        <button class="tab-btn" onclick="showTab('stats')"><i class="fas fa-chart-line"></i> Statistiche</button>
-    </div>
-
-    <!-- TAB MEDIA & PROGETTI -->
-    <div id="tab-media" class="tab-content active">
-        <div class="admin-grid">
-            <!-- Upload foto cantiere / progetti -->
-            <div class="admin-card">
-                <h3><i class="fas fa-upload"></i> Carica Immagini (Cantieri / Progetti)</h3>
-                <div class="upload-area" onclick="document.getElementById('imageUpload').click()">
-                    <i class="fas fa-cloud-upload-alt fa-2x"></i>
-                    <p>Clicca o trascina immagini qui (JPG, PNG)</p>
-                </div>
-                <input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(this)">
-                <div id="imagePreviewContainer" class="image-preview"></div>
-                <h4 style="margin-top: 1rem;">Galleria Immagini Caricate</h4>
-                <div id="galleryList" class="images-list"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>PROGETTO UNICO</h1>
+                <p>GROUP · Ideal Casa Srl</p>
             </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Chi Siamo</a></li>
+                <li><a href="#services">Servizi</a></li>
+                <li><a href="#projects">Progetti</a></li>
+                <li><a href="#gallery">Galleria</a></li>
+                <li><a href="#contact">Contatti</a></li>
+            </ul>
+        </div>
+    </nav>
 
-            <!-- Aggiungi Progetto / Descrizione Lavori -->
-            <div class="admin-card">
-                <h3><i class="fas fa-hard-hat"></i> Gestione Progetti / Cantieri</h3>
-                <input type="text" id="projectTitle" placeholder="Titolo progetto (es. Villa Bianca)">
-                <textarea id="projectDesc" rows="2" placeholder="Descrizione progetto..."></textarea>
-                <input type="text" id="projectImgUrl" placeholder="URL immagine esistente o lascia vuoto per usare galleria">
-                <button onclick="addProject()"><i class="fas fa-plus"></i> Aggiungi Progetto</button>
-                <h4 style="margin-top: 1rem;">Progetti Esistenti</h4>
-                <div id="projectsList" class="projects-list"></div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Progetto Unico Group · Ideal Casa Srl</div>
+            <h1 id="dynamicHeroTitle">Galleria delle Idee<br>EdilCost</h1>
+            <p id="dynamicHeroSubtitle">La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione</p>
+            <a href="#contact" class="btn">Richiedi Consulenza</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">Chi Siamo</h2>
+        <div class="group-badge">
+            <span>🏢 PROGETTO UNICO GROUP</span>
+            <span>🏗️ EDILCOST</span>
+            <span>🏠 IDEAL CASA SRL</span>
+            <span>✨ GALLERIA DELLE IDEE</span>
+        </div>
+        <div class="about-grid">
+            <div class="about-text">
+                <p id="dynamicAboutText"><strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>.</p>
+                <p>Lo showroom di <strong>Galleria delle Idee</strong> è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso, fargli pensare <em>"ok, è esattamente qui che troverò quello che cerco"</em>.</p>
+                <p><strong>Qualunque sia la sua idea di casa.</strong></p>
+                <div class="company-name">Fabio & Paolo Buongiorno</div>
             </div>
-
-            <!-- Sezione Brand / Testi personalizzabili -->
-            <div class="admin-card">
-                <h3><i class="fas fa-edit"></i> Testi Home & Servizi</h3>
-                <label>Titolo Hero:</label>
-                <input type="text" id="heroTitle" placeholder="Titolo principale">
-                <label>Sottotitolo Hero:</label>
-                <input type="text" id="heroSubtitle" placeholder="Sottotitolo">
-                <label>Testo Chi Siamo (breve):</label>
-                <textarea id="aboutText" rows="3"></textarea>
-                <button onclick="saveTexts()">Salva Testi</button>
-                <button style="background:#2c3e50; margin-top:0.5rem;" onclick="syncToWebsite()">Sincronizza con Sito Live</button>
+            <div class="about-text">
+                <p><strong>EdilCost</strong> si occupa di progettazione e realizzazione edile.</p>
+                <p><strong>Galleria delle Idee (Ideal Casa Srl)</strong> offre soluzioni per:</p>
+                <ul style="margin-top: 1rem; list-style: none;">
+                    <li>✓ Pavimenti e Rivestimenti</li>
+                    <li>✓ Arredo Bagno e Rubinetteria</li>
+                    <li>✓ Wellness e Spa</li>
+                    <li>✓ Complementi e Accessori</li>
+                </ul>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- TAB APPEARANCE (colori, font, layout) -->
-    <div id="tab-appearance" class="tab-content">
-        <div class="admin-grid">
-            <div class="admin-card">
-                <h3><i class="fas fa-fill-drip"></i> Colori Principali</h3>
-                <div class="style-option"><label>Colore Primario (bottoni, accenti):</label><input type="color" id="primaryColor" value="#c17b4c"></div>
-                <div class="style-option"><label>Colore Sfondo Navbar:</label><input type="color" id="navColor" value="#2c2418"></div>
-                <div class="style-option"><label>Colore Testo Hero:</label><input type="color" id="heroTextColor" value="#ffffff"></div>
-                <div class="style-option"><label>Sfondo Sezione Contatti:</label><input type="color" id="contactBg" value="#2c2418"></div>
-                <button onclick="saveColors()">Applica Colori</button>
-            </div>
-            <div class="admin-card">
-                <h3><i class="fas fa-font"></i> Font & Stili</h3>
-                <div class="style-option"><label>Font Titoli (Google Fonts):</label>
-                    <select id="headingFont">
-                        <option value="'Playfair Display', serif">Playfair Display (serif)</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
-                        <option value="'Montserrat', sans-serif">Montserrat</option>
+    <section id="services" class="section">
+        <h2 class="section-title">I Nostri Servizi</h2>
+        <div class="services-grid">
+            <div class="service-card"><i class="fas fa-pen-ruler"></i><h3>Consulenza</h3><p>Oltre 30 anni di esperienza a tua disposizione in tutte le fasi del progetto</p></div>
+            <div class="service-card"><i class="fas fa-palette"></i><h3>Interior Design</h3><p>Trasformiamo gli spazi, dando nuova luce e forma con linee funzionali</p></div>
+            <div class="service-card"><i class="fas fa-tile"></i><h3>Pavimenti e Rivestimenti</h3><p>Ceramiche e materiali dai migliori brand italiani e internazionali</p></div>
+            <div class="service-card"><i class="fas fa-toilet"></i><h3>Arredo Bagno</h3><p>Soluzioni eleganti e personalizzate per ogni spazio</p></div>
+            <div class="service-card"><i class="fas fa-faucet"></i><h3>Rubinetteria</h3><p>Design e qualità per la tua casa</p></div>
+            <div class="service-card"><i class="fas fa-spa"></i><h3>Wellness e Spa</h3><p>Crea il tuo angolo di benessere</p></div>
+            <div class="service-card"><i class="fas fa-couch"></i><h3>Complementi e Accessori</h3><p>Il tocco finale che fa la differenza</p></div>
+            <div class="service-card"><i class="fas fa-drafting-compass"></i><h3>Home & Contract Project</h3><p>Progetti residenziali e commerciali su misura</p></div>
+        </div>
+    </section>
+
+    <!-- Dynamic Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title">Progetti & Cantieri</h2>
+        <div id="projectsContainer" class="projects-grid">
+            <!-- Default projects will be inserted here via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Dynamic Gallery Section -->
+    <section id="gallery" class="section">
+        <h2 class="section-title">Galleria Immagini</h2>
+        <div id="galleryContainer" class="gallery-grid">
+            <!-- Gallery images will be inserted here -->
+        </div>
+    </section>
+
+    <section id="brands" class="section">
+        <h2 class="section-title">I Nostri Brand</h2>
+        <div class="services-grid">
+            <div class="service-card"><i class="fas fa-gem"></i><h3>Ceramiche Italiane</h3><p>I migliori marchi del made in Italy</p></div>
+            <div class="service-card"><i class="fas fa-globe-europe"></i><h3>Brand Internazionali</h3><p>Selezione esclusiva di produttori globali</p></div>
+            <div class="service-card"><i class="fas fa-bath"></i><h3>Wellness Luxury</h3><p>Eccellenza per Spa e benessere</p></div>
+            <div class="service-card"><i class="fas fa-tint"></i><h3>Rubinetteria di Design</h3><p>Firme italiane e internazionali</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="contact-section">
+            <h2 class="section-title" style="color: white;">Contattaci</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Via Francesco Rodio, 4 – 72017 - Ostuni (BR)</p>
+                    <p><i class="fas fa-phone"></i> Tel: +39.0831 341520</p>
+                    <p><i class="fas fa-envelope"></i> Email: info@galleriadelleidee.com</p>
+                    <p><i class="fas fa-globe"></i> www.galleriadelleideeostuni.com</p>
+                    <p><i class="fab fa-instagram"></i> Seguici sui social</p>
+                </div>
+                <form class="contact-form" action="#" method="POST">
+                    <input type="text" placeholder="Nome e Cognome*" required>
+                    <input type="email" placeholder="E-Mail*" required>
+                    <input type="text" placeholder="Oggetto">
+                    <select>
+                        <option>Seleziona il tuo Paese</option>
+                        <option>Italia</option>
+                        <option>Francia</option>
+                        <option>Germania</option>
+                        <option>Svizzera</option>
+                        <option>Regno Unito</option>
+                        <option>Stati Uniti</option>
+                        <option>Altro</option>
                     </select>
-                </div>
-                <div class="style-option"><label>Font Testi:</label>
-                    <select id="bodyFont">
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Roboto', sans-serif">Roboto</option>
-                        <option value="'Open Sans', sans-serif">Open Sans</option>
-                    </select>
-                </div>
-                <div class="style-option"><label>Layout Card Radius (px):</label><input type="number" id="borderRadius" value="15" min="0" max="50"></div>
-                <button onclick="saveFontsAndLayout()">Applica Font & Layout</button>
-            </div>
-            <div class="admin-card">
-                <h3><i class="fas fa-code-branch"></i> Anteprima Live</h3>
-                <p>Le modifiche vengono applicate in tempo reale sul sito frontend. Clicca per vedere anteprima.</p>
-                <button onclick="openPreview()">Anteprima Sito <i class="fas fa-external-link-alt"></i></button>
+                    <textarea placeholder="Messaggio*" rows="3" required></textarea>
+                    <button type="submit" class="btn">Invia Richiesta</button>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- TAB STATISTICHE -->
-    <div id="tab-stats" class="tab-content">
-        <div class="admin-grid">
-            <div class="admin-card">
-                <h3><i class="fas fa-chart-simple"></i> Statistiche Visite (simulate)</h3>
-                <canvas id="visitsChart" width="400" height="200"></canvas>
-                <p style="margin-top:1rem">Totale progetti pubblicati: <strong id="totalProjectsStat">0</strong></p>
-                <p>Immagini caricate: <strong id="totalImagesStat">0</strong></p>
-            </div>
-        </div>
-    </div>
-</div>
+    <footer class="footer">
+        <p><strong>Progetto Unico Group</strong> · Ideal Casa Srl · EdilCost · Galleria delle Idee</p>
+        <p style="margin-top: 0.5rem;">© 2025 Tutti i diritti riservati · Via Francesco Rodio, 4 – Ostuni (BR)</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Qualunque sia la tua idea di casa, noi la realizziamo.</p>
+    </footer>
 
-<!-- TOAST NOTIFICATION -->
-<div id="toastMsg" class="toast-msg"></div>
+    <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i> Admin</a>
 
-<script>
-    // --- DATA STORAGE (localStorage simulation) ---
-    let siteData = {
-        images: [],      // array di {url, name, timestamp}
-        projects: [],    // {title, desc, imgUrl}
-        texts: {
-            heroTitle: "Galleria delle Idee<br>EdilCost",
-            heroSubtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
-            aboutText: "Progetto Unico è il gruppo che riunisce EdilCost e Ideal Casa Srl, quest'ultima proprietaria del brand Galleria delle Idee. Lo showroom di Galleria delle Idee è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso."
-        },
-        colors: {
-            primary: "#c17b4c",
-            navBg: "#2c2418",
-            heroText: "#ffffff",
-            contactBg: "#2c2418"
-        },
-        fonts: {
-            heading: "'Playfair Display', serif",
-            body: "'Inter', sans-serif",
-            borderRadius: "15"
+    <script>
+        // Load all dynamic content from localStorage
+        function loadSiteData() {
+            const saved = localStorage.getItem('progettoAdminData');
+            if(saved) {
+                const data = JSON.parse(saved);
+                
+                // Update texts
+                if(data.texts) {
+                    document.getElementById('dynamicHeroTitle').innerHTML = data.texts.heroTitle || 'Galleria delle Idee<br>EdilCost';
+                    document.getElementById('dynamicHeroSubtitle').innerText = data.texts.heroSubtitle || 'La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione';
+                    document.getElementById('dynamicAboutText').innerHTML = data.texts.aboutText || '<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest\'ultima proprietaria del brand <strong>Galleria delle Idee</strong>.';
+                }
+                
+                // Update projects
+                if(data.projects && data.projects.length > 0) {
+                    const projectsContainer = document.getElementById('projectsContainer');
+                    projectsContainer.innerHTML = data.projects.map(proj => `
+                        <div class="project-card">
+                            <img src="${proj.imgUrl}" alt="${proj.title}">
+                            <h3>${proj.title}</h3>
+                            <p>${proj.desc}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    document.getElementById('projectsContainer').innerHTML = '<p style="text-align:center; color:#888;">Nessun progetto aggiunto. Vai nel pannello admin per aggiungerne!</p>';
+                }
+                
+                // Update gallery
+                if(data.images && data.images.length > 0) {
+                    const galleryContainer = document.getElementById('galleryContainer');
+                    galleryContainer.innerHTML = data.images.map(img => `
+                        <div class="gallery-item">
+                            <img src="${img.url}" alt="${img.name}">
+                        </div>
+                    `).join('');
+                } else {
+                    document.getElementById('galleryContainer').innerHTML = '<p style="text-align:center; color:#888;">Nessuna immagine caricata. Vai nel pannello admin per aggiungerne!</p>';
+                }
+                
+                // Update colors
+                if(data.colors) {
+                    document.documentElement.style.setProperty('--primary-color', data.colors.primary);
+                    document.documentElement.style.setProperty('--nav-bg', data.colors.navBg);
+                    document.documentElement.style.setProperty('--hero-text', data.colors.heroText);
+                    document.documentElement.style.setProperty('--contact-bg', data.colors.contactBg);
+                }
+                
+                // Update fonts
+                if(data.fonts) {
+                    document.documentElement.style.setProperty('--heading-font', data.fonts.heading);
+                    document.documentElement.style.setProperty('--body-font', data.fonts.body);
+                    document.documentElement.style.setProperty('--card-radius', data.fonts.borderRadius + 'px');
+                    
+                    // Also update body font
+                    document.body.style.fontFamily = data.fonts.body;
+                }
+            } else {
+                // Default demo content if no admin data
+                const defaultProjects = [
+                    { title: "Villa Mediterranea", desc: "Ristrutturazione completa con piscina e area wellness", imgUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                    { title: "Showroom Galleria", desc: "Nuovo spazio espositivo di 300mq", imgUrl: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+                ];
+                document.getElementById('projectsContainer').innerHTML = defaultProjects.map(proj => `
+                    <div class="project-card">
+                        <img src="${proj.imgUrl}" alt="${proj.title}">
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc}</p>
+                    </div>
+                `).join('');
+                
+                const defaultImages = [
+                    { url: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=300", name: "showroom" },
+                    { url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300", name: "cantiere" }
+                ];
+                document.getElementById('galleryContainer').innerHTML = defaultImages.map(img => `
+                    <div class="gallery-item"><img src="${img.url}" alt="${img.name}"></div>
+                `).join('');
+            }
         }
-    };
-
-    // Load data from localStorage
-    function loadData() {
-        const stored = localStorage.getItem('progettoAdminData');
-        if(stored) {
-            const parsed = JSON.parse(stored);
-            siteData = {...siteData, ...parsed};
-        }
-        renderGallery();
-        renderProjects();
-        updateStatsUI();
-        applyStylesToPreview(); // apply to iframe later, but also save default site style
-    }
-
-    function saveAllData() {
-        localStorage.setItem('progettoAdminData', JSON.stringify(siteData));
-        updateStatsUI();
-        showToast("Dati salvati con successo!");
-    }
-
-    function showToast(msg) {
-        const toast = document.getElementById('toastMsg');
-        toast.innerText = msg;
-        toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2000);
-    }
-
-    // Image upload
-    function handleImageUpload(input) {
-        const files = Array.from(input.files);
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgData = {
-                    url: e.target.result,
-                    name: file.name,
-                    timestamp: Date.now()
-                };
-                siteData.images.unshift(imgData);
-                saveAllData();
-                renderGallery();
-            };
-            reader.readAsDataURL(file);
-        });
-        input.value = '';
-    }
-
-    function renderGallery() {
-        const container = document.getElementById('galleryList');
-        if(!container) return;
-        if(siteData.images.length === 0) {
-            container.innerHTML = '<p style="color:gray">Nessuna immagine caricata.</p>';
-            return;
-        }
-        container.innerHTML = siteData.images.map((img, idx) => `
-            <div class="image-item">
-                <img src="${img.url}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
-                <span style="flex:1; margin-left:10px;">${img.name.substring(0,30)}</span>
-                <button class="delete-btn" onclick="deleteImage(${idx})">Elimina</button>
-            </div>
-        `).join('');
-        updateStatsUI();
-    }
-
-    function deleteImage(idx) {
-        siteData.images.splice(idx,1);
-        saveAllData();
-        renderGallery();
-    }
-
-    // Projects
-    function addProject() {
-        const title = document.getElementById('projectTitle').value;
-        const desc = document.getElementById('projectDesc').value;
-        let imgUrl = document.getElementById('projectImgUrl').value;
-        if(!title) { showToast("Inserisci titolo progetto"); return; }
-        if(!imgUrl && siteData.images.length>0) {
-            imgUrl = siteData.images[0].url;
-        } else if(!imgUrl) {
-            imgUrl = "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400";
-        }
-        siteData.projects.unshift({ title, desc, imgUrl, date: new Date().toISOString() });
-        document.getElementById('projectTitle').value = '';
-        document.getElementById('projectDesc').value = '';
-        document.getElementById('projectImgUrl').value = '';
-        saveAllData();
-        renderProjects();
-    }
-
-    function renderProjects() {
-        const container = document.getElementById('projectsList');
-        if(!container) return;
-        if(siteData.projects.length === 0) {
-            container.innerHTML = '<p>Nessun progetto. Aggiungine uno!</p>';
-            return;
-        }
-        container.innerHTML = siteData.projects.map((proj, idx) => `
-            <div class="project-item">
-                <div><strong>${proj.title}</strong><br><small>${proj.desc.substring(0,50)}...</small></div>
-                <button class="delete-btn" onclick="deleteProject(${idx})">Elimina</button>
-            </div>
-        `).join('');
-        updateStatsUI();
-    }
-
-    function deleteProject(idx) {
-        siteData.projects.splice(idx,1);
-        saveAllData();
-        renderProjects();
-    }
-
-    function saveTexts() {
-        siteData.texts.heroTitle = document.getElementById('heroTitle').value;
-        siteData.texts.heroSubtitle = document.getElementById('heroSubtitle').value;
-        siteData.texts.aboutText = document.getElementById('aboutText').value;
-        saveAllData();
-        showToast("Testi salvati");
-    }
-
-    // Colors & Fonts
-    function saveColors() {
-        siteData.colors.primary = document.getElementById('primaryColor').value;
-        siteData.colors.navBg = document.getElementById('navColor').value;
-        siteData.colors.heroText = document.getElementById('heroTextColor').value;
-        siteData.colors.contactBg = document.getElementById('contactBg').value;
-        saveAllData();
-        applyStylesToPreview();
-        showToast("Colori aggiornati");
-    }
-    function saveFontsAndLayout() {
-        siteData.fonts.heading = document.getElementById('headingFont').value;
-        siteData.fonts.body = document.getElementById('bodyFont').value;
-        siteData.fonts.borderRadius = document.getElementById('borderRadius').value;
-        saveAllData();
-        applyStylesToPreview();
-        showToast("Font e layout salvati");
-    }
-
-    // This function updates the actual live website CSS variables (we modify the style of the main website html)
-    function applyStylesToPreview() {
-        // we will overwrite the style for the main website (which is in an iframe or we can rebuild preview)
-        const previewFrame = document.getElementById('previewFrame');
-        if(previewFrame && previewFrame.contentDocument) {
-            updateWebsiteCSS(previewFrame.contentDocument);
-        } else {
-            // also if we have direct access? We'll later use openPreview to show
-        }
-    }
-
-    // Sync to the real website output (dynamic new window)
-    function syncToWebsite() {
-        // Build complete website HTML with current admin data
-        const generatedHtml = generateWebsiteHTML();
-        // Create a Blob and show download or open new tab
-        const blob = new Blob([generatedHtml], {type: 'text/html'});
-        const url = URL.createObjectURL(blob);
-        window.open(url, '_blank');
-        showToast("Sito generato! Si apre in nuova scheda.");
-    }
-
-    function generateWebsiteHTML() {
-        // Dynamic content from siteData
-        const heroTitleHTML = siteData.texts.heroTitle;
-        const heroSub = siteData.texts.heroSubtitle;
-        const aboutHTML = siteData.texts.aboutText;
-        const projectsHtml = siteData.projects.map(p => `
-            <div class="service-card" style="border-radius: ${siteData.fonts.borderRadius}px;">
-                <img src="${p.imgUrl}" style="width:100%; height:150px; object-fit:cover; border-radius:10px;">
-                <h3>${p.title}</h3>
-                <p>${p.desc}</p>
-            </div>
-        `).join('');
-        const galleryHtml = siteData.images.slice(0,6).map(img => `
-            <div class="service-card"><img src="${img.url}" style="width:100%; border-radius:10px; height:150px; object-fit:cover;"></div>
-        `).join('');
         
-        return `<!DOCTYPE html>
-        <html lang="it">
-        <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Progetto Unico Group | EdilCost · Galleria delle Idee</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;600&family=Montserrat:wght@400;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <style>
-            *{margin:0;padding:0;box-sizing:border-box;}
-            body{font-family:${siteData.fonts.body}; background:#f5f0e8; color:#2c2418;}
-            .navbar{background:${siteData.colors.navBg}; backdrop-filter:blur(10px); padding:1rem 5%; position:fixed; width:100%; top:0; z-index:1000;}
-            .logo h1{color:#f5e6d3;} .nav-links a{color:#f5e6d3;}
-            .hero{height:100vh; background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600'); background-size:cover; display:flex; align-items:center; justify-content:center; text-align:center; color:${siteData.colors.heroText};}
-            .btn{background:${siteData.colors.primary}; border-radius:50px;} .btn:hover{background:#a5663a;}
-            .section{padding:5rem 5%; max-width:1400px; margin:0 auto;}
-            .section-title::after{background:${siteData.colors.primary};}
-            .service-card{background:white; padding:1.5rem; border-radius:${siteData.fonts.borderRadius}px; transition:0.3s; box-shadow:0 5px 20px rgba(0,0,0,0.05);}
-            .contact-section{background:${siteData.colors.contactBg}; border-radius:30px;}
-            .footer{background:#1a1510; color:#9e9182;}
-            @media(max-width:768px){.nav-links{display:none;}}
-        </style>
-        </head>
-        <body>
-        <nav class="navbar"><div class="nav-container" style="display:flex; justify-content:space-between;"><div class="logo"><h1>PROGETTO UNICO</h1><p>GROUP · Ideal Casa Srl</p></div><ul class="nav-links"><li><a href="#home">Home</a></li><li><a href="#about">Chi Siamo</a></li><li><a href="#projects">Progetti</a></li><li><a href="#contact">Contatti</a></li></ul></div></nav>
-        <section id="home" class="hero"><div class="hero-content"><div class="hero-badge">Progetto Unico Group</div><h1>${heroTitleHTML}</h1><p>${heroSub}</p><a href="#contact" class="btn">Richiedi Consulenza</a></div></section>
-        <section id="about" class="section"><h2 class="section-title">Chi Siamo</h2><p>${aboutHTML}</p><div class="company-name">Fabio & Paolo Buongiorno</div></section>
-        <section id="projects" class="section"><h2 class="section-title">Progetti & Cantieri</h2><div class="services-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem;">${projectsHtml || '<p>Presto nuovi progetti</p>'}</div></section>
-        <section class="section"><h2 class="section-title">Galleria Immagini</h2><div class="services-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">${galleryHtml || '<p>Carica immagini dall admin</p>'}</div></section>
-        <section id="contact" class="section"><div class="contact-section" style="padding:2rem;"><h2 class="section-title" style="color:white;">Contattaci</h2><p>Via Francesco Rodio, 4 – Ostuni (BR) · Tel: 0831 341520 · Email: info@galleriadelleidee.com</p></div></section>
-        <footer class="footer"><p>© 2025 Tutti i diritti riservati · Qualunque sia la tua idea di casa, noi la realizziamo.</p></footer>
-        </body></html>`;
-    }
-
-    function openPreview() {
-        syncToWebsite();
-    }
-
-    function updateStatsUI() {
-        document.getElementById('totalProjectsStat').innerText = siteData.projects.length;
-        document.getElementById('totalImagesStat').innerText = siteData.images.length;
-        // chart initialization
-        const ctx = document.getElementById('visitsChart')?.getContext('2d');
-        if(ctx && window.visitsChart) window.visitsChart.destroy();
-        if(ctx) {
-            window.visitsChart = new Chart(ctx, {
-                type: 'line',
-                data: { labels: ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'], datasets: [{ label: 'Visite (demo)', data: [120,190,300,450,380,600], borderColor: siteData.colors.primary }] }
-            });
-        }
-    }
-
-    // UI load text fields
-    function populateTextFields() {
-        document.getElementById('heroTitle').value = siteData.texts.heroTitle;
-        document.getElementById('heroSubtitle').value = siteData.texts.heroSubtitle;
-        document.getElementById('aboutText').value = siteData.texts.aboutText;
-        document.getElementById('primaryColor').value = siteData.colors.primary;
-        document.getElementById('navColor').value = siteData.colors.navBg;
-        document.getElementById('heroTextColor').value = siteData.colors.heroText;
-        document.getElementById('contactBg').value = siteData.colors.contactBg;
-        document.getElementById('headingFont').value = siteData.fonts.heading;
-        document.getElementById('bodyFont').value = siteData.fonts.body;
-        document.getElementById('borderRadius').value = siteData.fonts.borderRadius;
-    }
-
-    // LOGIC
-    function attemptLogin() {
-        const user = document.getElementById('adminUser').value;
-        const pass = document.getElementById('adminPass').value;
-        if(user === 'admin' && pass === 'admin123') {
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('adminContainer').style.display = 'block';
-            loadData();
-            populateTextFields();
-            renderGallery();
-            renderProjects();
-            updateStatsUI();
-        } else {
-            document.getElementById('loginError').innerText = 'Credenziali errate! (admin / admin123)';
-        }
-    }
-    function logout() {
-        document.getElementById('loginOverlay').style.display = 'flex';
-        document.getElementById('adminContainer').style.display = 'none';
-    }
-    function showTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.getElementById(`tab-${tabName}`).classList.add('active');
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-    }
-
-    // Initialize demo content if empty
-    if(!localStorage.getItem('progettoAdminData')) {
-        siteData.projects.push({ title: "Villa Mediterranea", desc: "Ristrutturazione completa con piscina wellness", imgUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" });
-        siteData.images.push({ url: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=200", name: "cantiere1.jpg" });
-        saveAllData();
-    }
-    window.addProject = addProject; window.deleteProject = deleteProject; window.deleteImage = deleteImage;
-    window.saveTexts = saveTexts; window.saveColors = saveColors; window.saveFontsAndLayout = saveFontsAndLayout;
-    window.syncToWebsite = syncToWebsite; window.openPreview = openPreview; window.handleImageUpload = handleImageUpload;
-    window.showTab = showTab; window.logout = logout;
-</script>
+        loadSiteData();
+        
+        // Listen for storage changes (when admin updates)
+        window.addEventListener('storage', function(e) {
+            if(e.key === 'progettoAdminData') {
+                location.reload();
+            }
+        });
+    </script>
 </body>
 </html>
