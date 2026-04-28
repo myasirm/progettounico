@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel · Progetto Unico Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+        }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: 0.3s;
+        }
+        .login-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-card h2 {
+            margin-bottom: 1.5rem;
+            color: #c17b4c;
+        }
+        .login-card input {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        .login-card button {
+            width: 100%;
+            padding: 1rem;
+            background: #c17b4c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .login-error {
+            color: red;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Admin Dashboard */
+        .admin-container {
+            display: none;
+        }
+        .admin-nav {
+            background: #1a1a2e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .admin-nav h2 {
+            font-size: 1.3rem;
+        }
+        .logout-btn {
+            background: #e94560;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+        .view-site-btn {
+            background: #2c3e50;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            font-weight: 600;
+            margin-right: 1rem;
+            text-decoration: none;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: white;
+            padding: 0 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            color: #c17b4c;
+            border-bottom: 3px solid #c17b4c;
+        }
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 80vh;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .admin-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .admin-card h3 {
+            margin-bottom: 1rem;
+            border-left: 4px solid #c17b4c;
+            padding-left: 1rem;
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #c17b4c;
+            background: #fdf8f3;
+        }
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .image-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        button {
+            background: #c17b4c;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        button.danger {
+            background: #e94560;
+        }
+        button.secondary {
+            background: #2c3e50;
+        }
+        .style-option {
+            margin: 1rem 0;
+        }
+        .style-option label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .projects-list, .images-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .project-item, .image-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+        .delete-btn {
+            background: #e94560;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #c17b4c;
+        }
+        @media (max-width: 768px) {
+            .admin-tabs { flex-wrap: wrap; }
+            .tab-btn { padding: 0.8rem 1rem; }
+            .admin-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-card">
+        <i class="fas fa-lock" style="font-size: 3rem; color: #c17b4c;"></i>
+        <h2>Admin Access</h2>
+        <input type="text" id="adminUser" placeholder="Username" value="admin">
+        <input type="password" id="adminPass" placeholder="Password" value="admin123">
+        <button onclick="attemptLogin()">Accedi al Pannello</button>
+        <div id="loginError" class="login-error"></div>
+        <p style="margin-top: 1rem; font-size: 0.8rem; color: #888;">Demo: admin / admin123</p>
+    </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="adminContainer" class="admin-container">
+    <div class="admin-nav">
+        <h2><i class="fas fa-crown"></i> Progetto Unico · Admin Panel</h2>
+        <div>
+            <a href="index.html" target="_blank" class="view-site-btn"><i class="fas fa-globe"></i> View Website</a>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+    <div class="admin-tabs">
+        <button class="tab-btn active" onclick="showTab('media')"><i class="fas fa-images"></i> Media & Projects</button>
+        <button class="tab-btn" onclick="showTab('appearance')"><i class="fas fa-palette"></i> Layout & Style</button>
+        <button class="tab-btn" onclick="showTab('stats')"><i class="fas fa-chart-line"></i> Statistics</button>
+    </div>
+
+    <!-- TAB MEDIA & PROJECTS -->
+    <div id="tab-media" class="tab-content active">
+        <div class="admin-grid">
+            <!-- Upload Images -->
+            <div class="admin-card">
+                <h3><i class="fas fa-upload"></i> Upload Images (Construction Sites / Projects)</h3>
+                <div class="upload-area" onclick="document.getElementById('imageUpload').click()">
+                    <i class="fas fa-cloud-upload-alt fa-2x"></i>
+                    <p>Click or drag images here (JPG, PNG)</p>
+                </div>
+                <input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(this)">
+                <div id="imagePreviewContainer" class="image-preview"></div>
+                <h4 style="margin-top: 1rem;">Uploaded Gallery</h4>
+                <div id="galleryList" class="images-list"></div>
+            </div>
+
+            <!-- Add Project -->
+            <div class="admin-card">
+                <h3><i class="fas fa-hard-hat"></i> Manage Projects / Construction Sites</h3>
+                <input type="text" id="projectTitle" placeholder="Project Title (e.g., Villa Bianca)">
+                <textarea id="projectDesc" rows="2" placeholder="Project description..."></textarea>
+                <input type="text" id="projectImgUrl" placeholder="Image URL (or leave empty to use first uploaded image)">
+                <button onclick="addProject()"><i class="fas fa-plus"></i> Add Project</button>
+                <h4 style="margin-top: 1rem;">Existing Projects</h4>
+                <div id="projectsList" class="projects-list"></div>
+            </div>
+
+            <!-- Custom Texts -->
+            <div class="admin-card">
+                <h3><i class="fas fa-edit"></i> Customize Texts</h3>
+                <label>Hero Title:</label>
+                <input type="text" id="heroTitle" placeholder="Main title">
+                <label>Hero Subtitle:</label>
+                <input type="text" id="heroSubtitle" placeholder="Subtitle">
+                <label>About Section Text:</label>
+                <textarea id="aboutText" rows="4"></textarea>
+                <button onclick="saveTexts()"><i class="fas fa-save"></i> Save Texts</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB APPEARANCE -->
+    <div id="tab-appearance" class="tab-content">
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3><i class="fas fa-fill-drip"></i> Colors</h3>
+                <div class="style-option"><label>Primary Color (buttons, accents):</label><input type="color" id="primaryColor" value="#c17b4c"></div>
+                <div class="style-option"><label>Navigation Bar Background:</label><input type="color" id="navColor" value="#2c2418"></div>
+                <div class="style-option"><label>Hero Text Color:</label><input type="color" id="heroTextColor" value="#ffffff"></div>
+                <div class="style-option"><label>Contact Section Background:</label><input type="color" id="contactBg" value="#2c2418"></div>
+                <button onclick="saveColors()">Apply Colors</button>
+            </div>
+            <div class="admin-card">
+                <h3><i class="fas fa-font"></i> Fonts & Layout</h3>
+                <div class="style-option"><label>Heading Font:</label>
+                    <select id="headingFont">
+                        <option value="'Playfair Display', serif">Playfair Display (Serif)</option>
+                        <option value="'Poppins', sans-serif">Poppins</option>
+                        <option value="'Montserrat', sans-serif">Montserrat</option>
+                    </select>
+                </div>
+                <div class="style-option"><label>Body Font:</label>
+                    <select id="bodyFont">
+                        <option value="'Inter', sans-serif">Inter</option>
+                        <option value="'Roboto', sans-serif">Roboto</option>
+                        <option value="'Open Sans', sans-serif">Open Sans</option>
+                    </select>
+                </div>
+                <div class="style-option"><label>Card Border Radius (px):</label><input type="number" id="borderRadius" value="15" min="0" max="50"></div>
+                <button onclick="saveFontsAndLayout()">Apply Fonts & Layout</button>
+            </div>
+            <div class="admin-card">
+                <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+                <p>All changes are saved automatically. Your public website (<strong>index.html</strong>) will reflect all changes instantly.</p>
+                <hr style="margin: 1rem 0;">
+                <p><strong>How to use:</strong></p>
+                <ol style="margin-left: 1rem;">
+                    <li>Upload images to the gallery</li>
+                    <li>Add projects with titles and descriptions</li>
+                    <li>Customize colors and fonts</li>
+                    <li>Changes appear immediately on your website</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB STATISTICS -->
+    <div id="tab-stats" class="tab-content">
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3><i class="fas fa-chart-simple"></i> Content Statistics</h3>
+                <p>Total Projects Published: <strong><span id="totalProjectsStat" class="stats-number">0</span></strong></p>
+                <p>Total Images Uploaded: <strong><span id="totalImagesStat" class="stats-number">0</span></strong></p>
+                <canvas id="visitsChart" width="400" height="200" style="margin-top: 1rem;"></canvas>
+                <p style="margin-top: 1rem; font-size: 0.8rem; color: #888;">*Demo statistics for illustration</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+    // Data storage
+    let siteData = {
+        images: [],
+        projects: [],
+        texts: {
+            heroTitle: "Galleria delle Idee<br>EdilCost",
+            heroSubtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
+            aboutText: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>."
+        },
+        colors: {
+            primary: "#c17b4c",
+            navBg: "#2c2418",
+            heroText: "#ffffff",
+            contactBg: "#2c2418"
+        },
+        fonts: {
+            heading: "'Playfair Display', serif",
+            body: "'Inter', sans-serif",
+            borderRadius: "15"
+        }
+    };
+
+    function loadData() {
+        const stored = localStorage.getItem('progettoAdminData');
+        if(stored) {
+            const parsed = JSON.parse(stored);
+            siteData = {...siteData, ...parsed};
+        } else {
+            // Add default demo data
+            siteData.projects = [
+                { title: "Villa Mediterranea", desc: "Complete renovation with pool and wellness area", imgUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                { title: "Showroom Gallery", desc: "New 300sqm exhibition space", imgUrl: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+            ];
+            siteData.images = [
+                { url: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=300", name: "showroom.jpg", timestamp: Date.now() },
+                { url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300", name: "construction.jpg", timestamp: Date.now() }
+            ];
+            saveAllData();
+        }
+        renderGallery();
+        renderProjects();
+        populateTextFields();
+        updateStatsUI();
+    }
+
+    function saveAllData() {
+        localStorage.setItem('progettoAdminData', JSON.stringify(siteData));
+        updateStatsUI();
+        showToast("Changes saved successfully!");
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toastMsg');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2000);
+    }
+
+    // Image handling
+    function handleImageUpload(input) {
+        const files = Array.from(input.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgData = {
+                    url: e.target.result,
+                    name: file.name,
+                    timestamp: Date.now()
+                };
+                siteData.images.unshift(imgData);
+                saveAllData();
+                renderGallery();
+            };
+            reader.readAsDataURL(file);
+        });
+        input.value = '';
+    }
+
+    function renderGallery() {
+        const container = document.getElementById('galleryList');
+        if(!container) return;
+        if(siteData.images.length === 0) {
+            container.innerHTML = '<p style="color:gray">No images uploaded yet.</p>';
+            return;
+        }
+        container.innerHTML = siteData.images.map((img, idx) => `
+            <div class="image-item">
+                <img src="${img.url}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+                <span style="flex:1; margin-left:10px;">${img.name.substring(0,30)}</span>
+                <button class="delete-btn" onclick="deleteImage(${idx})">Delete</button>
+            </div>
+        `).join('');
+    }
+
+    function deleteImage(idx) {
+        siteData.images.splice(idx,1);
+        saveAllData();
+        renderGallery();
+    }
+
+    // Projects
+    function addProject() {
+        const title = document.getElementById('projectTitle').value;
+        const desc = document.getElementById('projectDesc').value;
+        let imgUrl = document.getElementById('projectImgUrl').value;
+        if(!title) { showToast("Please enter a project title"); return; }
+        if(!imgUrl && siteData.images.length > 0) {
+            imgUrl = siteData.images[0].url;
+        } else if(!imgUrl) {
+            imgUrl = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400";
+        }
+        siteData.projects.unshift({ title, desc, imgUrl, date: new Date().toISOString() });
+        document.getElementById('projectTitle').value = '';
+        document.getElementById('projectDesc').value = '';
+        document.getElementById('projectImgUrl').value = '';
+        saveAllData();
+        renderProjects();
+    }
+
+    function renderProjects() {
+        const container = document.getElementById('projectsList');
+        if(!container) return;
+        if(siteData.projects.length === 0) {
+            container.innerHTML = '<p>No projects yet. Add one!</p>';
+            return;
+        }
+        container.innerHTML = siteData.projects.map((proj, idx) => `
+            <div class="project-item">
+                <div><strong>${proj.title}</strong><br><small>${proj.desc.substring(0,50)}...</small></div>
+                <button class="delete-btn" onclick="deleteProject(${idx})">Delete</button>
+            </div>
+        `).join('');
+    }
+
+    function deleteProject(idx) {
+        siteData.projects.splice(idx,1);
+        saveAllData();
+        renderProjects();
+    }
+
+    // Texts
+    function populateTextFields() {
+        document.getElementById('heroTitle').value = siteData.texts.heroTitle;
+        document.getElementById('heroSubtitle').value = siteData.texts.heroSubtitle;
+        document.getElementById('aboutText').value = siteData.texts.aboutText;
+        document.getElementById('primaryColor').value = siteData.colors.primary;
+        document.getElementById('navColor').value = siteData.colors.navBg;
+        document.getElementById('heroTextColor').value = siteData.colors.heroText;
+        document.getElementById('contactBg').value = siteData.colors.contactBg;
+        document.getElementById('headingFont').value = siteData.fonts.heading;
+        document.getElementById('bodyFont').value = siteData.fonts.body;
+        document.getElementById('borderRadius').value = siteData.fonts.borderRadius;
+    }
+
+    function saveTexts() {
+        siteData.texts.heroTitle = document.getElementById('heroTitle').value;
+        siteData.texts.heroSubtitle = document.getElementById('heroSubtitle').value;
+        siteData.texts.aboutText = document.getElementById('aboutText').value;
+        saveAllData();
+        showToast("Texts saved! Your website will update automatically.");
+    }
+
+    function saveColors() {
+        siteData.colors.primary = document.getElementById('primaryColor').value;
+        siteData.colors.navBg = document.getElementById('navColor').value;
+        siteData.colors.heroText = document.getElementById('heroTextColor').value;
+        siteData.colors.contactBg = document.getElementById('contactBg').value;
+        saveAllData();
+        showToast("Colors applied to your website!");
+    }
+
+    function saveFontsAndLayout() {
+        siteData.fonts.heading = document.getElementById('headingFont').value;
+        siteData.fonts.body = document.getElementById('bodyFont').value;
+        siteData.fonts.borderRadius = document.getElementById('borderRadius').value;
+        saveAllData();
+        showToast("Fonts and layout updated!");
+    }
+
+    function updateStatsUI() {
+        document.getElementById('totalProjectsStat').innerText = siteData.projects.length;
+        document.getElementById('totalImagesStat').innerText = siteData.images.length;
+        
+        const ctx = document.getElementById('visitsChart')?.getContext('2d');
+        if(ctx && window.visitsChart) window.visitsChart.destroy();
+        if(ctx) {
+            window.visitsChart = new Chart(ctx, {
+                type: 'line',
+                data: { 
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], 
+                    datasets: [{ 
+                        label: 'Weekly Visits (demo)', 
+                        data: [124, 198, 312, 445, 382, 598], 
+                        borderColor: siteData.colors.primary,
+                        backgroundColor: siteData.colors.primary + '20',
+                        fill: true
+                    }] 
+                }
+            });
+        }
+    }
+
+    // Login/Logout
+    function attemptLogin() {
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+        if(user === 'admin' && pass === 'admin123') {
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('adminContainer').style.display = 'block';
+            loadData();
+        } else {
+            document.getElementById('loginError').innerText = 'Wrong credentials! Use admin / admin123';
+        }
+    }
+    
+    function logout() {
+        document.getElementById('loginOverlay').style.display = 'flex';
+        document.getElementById('adminContainer').style.display = 'none';
+    }
+    
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        if(event && event.target) event.target.classList.add('active');
+    }
+
+    // Expose functions globally
+    window.attemptLogin = attemptLogin;
+    window.logout = logout;
+    window.showTab = showTab;
+    window.handleImageUpload = handleImageUpload;
+    window.deleteImage = deleteImage;
+    window.addProject = addProject;
+    window.deleteProject = deleteProject;
+    window.saveTexts = saveTexts;
+    window.saveColors = saveColors;
+    window.saveFontsAndLayout = saveFontsAndLayout;
+</script>
+</body>
+</html>
