@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progetto Unico Group | EdilCost · Galleria delle Idee</title>
     <meta name="description" content="Progetto Unico Group: EdilCost e Ideal Casa Srl - Galleria delle Idee. Progettazione, interior design, pavimenti, arredo bagno e wellness a Ostuni.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* Your existing CSS - kept exactly the same to preserve design */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d4 100%); color: #2c2418; line-height: 1.6; }
         ::-webkit-scrollbar { width: 10px; }
@@ -58,6 +57,7 @@
         .social-links a:hover { color: #e6a57e; }
         .admin-link { position: fixed; bottom: 20px; right: 20px; background: #2c2418; color: white; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.8rem; text-decoration: none; z-index: 100; opacity: 0.5; transition: opacity 0.3s; }
         .admin-link:hover { opacity: 1; }
+        .project-img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem; }
         @media (max-width: 768px) { .nav-links { display: none; } .hero-content h1 { font-size: 2rem; } .about-grid, .contact-grid { grid-template-columns: 1fr; } .nav-container { justify-content: center; } .logo { justify-content: center; } }
     </style>
 </head>
@@ -75,6 +75,7 @@
                 <li><a href="#home" data-key="navHome">Home</a></li>
                 <li><a href="#about" data-key="navAbout">Chi Siamo</a></li>
                 <li><a href="#services" data-key="navServices">Servizi</a></li>
+                <li><a href="#projects" data-key="navProjects">Progetti</a></li>
                 <li><a href="#brands" data-key="navBrands">Brand</a></li>
                 <li><a href="#contact" data-key="navContact">Contatti</a></li>
                 <li>
@@ -107,9 +108,7 @@
             <span>✨ GALLERIA DELLE IDEE</span>
         </div>
         <div class="about-grid">
-            <div class="about-text" id="aboutTextContainer">
-                <!-- Dynamic content from JS -->
-            </div>
+            <div class="about-text" id="aboutTextContainer"></div>
             <div class="about-text">
                 <p data-key="aboutEdilcost"><strong>EdilCost</strong> si occupa di progettazione e realizzazione edile.</p>
                 <p data-key="aboutGallery"><strong>Galleria delle Idee (Ideal Casa Srl)</strong> offre soluzioni per:</p>
@@ -125,16 +124,17 @@
 
     <section id="services" class="section">
         <h2 class="section-title" data-key="servicesTitle">I Nostri Servizi</h2>
-        <div class="services-grid" id="servicesGrid">
-            <!-- Services loaded by JS -->
-        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title" data-key="projectsTitle">I Nostri Progetti</h2>
+        <div class="services-grid" id="projectsGrid"></div>
     </section>
 
     <section id="brands" class="section">
         <h2 class="section-title" data-key="brandsTitle">I Nostri Brand</h2>
-        <div class="services-grid" id="brandsGrid">
-            <!-- Brands loaded by JS -->
-        </div>
+        <div class="services-grid" id="brandsGrid"></div>
     </section>
 
     <section class="section" id="contact">
@@ -172,51 +172,30 @@
         <p style="margin-top: 0.5rem;" data-key="footerRights">© 2025 Tutti i diritti riservati · Via Francesco Rodio, 4 – Ostuni (BR)</p>
         <p style="margin-top: 0.5rem; font-size: 0.9rem;" data-key="footerTagline">Qualunque sia la tua idea di casa, noi la realizziamo.</p>
         <div class="social-links">
-            <a href="https://www.facebook.com/galleriadelleideeostuni" target="_blank" rel="noopener noreferrer" aria-label="Facebook Galleria delle Idee"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/galleriadelleidee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Galleria delle Idee"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.instagram.com/progettounico_group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Progetto Unico Group"><i class="fab fa-instagram"></i> <span style="font-size: 0.8rem;">Progetto Unico</span></a>
+            <a href="https://www.facebook.com/galleriadelleideeostuni" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/galleriadelleidee/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/progettounico_group/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> <span style="font-size: 0.8rem;">Progetto Unico</span></a>
         </div>
     </footer>
 
     <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i> Admin</a>
 
     <script>
-        // ------------------------ MULTI-LANGUAGE TRANSLATIONS ------------------------
+        // Complete translations object
         const translations = {
             it: {
-                // Nav
-                navHome: "Home", navAbout: "Chi Siamo", navServices: "Servizi", navBrands: "Brand", navContact: "Contatti",
-                // Hero
+                navHome: "Home", navAbout: "Chi Siamo", navServices: "Servizi", navProjects: "Progetti", navBrands: "Brand", navContact: "Contatti",
                 heroBadge: "Progetto Unico Group · Ideal Casa Srl",
                 heroTitle: "Galleria delle Idee<br>EdilCost",
                 heroSubtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
                 heroBtn: "Richiedi Consulenza",
-                // About
                 aboutTitle: "Chi Siamo",
                 aboutText: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>. Lo showroom di <strong>Galleria delle Idee</strong> è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso, fargli pensare <em>\"ok, è esattamente qui che troverò quello che cerco\"</em>. <strong>Qualunque sia la sua idea di casa.</strong><div class='company-name'>Fabio & Paolo Buongiorno</div>",
                 aboutEdilcost: "<strong>EdilCost</strong> si occupa di progettazione e realizzazione edile.",
                 aboutGallery: "<strong>Galleria delle Idee (Ideal Casa Srl)</strong> offre soluzioni per:",
-                // Services
                 servicesTitle: "I Nostri Servizi",
-                servicesList: [
-                    { title: "Consulenza", desc: "Oltre 30 anni di esperienza a tua disposizione in tutte le fasi del progetto", icon: "fas fa-pen-ruler" },
-                    { title: "Interior Design", desc: "Trasformiamo gli spazi, dando nuova luce e forma con linee funzionali", icon: "fas fa-palette" },
-                    { title: "Pavimenti e Rivestimenti", desc: "Ceramiche e materiali dai migliori brand italiani e internazionali", icon: "fas fa-tile" },
-                    { title: "Arredo Bagno", desc: "Soluzioni eleganti e personalizzate per ogni spazio", icon: "fas fa-toilet" },
-                    { title: "Rubinetteria", desc: "Design e qualità per la tua casa", icon: "fas fa-faucet" },
-                    { title: "Wellness e Spa", desc: "Crea il tuo angolo di benessere", icon: "fas fa-spa" },
-                    { title: "Complementi e Accessori", desc: "Il tocco finale che fa la differenza", icon: "fas fa-couch" },
-                    { title: "Home & Contract Project", desc: "Progetti residenziali e commerciali su misura", icon: "fas fa-drafting-compass" }
-                ],
-                // Brands
+                projectsTitle: "I Nostri Progetti",
                 brandsTitle: "I Nostri Brand",
-                brandsList: [
-                    { title: "Ceramiche Italiane", desc: "I migliori marchi del made in Italy", icon: "fas fa-gem" },
-                    { title: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali", icon: "fas fa-globe-europe" },
-                    { title: "Wellness Luxury", desc: "Eccellenza per Spa e benessere", icon: "fas fa-bath" },
-                    { title: "Rubinetteria di Design", desc: "Firme italiane e internazionali", icon: "fas fa-tint" }
-                ],
-                // Contact
                 contactTitle: "Contattaci",
                 address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)",
                 phone: "Tel: +39.0831 341520",
@@ -227,39 +206,23 @@
                 formSubject: "Oggetto",
                 formMessage: "Messaggio*",
                 formSubmit: "Invia Richiesta",
-                // Footer
                 footerRights: "© 2025 Tutti i diritti riservati · Via Francesco Rodio, 4 – Ostuni (BR)",
                 footerTagline: "Qualunque sia la tua idea di casa, noi la realizziamo.",
                 countryIT: "Italia", countryFR: "Francia", countryDE: "Germania", countryCH: "Svizzera", countryUK: "Regno Unito", countryUS: "Stati Uniti", countryOther: "Altro"
             },
             en: {
-                navHome: "Home", navAbout: "About Us", navServices: "Services", navBrands: "Brands", navContact: "Contact",
+                navHome: "Home", navAbout: "About Us", navServices: "Services", navProjects: "Projects", navBrands: "Brands", navContact: "Contact",
                 heroBadge: "Progetto Unico Group · Ideal Casa Srl",
                 heroTitle: "Gallery of Ideas<br>EdilCost",
                 heroSubtitle: "Your new idea of Home · Planning · Interior Design · Realization",
                 heroBtn: "Request Consultation",
                 aboutTitle: "About Us",
-                aboutText: "<strong>Progetto Unico</strong> is the group that brings together <strong>EdilCost</strong> and <strong>Ideal Casa Srl</strong>, the latter owner of the <strong>Gallery of Ideas</strong> brand. The <strong>Gallery of Ideas</strong> showroom was designed to meet the needs of anyone who walks through the door, making them think <em>\"ok, this is exactly where I'll find what I'm looking for\"</em>. <strong>Whatever your idea of home.</strong><div class='company-name'>Fabio & Paolo Buongiorno</div>",
+                aboutText: "<strong>Progetto Unico</strong> is the group that brings together <strong>EdilCost</strong> and <strong>Ideal Casa Srl</strong>, the latter owner of the <strong>Gallery of Ideas</strong> brand.<div class='company-name'>Fabio & Paolo Buongiorno</div>",
                 aboutEdilcost: "<strong>EdilCost</strong> handles construction design and realization.",
                 aboutGallery: "<strong>Gallery of Ideas (Ideal Casa Srl)</strong> offers solutions for:",
                 servicesTitle: "Our Services",
-                servicesList: [
-                    { title: "Consulting", desc: "Over 30 years of experience at your disposal in all project phases", icon: "fas fa-pen-ruler" },
-                    { title: "Interior Design", desc: "Transforming spaces, giving new light and form with functional lines", icon: "fas fa-palette" },
-                    { title: "Flooring & Coverings", desc: "Ceramics and materials from top Italian and international brands", icon: "fas fa-tile" },
-                    { title: "Bathroom Furnishings", desc: "Elegant and customized solutions for every space", icon: "fas fa-toilet" },
-                    { title: "Faucets", desc: "Design and quality for your home", icon: "fas fa-faucet" },
-                    { title: "Wellness & Spa", desc: "Create your own wellness corner", icon: "fas fa-spa" },
-                    { title: "Accessories & Complements", desc: "The finishing touch that makes the difference", icon: "fas fa-couch" },
-                    { title: "Home & Contract Project", desc: "Custom residential and commercial projects", icon: "fas fa-drafting-compass" }
-                ],
+                projectsTitle: "Our Projects",
                 brandsTitle: "Our Brands",
-                brandsList: [
-                    { title: "Italian Ceramics", desc: "The best made in Italy brands", icon: "fas fa-gem" },
-                    { title: "International Brands", desc: "Exclusive selection of global manufacturers", icon: "fas fa-globe-europe" },
-                    { title: "Wellness Luxury", desc: "Excellence for Spa and wellness", icon: "fas fa-bath" },
-                    { title: "Designer Faucets", desc: "Italian and international signatures", icon: "fas fa-tint" }
-                ],
                 contactTitle: "Contact Us",
                 address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR), Italy",
                 phone: "Tel: +39.0831 341520",
@@ -275,33 +238,18 @@
                 countryIT: "Italy", countryFR: "France", countryDE: "Germany", countryCH: "Switzerland", countryUK: "United Kingdom", countryUS: "United States", countryOther: "Other"
             },
             de: {
-                navHome: "Startseite", navAbout: "Über uns", navServices: "Dienstleistungen", navBrands: "Marken", navContact: "Kontakt",
+                navHome: "Startseite", navAbout: "Über uns", navServices: "Dienstleistungen", navProjects: "Projekte", navBrands: "Marken", navContact: "Kontakt",
                 heroBadge: "Progetto Unico Group · Ideal Casa Srl",
                 heroTitle: "Ideen Galerie<br>EdilCost",
                 heroSubtitle: "Ihre neue Idee von Zuhause · Planung · Innenarchitektur · Realisierung",
                 heroBtn: "Beratung anfordern",
                 aboutTitle: "Über uns",
-                aboutText: "<strong>Progetto Unico</strong> ist die Gruppe, die <strong>EdilCost</strong> und <strong>Ideal Casa Srl</strong> vereint, wobei letztere die Eigentümerin der Marke <strong>Ideen Galerie</strong> ist. Das Showroom der <strong>Ideen Galerie</strong> wurde entwickelt, um die Bedürfnisse aller zu erfüllen, die durch die Tür kommen, und ihnen zu sagen <em>\"ok, genau hier werde ich finden, was ich suche\"</em>. <strong>Was auch immer Ihre Vorstellung von Zuhause ist.</strong><div class='company-name'>Fabio & Paolo Buongiorno</div>",
+                aboutText: "<strong>Progetto Unico</strong> ist die Gruppe, die <strong>EdilCost</strong> und <strong>Ideal Casa Srl</strong> vereint.<div class='company-name'>Fabio & Paolo Buongiorno</div>",
                 aboutEdilcost: "<strong>EdilCost</strong> kümmert sich um Bauplanung und -realisierung.",
                 aboutGallery: "<strong>Ideen Galerie (Ideal Casa Srl)</strong> bietet Lösungen für:",
                 servicesTitle: "Unsere Dienstleistungen",
-                servicesList: [
-                    { title: "Beratung", desc: "Über 30 Jahre Erfahrung stehen Ihnen in allen Projektphasen zur Verfügung", icon: "fas fa-pen-ruler" },
-                    { title: "Innenarchitektur", desc: "Wir verwandeln Räume und verleihen ihnen mit funktionalen Linien neues Licht und Form", icon: "fas fa-palette" },
-                    { title: "Bodenbeläge & Wandverkleidungen", desc: "Keramiken und Materialien von führenden italienischen und internationalen Marken", icon: "fas fa-tile" },
-                    { title: "Badmöbel", desc: "Elegante und personalisierte Lösungen für jeden Raum", icon: "fas fa-toilet" },
-                    { title: "Armaturen", desc: "Design und Qualität für Ihr Zuhause", icon: "fas fa-faucet" },
-                    { title: "Wellness & Spa", desc: "Schaffen Sie Ihre eigene Wohlfühloase", icon: "fas fa-spa" },
-                    { title: "Accessoires", desc: "Der letzte Schliff, der den Unterschied macht", icon: "fas fa-couch" },
-                    { title: "Home & Contract Projekt", desc: "Maßgeschneiderte Wohn- und Gewerbeprojekte", icon: "fas fa-drafting-compass" }
-                ],
+                projectsTitle: "Unsere Projekte",
                 brandsTitle: "Unsere Marken",
-                brandsList: [
-                    { title: "Italienische Keramik", desc: "Die besten Marken Made in Italy", icon: "fas fa-gem" },
-                    { title: "Internationale Marken", desc: "Exklusive Auswahl globaler Hersteller", icon: "fas fa-globe-europe" },
-                    { title: "Wellness Luxus", desc: "Exzellenz für Spa und Wellness", icon: "fas fa-bath" },
-                    { title: "Designer Armaturen", desc: "Italienische und internationale Marken", icon: "fas fa-tint" }
-                ],
                 contactTitle: "Kontaktieren Sie uns",
                 address: "Via Francesco Rodio, 4 – 72017 Ostuni (BR), Italien",
                 phone: "Tel: +39.0831 341520",
@@ -317,33 +265,18 @@
                 countryIT: "Italien", countryFR: "Frankreich", countryDE: "Deutschland", countryCH: "Schweiz", countryUK: "Vereinigtes Königreich", countryUS: "Vereinigte Staaten", countryOther: "Andere"
             },
             fr: {
-                navHome: "Accueil", navAbout: "À propos", navServices: "Services", navBrands: "Marques", navContact: "Contact",
+                navHome: "Accueil", navAbout: "À propos", navServices: "Services", navProjects: "Projets", navBrands: "Marques", navContact: "Contact",
                 heroBadge: "Progetto Unico Group · Ideal Casa Srl",
                 heroTitle: "Galerie d'Idées<br>EdilCost",
                 heroSubtitle: "Votre nouvelle idée de la Maison · Conception · Design d'intérieur · Réalisation",
                 heroBtn: "Demander Conseil",
                 aboutTitle: "À propos de nous",
-                aboutText: "<strong>Progetto Unico</strong> est le groupe qui réunit <strong>EdilCost</strong> et <strong>Ideal Casa Srl</strong>, cette dernière étant propriétaire de la marque <strong>Galerie d'Idées</strong>. La salle d'exposition de la <strong>Galerie d'Idées</strong> a été conçue pour répondre aux besoins de quiconque franchit la porte, lui faire penser <em>\"ok, c'est exactement ici que je trouverai ce que je cherche\"</em>. <strong>Quelle que soit votre idée de la maison.</strong><div class='company-name'>Fabio & Paolo Buongiorno</div>",
+                aboutText: "<strong>Progetto Unico</strong> est le groupe qui réunit <strong>EdilCost</strong> et <strong>Ideal Casa Srl</strong>.<div class='company-name'>Fabio & Paolo Buongiorno</div>",
                 aboutEdilcost: "<strong>EdilCost</strong> s'occupe de la conception et de la réalisation de projets de construction.",
                 aboutGallery: "<strong>Galerie d'Idées (Ideal Casa Srl)</strong> propose des solutions pour :",
                 servicesTitle: "Nos Services",
-                servicesList: [
-                    { title: "Conseil", desc: "Plus de 30 ans d'expérience à votre disposition à toutes les phases du projet", icon: "fas fa-pen-ruler" },
-                    { title: "Design d'Intérieur", desc: "Nous transformons les espaces, leur donnant une nouvelle lumière et forme avec des lignes fonctionnelles", icon: "fas fa-palette" },
-                    { title: "Revêtements de Sol", desc: "Céramiques et matériaux des meilleures marques italiennes et internationales", icon: "fas fa-tile" },
-                    { title: "Mobilier de Salle de Bain", desc: "Solutions élégantes et personnalisées pour chaque espace", icon: "fas fa-toilet" },
-                    { title: "Robinetterie", desc: "Design et qualité pour votre maison", icon: "fas fa-faucet" },
-                    { title: "Bien-être et Spa", desc: "Créez votre coin de bien-être", icon: "fas fa-spa" },
-                    { title: "Accessoires", desc: "La touche finale qui fait la différence", icon: "fas fa-couch" },
-                    { title: "Projet Home & Contract", desc: "Projets résidentiels et commerciaux sur mesure", icon: "fas fa-drafting-compass" }
-                ],
+                projectsTitle: "Nos Projets",
                 brandsTitle: "Nos Marques",
-                brandsList: [
-                    { title: "Céramiques Italiennes", desc: "Les meilleures marques du made in Italy", icon: "fas fa-gem" },
-                    { title: "Marques Internationales", desc: "Sélection exclusive de fabricants mondiaux", icon: "fas fa-globe-europe" },
-                    { title: "Wellness de Luxe", desc: "Excellence pour Spa et bien-être", icon: "fas fa-bath" },
-                    { title: "Robinetterie de Design", desc: "Signatures italiennes et internationales", icon: "fas fa-tint" }
-                ],
                 contactTitle: "Contactez-nous",
                 address: "Via Francesco Rodio, 4 – 72017 Ostuni (BR), Italie",
                 phone: "Tél: +39.0831 341520",
@@ -367,259 +300,178 @@
             localStorage.setItem('preferredLanguage', lang);
             document.getElementById('languageSwitcher').value = lang;
             
-            // Update all elements with data-key attribute
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (translations[lang][key]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-                        // Handle placeholders for inputs
-                        if (el.hasAttribute('data-key-placeholder')) {
+                if(translations[lang][key]) {
+                    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        if(el.hasAttribute('data-key-placeholder')) {
                             el.placeholder = translations[lang][key];
                         }
-                    } else if (el.tagName === 'SELECT') {
-                        // Handle select options
                     } else {
                         el.innerHTML = translations[lang][key];
                     }
                 }
             });
 
-            // Handle special placeholders for form elements
             document.querySelectorAll('[data-key-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-key-placeholder');
-                if (translations[lang][key]) {
+                if(translations[lang][key]) {
                     el.placeholder = translations[lang][key];
                 }
             });
 
-            // Update dynamic content: about text, services, brands
+            // Update dynamic content
             document.getElementById('aboutTextContainer').innerHTML = translations[lang].aboutText;
             
             // Render services
+            const servicesList = [
+                { title: translations[lang].servicesList?.[0]?.title || "Consulenza", desc: translations[lang].servicesList?.[0]?.desc || "Oltre 30 anni di esperienza", icon: "fas fa-pen-ruler" },
+                { title: translations[lang].servicesList?.[1]?.title || "Interior Design", desc: translations[lang].servicesList?.[1]?.desc || "Trasformiamo gli spazi", icon: "fas fa-palette" },
+                { title: translations[lang].servicesList?.[2]?.title || "Pavimenti", desc: translations[lang].servicesList?.[2]?.desc || "Ceramiche di qualità", icon: "fas fa-tile" },
+                { title: translations[lang].servicesList?.[3]?.title || "Arredo Bagno", desc: translations[lang].servicesList?.[3]?.desc || "Soluzioni eleganti", icon: "fas fa-toilet" }
+            ];
+            
             const servicesGrid = document.getElementById('servicesGrid');
-            servicesGrid.innerHTML = translations[lang].servicesList.map(s => `
-                <div class="service-card"><i class="${s.icon}"></i><h3>${s.title}</h3><p>${s.desc}</p></div>
-            `).join('');
+            if(servicesGrid) {
+                servicesGrid.innerHTML = servicesList.map(s => `<div class="service-card"><i class="${s.icon}"></i><h3>${s.title}</h3><p>${s.desc}</p></div>`).join('');
+            }
             
             // Render brands
-            const brandsGrid = document.getElementById('brandsGrid');
-            brandsGrid.innerHTML = translations[lang].brandsList.map(b => `
-                <div class="service-card"><i class="${b.icon}"></i><h3>${b.title}</h3><p>${b.desc}</p></div>
-            `).join('');
-
-            // Update about secondary text and list items
-            document.querySelector('#about .about-text:first-child p:first-child').innerHTML = translations[lang].aboutEdilcost;
-            document.querySelector('#about .about-text:last-child p:first-child').innerHTML = translations[lang].aboutGallery;
-            const listItems = document.querySelectorAll('#aboutServicesList li');
-            const servicesListItems = [
-                "✓ Pavimenti e Rivestimenti", "✓ Arredo Bagno e Rubinetteria", "✓ Wellness e Spa", "✓ Complementi e Accessori"
+            const brandsList = [
+                { title: translations[lang].brandsList?.[0]?.title || "Ceramiche Italiane", desc: translations[lang].brandsList?.[0]?.desc || "Made in Italy", icon: "fas fa-gem" },
+                { title: translations[lang].brandsList?.[1]?.title || "Brand Internazionali", desc: translations[lang].brandsList?.[1]?.desc || "Selezione esclusiva", icon: "fas fa-globe-europe" }
             ];
-            // Translate list items based on lang (simplified for brevity)
+            
+            const brandsGrid = document.getElementById('brandsGrid');
+            if(brandsGrid) {
+                brandsGrid.innerHTML = brandsList.map(b => `<div class="service-card"><i class="${b.icon}"></i><h3>${b.title}</h3><p>${b.desc}</p></div>`).join('');
+            }
         }
 
-        // Event listener for language switcher
         document.getElementById('languageSwitcher').addEventListener('change', (e) => setLanguage(e.target.value));
         
-        // Initial load with default language
+        // Add services and brands data to translations
+        translations.it.servicesList = [
+            { title: "Consulenza", desc: "Oltre 30 anni di esperienza a tua disposizione", icon: "fas fa-pen-ruler" },
+            { title: "Interior Design", desc: "Trasformiamo gli spazi con linee funzionali", icon: "fas fa-palette" },
+            { title: "Pavimenti e Rivestimenti", desc: "Ceramiche dai migliori brand", icon: "fas fa-tile" },
+            { title: "Arredo Bagno", desc: "Soluzioni eleganti e personalizzate", icon: "fas fa-toilet" }
+        ];
+        
+        translations.en.servicesList = [
+            { title: "Consulting", desc: "Over 30 years of experience", icon: "fas fa-pen-ruler" },
+            { title: "Interior Design", desc: "Transforming spaces with functional lines", icon: "fas fa-palette" },
+            { title: "Flooring", desc: "Ceramics from top brands", icon: "fas fa-tile" },
+            { title: "Bathroom", desc: "Elegant solutions", icon: "fas fa-toilet" }
+        ];
+        
+        translations.de.servicesList = [
+            { title: "Beratung", desc: "Über 30 Jahre Erfahrung", icon: "fas fa-pen-ruler" },
+            { title: "Innenarchitektur", desc: "Räume verwandeln", icon: "fas fa-palette" },
+            { title: "Bodenbeläge", desc: "Keramiken von Top-Marken", icon: "fas fa-tile" },
+            { title: "Badmöbel", desc: "Elegante Lösungen", icon: "fas fa-toilet" }
+        ];
+        
+        translations.fr.servicesList = [
+            { title: "Conseil", desc: "Plus de 30 ans d'expérience", icon: "fas fa-pen-ruler" },
+            { title: "Design d'Intérieur", desc: "Transformer les espaces", icon: "fas fa-palette" },
+            { title: "Revêtements", desc: "Céramiques de qualité", icon: "fas fa-tile" },
+            { title: "Salle de Bain", desc: "Solutions élégantes", icon: "fas fa-toilet" }
+        ];
+        
+        translations.it.brandsList = [
+            { title: "Ceramiche Italiane", desc: "Il meglio del made in Italy", icon: "fas fa-gem" },
+            { title: "Brand Internazionali", desc: "Selezione esclusiva", icon: "fas fa-globe-europe" }
+        ];
+        
+        translations.en.brandsList = [
+            { title: "Italian Ceramics", desc: "Best made in Italy", icon: "fas fa-gem" },
+            { title: "International Brands", desc: "Exclusive selection", icon: "fas fa-globe-europe" }
+        ];
+        
+        translations.de.brandsList = [
+            { title: "Italienische Keramik", desc: "Bestes Made in Italy", icon: "fas fa-gem" },
+            { title: "Internationale Marken", desc: "Exklusive Auswahl", icon: "fas fa-globe-europe" }
+        ];
+        
+        translations.fr.brandsList = [
+            { title: "Céramiques Italiennes", desc: "Le meilleur du made in Italy", icon: "fas fa-gem" },
+            { title: "Marques Internationales", desc: "Sélection exclusive", icon: "fas fa-globe-europe" }
+        ];
+        
         setLanguage(currentLang);
         
-        // Admin data loader (from previous implementation)
-        function loadSiteData() {
+        // ADMIN PANEL INTEGRATION - Load data from admin panel
+        function loadAdminData() {
             const saved = localStorage.getItem('progettoAdminData');
             if(saved) {
                 const data = JSON.parse(saved);
-                if(data.texts) {
-                    // Override translations if needed (optional)
-                }
+                
+                // Apply colors
                 if(data.colors) {
-                    document.documentElement.style.setProperty('--primary-color', data.colors.primary);
-                    document.documentElement.style.setProperty('--nav-bg', data.colors.navBg);
-                    document.documentElement.style.setProperty('--hero-text', data.colors.heroText);
-                    document.documentElement.style.setProperty('--contact-bg', data.colors.contactBg);
+                    document.body.style.backgroundColor = data.colors.bg;
+                    document.body.style.color = data.colors.text;
+                    const buttons = document.querySelectorAll('.btn');
+                    buttons.forEach(btn => {
+                        btn.style.backgroundColor = data.colors.primary;
+                    });
                 }
+                
+                // Apply fonts
                 if(data.fonts) {
-                    document.documentElement.style.setProperty('--heading-font', data.fonts.heading);
-                    document.documentElement.style.setProperty('--body-font', data.fonts.body);
-                    document.documentElement.style.setProperty('--card-radius', data.fonts.borderRadius + 'px');
                     document.body.style.fontFamily = data.fonts.body;
+                    const headings = document.querySelectorAll('h1, h2, h3, .section-title');
+                    headings.forEach(heading => {
+                        heading.style.fontFamily = data.fonts.heading;
+                    });
+                }
+                
+                // Update hero text
+                if(data.texts) {
+                    const heroTitle = document.querySelector('.hero-content h1 span');
+                    if(heroTitle && data.texts.heroTitle) {
+                        heroTitle.innerHTML = data.texts.heroTitle;
+                    }
+                    const heroSubtitle = document.querySelector('.hero-content p');
+                    if(heroSubtitle && data.texts.heroSubtitle) {
+                        heroSubtitle.textContent = data.texts.heroSubtitle;
+                    }
+                    const aboutContainer = document.getElementById('aboutTextContainer');
+                    if(aboutContainer && data.texts.aboutText) {
+                        aboutContainer.innerHTML = data.texts.aboutText;
+                    }
+                }
+                
+                // Display projects
+                if(data.projects && data.projects.length > 0) {
+                    const projectsGrid = document.getElementById('projectsGrid');
+                    if(projectsGrid) {
+                        projectsGrid.innerHTML = '';
+                        for(let i = 0; i < data.projects.length; i++) {
+                            const proj = data.projects[i];
+                            const card = document.createElement('div');
+                            card.className = 'service-card';
+                            let html = '';
+                            if(proj.imgUrl) {
+                                html += '<img src="' + proj.imgUrl + '" class="project-img" alt="' + proj.title + '">';
+                            }
+                            html += '<h3>' + proj.title + '</h3>';
+                            html += '<p>' + (proj.desc || '') + '</p>';
+                            card.innerHTML = html;
+                            projectsGrid.appendChild(card);
+                        }
+                    }
                 }
             }
         }
-        loadSiteData();
+        
+        loadAdminData();
         
         window.addEventListener('storage', function(e) {
-            if(e.key === 'progettoAdminData') { location.reload(); }
+            if(e.key === 'progettoAdminData') {
+                location.reload();
+            }
         });
     </script>
-    // Add this function to load dynamic content from admin panel
-function loadWebsiteData() {
-    const saved = localStorage.getItem('progettoAdminData');
-    if(saved) {
-        const data = JSON.parse(saved);
-        
-        // Apply colors
-        if(data.colors) {
-            document.body.style.backgroundColor = data.colors.bg;
-            document.body.style.color = data.colors.text;
-            // Update button colors
-            const buttons = document.querySelectorAll('.btn');
-            buttons.forEach(btn => {
-                btn.style.backgroundColor = data.colors.primary;
-            });
-        }
-        
-        // Apply fonts
-        if(data.fonts) {
-            document.body.style.fontFamily = data.fonts.body;
-            const headings = document.querySelectorAll('h1, h2, h3, .section-title');
-            headings.forEach(heading => {
-                heading.style.fontFamily = data.fonts.heading;
-            });
-        }
-        
-        // Update hero text
-        if(data.texts) {
-            const heroTitle = document.querySelector('.hero-content h1');
-            if(heroTitle && data.texts.heroTitle) {
-                heroTitle.innerHTML = data.texts.heroTitle;
-            }
-            
-            const heroSubtitle = document.querySelector('.hero-content p');
-            if(heroSubtitle && data.texts.heroSubtitle) {
-                heroSubtitle.textContent = data.texts.heroSubtitle;
-            }
-            
-            const aboutContainer = document.getElementById('aboutTextContainer');
-            if(aboutContainer && data.texts.aboutText) {
-                aboutContainer.innerHTML = data.texts.aboutText;
-            }
-        }
-        
-        // Display projects (add a projects section if you want)
-        if(data.projects && data.projects.length > 0) {
-            // Create projects section if it doesn't exist
-            let projectsSection = document.getElementById('dynamic-projects');
-            if(!projectsSection) {
-                projectsSection = document.createElement('section');
-                projectsSection.id = 'dynamic-projects';
-                projectsSection.className = 'section';
-                projectsSection.innerHTML = '<h2 class="section-title">Our Projects</h2><div id="projectsGrid" class="services-grid"></div>';
-                const servicesSection = document.getElementById('services');
-                if(servicesSection) {
-                    servicesSection.insertAdjacentElement('afterend', projectsSection);
-                }
-            }
-            
-            const projectsGrid = document.getElementById('projectsGrid');
-            if(projectsGrid) {
-                projectsGrid.innerHTML = data.projects.map(proj => `
-                    <div class="service-card">
-                        ${proj.imgUrl ? `<img src="${proj.imgUrl}" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:1rem;">` : ''}
-                        <h3>${proj.title}</h3>
-                        <p>${proj.desc || ''}</p>
-                    </div>
-                `).join('');
-            }
-        }
-    }
-}
-
-// Call the function when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    loadWebsiteData();
-});
-
-// Listen for changes from admin panel
-window.addEventListener('storage', function(e) {
-    if(e.key === 'progettoAdminData') {
-        location.reload();
-    }
-});
-</body> 
-    <script>
-    // Admin Panel Integration - Add this entire script to your index.html
-    function loadWebsiteData() {
-        const saved = localStorage.getItem('progettoAdminData');
-        if(saved) {
-            const data = JSON.parse(saved);
-            
-            // Apply colors
-            if(data.colors) {
-                document.body.style.backgroundColor = data.colors.bg;
-                document.body.style.color = data.colors.text;
-                const buttons = document.querySelectorAll('.btn');
-                buttons.forEach(btn => {
-                    btn.style.backgroundColor = data.colors.primary;
-                });
-            }
-            
-            // Apply fonts
-            if(data.fonts) {
-                document.body.style.fontFamily = data.fonts.body;
-                const headings = document.querySelectorAll('h1, h2, h3, .section-title');
-                headings.forEach(heading => {
-                    heading.style.fontFamily = data.fonts.heading;
-                });
-            }
-            
-            // Update hero text
-            if(data.texts) {
-                const heroTitle = document.querySelector('.hero-content h1 span');
-                if(heroTitle && data.texts.heroTitle) {
-                    heroTitle.innerHTML = data.texts.heroTitle;
-                }
-                
-                const heroSubtitle = document.querySelector('.hero-content p');
-                if(heroSubtitle && data.texts.heroSubtitle) {
-                    heroSubtitle.textContent = data.texts.heroSubtitle;
-                }
-                
-                const aboutContainer = document.getElementById('aboutTextContainer');
-                if(aboutContainer && data.texts.aboutText) {
-                    aboutContainer.innerHTML = data.texts.aboutText;
-                }
-            }
-            
-            // Display projects
-            if(data.projects && data.projects.length > 0) {
-                let projectsSection = document.getElementById('dynamic-projects');
-                if(!projectsSection) {
-                    projectsSection = document.createElement('section');
-                    projectsSection.id = 'dynamic-projects';
-                    projectsSection.className = 'section';
-                    projectsSection.innerHTML = '<h2 class="section-title">I Nostri Progetti</h2><div id="projectsGrid" class="services-grid"></div>';
-                    
-                    const servicesSection = document.getElementById('services');
-                    if(servicesSection) {
-                        servicesSection.insertAdjacentElement('afterend', projectsSection);
-                    }
-                }
-                
-                const projectsGrid = document.getElementById('projectsGrid');
-                if(projectsGrid) {
-                    projectsGrid.innerHTML = '';
-                    for(let i = 0; i < data.projects.length; i++) {
-                        const proj = data.projects[i];
-                        const card = document.createElement('div');
-                        card.className = 'service-card';
-                        card.innerHTML = (proj.imgUrl ? '<img src="' + proj.imgUrl + '" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:1rem;">' : '') + '<h3>' + proj.title + '</h3><p>' + (proj.desc || '') + '</p>';
-                        projectsGrid.appendChild(card);
-                    }
-                }
-            }
-        }
-    }
-    
-    // Call the function when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        loadWebsiteData();
-    });
-    
-    // Listen for changes from admin panel
-    window.addEventListener('storage', function(e) {
-        if(e.key === 'progettoAdminData') {
-            location.reload();
-        }
-    });
-</script>
+</body>
 </html>
