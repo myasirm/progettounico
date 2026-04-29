@@ -451,5 +451,89 @@
             if(e.key === 'progettoAdminData') { location.reload(); }
         });
     </script>
+    // Add this function to load dynamic content from admin panel
+function loadWebsiteData() {
+    const saved = localStorage.getItem('progettoAdminData');
+    if(saved) {
+        const data = JSON.parse(saved);
+        
+        // Apply colors
+        if(data.colors) {
+            document.body.style.backgroundColor = data.colors.bg;
+            document.body.style.color = data.colors.text;
+            // Update button colors
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.style.backgroundColor = data.colors.primary;
+            });
+        }
+        
+        // Apply fonts
+        if(data.fonts) {
+            document.body.style.fontFamily = data.fonts.body;
+            const headings = document.querySelectorAll('h1, h2, h3, .section-title');
+            headings.forEach(heading => {
+                heading.style.fontFamily = data.fonts.heading;
+            });
+        }
+        
+        // Update hero text
+        if(data.texts) {
+            const heroTitle = document.querySelector('.hero-content h1');
+            if(heroTitle && data.texts.heroTitle) {
+                heroTitle.innerHTML = data.texts.heroTitle;
+            }
+            
+            const heroSubtitle = document.querySelector('.hero-content p');
+            if(heroSubtitle && data.texts.heroSubtitle) {
+                heroSubtitle.textContent = data.texts.heroSubtitle;
+            }
+            
+            const aboutContainer = document.getElementById('aboutTextContainer');
+            if(aboutContainer && data.texts.aboutText) {
+                aboutContainer.innerHTML = data.texts.aboutText;
+            }
+        }
+        
+        // Display projects (add a projects section if you want)
+        if(data.projects && data.projects.length > 0) {
+            // Create projects section if it doesn't exist
+            let projectsSection = document.getElementById('dynamic-projects');
+            if(!projectsSection) {
+                projectsSection = document.createElement('section');
+                projectsSection.id = 'dynamic-projects';
+                projectsSection.className = 'section';
+                projectsSection.innerHTML = '<h2 class="section-title">Our Projects</h2><div id="projectsGrid" class="services-grid"></div>';
+                const servicesSection = document.getElementById('services');
+                if(servicesSection) {
+                    servicesSection.insertAdjacentElement('afterend', projectsSection);
+                }
+            }
+            
+            const projectsGrid = document.getElementById('projectsGrid');
+            if(projectsGrid) {
+                projectsGrid.innerHTML = data.projects.map(proj => `
+                    <div class="service-card">
+                        ${proj.imgUrl ? `<img src="${proj.imgUrl}" style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:1rem;">` : ''}
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc || ''}</p>
+                    </div>
+                `).join('');
+            }
+        }
+    }
+}
+
+// Call the function when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadWebsiteData();
+});
+
+// Listen for changes from admin panel
+window.addEventListener('storage', function(e) {
+    if(e.key === 'progettoAdminData') {
+        location.reload();
+    }
+});
 </body>
 </html>
