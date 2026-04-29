@@ -3,23 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel · Progetto Unico Group</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Admin Panel · Progetto Unico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #1a1a2e;
-            color: #fff;
-        }
-
-        /* Login Overlay */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #1a1a2e; color: #fff; }
+        
         .login-overlay {
             position: fixed;
             top: 0;
@@ -32,7 +22,7 @@
             justify-content: center;
             z-index: 10000;
         }
-
+        
         .login-card {
             background: white;
             padding: 2.5rem;
@@ -41,21 +31,15 @@
             max-width: 400px;
             text-align: center;
         }
-
-        .login-card h2 {
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-
+        
+        .login-card h2 { color: #333; margin-bottom: 1.5rem; }
         .login-card input {
             width: 100%;
             padding: 1rem;
             margin: 0.5rem 0;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
-            font-size: 1rem;
         }
-
         .login-card button {
             width: 100%;
             padding: 1rem;
@@ -67,60 +51,21 @@
             cursor: pointer;
             margin-top: 1rem;
         }
-
-        /* Admin Dashboard */
-        .admin-container {
-            display: none;
-        }
-
+        
+        .admin-container { display: none; }
         .admin-nav {
             background: #16213e;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
-
-        .admin-nav h2 {
-            font-size: 1.3rem;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .view-site-btn {
-            background: #2c3e50;
-            color: white;
-        }
-
-        .logout-btn {
-            background: #e94560;
-            color: white;
-        }
-
         .admin-tabs {
             display: flex;
             gap: 0.5rem;
             background: #0f3460;
             padding: 0.5rem 2rem;
-            flex-wrap: wrap;
         }
-
         .tab-btn {
             padding: 0.8rem 1.5rem;
             background: transparent;
@@ -129,69 +74,24 @@
             font-weight: 600;
             color: #fff;
             border-radius: 8px;
-            transition: 0.3s;
         }
-
-        .tab-btn.active {
-            background: #e94560;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 2rem;
-            min-height: 80vh;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-
-        .admin-card {
-            background: #16213e;
-            padding: 1.5rem;
-            border-radius: 15px;
-        }
-
-        .admin-card h3 {
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
+        .tab-btn.active { background: #e94560; }
+        .tab-content { display: none; padding: 2rem; }
+        .tab-content.active { display: block; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+        .admin-card { background: #16213e; padding: 1.5rem; border-radius: 15px; }
+        .admin-card h3 { margin-bottom: 1rem; color: #667eea; }
+        
         .upload-area {
             border: 2px dashed #667eea;
             padding: 2rem;
             text-align: center;
             border-radius: 15px;
-            margin: 1rem 0;
             cursor: pointer;
+            margin: 1rem 0;
         }
-
-        .upload-area:hover {
-            background: rgba(102,126,234,0.1);
-        }
-
-        .image-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .image-preview img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
+        .upload-area:hover { background: rgba(102,126,234,0.1); }
+        
         input, select, textarea {
             width: 100%;
             padding: 0.8rem;
@@ -201,7 +101,7 @@
             background: #0f3460;
             color: white;
         }
-
+        
         button {
             background: #667eea;
             color: white;
@@ -212,40 +112,38 @@
             font-weight: 600;
             margin-top: 0.5rem;
         }
-
-        button.danger {
-            background: #e94560;
+        
+        button.danger { background: #e94560; }
+        
+        .image-grid, .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
         }
-
-        button.secondary {
-            background: #2c3e50;
+        
+        .image-card {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 0.5rem;
+            text-align: center;
         }
-
-        .style-option {
-            margin: 1rem 0;
-        }
-
-        .style-option label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .color-preview {
-            width: 50px;
-            height: 50px;
+        
+        .image-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
             border-radius: 8px;
+        }
+        
+        .image-card button {
             margin-top: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
         }
-
-        .image-item, .project-item, .slide-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem;
-            border-bottom: 1px solid #2c3e50;
-        }
-
+        
         .toast-msg {
             position: fixed;
             bottom: 20px;
@@ -257,63 +155,67 @@
             z-index: 2000;
             display: none;
         }
-
-        .stats-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #667eea;
+        
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginOverlay" class="login-overlay">
     <div class="login-card">
-        <i class="fas fa-crown" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <i class="fas fa-crown" style="font-size: 3rem; color: #667eea;"></i>
         <h2>Admin Access</h2>
         <input type="text" id="adminUser" placeholder="Username" value="admin">
         <input type="password" id="adminPass" placeholder="Password" value="admin123">
-        <button onclick="attemptLogin()">Login to Dashboard</button>
+        <button onclick="attemptLogin()">Login</button>
         <div id="loginError" style="color: red; margin-top: 1rem;"></div>
     </div>
 </div>
 
-<!-- ADMIN DASHBOARD -->
 <div id="adminContainer" class="admin-container">
     <div class="admin-nav">
         <h2><i class="fas fa-crown"></i> Progetto Unico Admin</h2>
-        <div class="nav-buttons">
-            <a href="index.html" target="_blank" class="nav-btn view-site-btn">View Website</a>
-            <button class="nav-btn logout-btn" onclick="logout()">Logout</button>
+        <div>
+            <a href="index.html" target="_blank" style="background: #2c3e50; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; margin-right: 1rem;">View Site</a>
+            <button onclick="logout()" style="background: #e94560;">Logout</button>
         </div>
     </div>
-
+    
     <div class="admin-tabs">
-        <button class="tab-btn active" onclick="showTab('media')">📸 Media Gallery</button>
+        <button class="tab-btn active" onclick="showTab('gallery')">📸 Media Gallery</button>
         <button class="tab-btn" onclick="showTab('projects')">🏗️ Projects</button>
         <button class="tab-btn" onclick="showTab('appearance')">🎨 Appearance</button>
         <button class="tab-btn" onclick="showTab('content')">📝 Content</button>
     </div>
-
-    <!-- MEDIA TAB -->
-    <div id="tab-media" class="tab-content active">
+    
+    <!-- GALLERY TAB -->
+    <div id="tab-gallery" class="tab-content active">
         <div class="admin-grid">
             <div class="admin-card">
-                <h3>Upload Images</h3>
-                <div class="upload-area" onclick="document.getElementById('imageUpload').click()">
+                <h3>Upload New Image</h3>
+                <div class="upload-area" onclick="document.getElementById('imageInput').click()">
                     <i class="fas fa-cloud-upload-alt fa-3x"></i>
-                    <p>Click to upload images (JPG, PNG)</p>
+                    <p>Click to select image (JPG, PNG)</p>
                 </div>
-                <input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="handleImageUpload(this)">
+                <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="uploadImage(this)">
+                <div id="uploadPreview" style="display:none; margin-top: 1rem;">
+                    <img id="previewImg" class="preview-img">
+                </div>
             </div>
+            
             <div class="admin-card">
-                <h3>Image Library</h3>
-                <div id="galleryList" style="max-height: 400px; overflow-y: auto;"></div>
+                <h3>Image Library (<span id="imageCount">0</span> images)</h3>
+                <div id="imageGrid" class="image-grid"></div>
+                <button onclick="clearAllImages()" class="danger" style="margin-top: 1rem; width: 100%;">Delete All Images</button>
             </div>
         </div>
     </div>
-
+    
     <!-- PROJECTS TAB -->
     <div id="tab-projects" class="tab-content">
         <div class="admin-grid">
@@ -321,58 +223,52 @@
                 <h3>Add New Project</h3>
                 <input type="text" id="projectTitle" placeholder="Project Title">
                 <textarea id="projectDesc" rows="3" placeholder="Project Description"></textarea>
-                <input type="text" id="projectImgUrl" placeholder="Image URL (optional)">
+                <select id="projectImageSelect">
+                    <option value="">-- Select an image from gallery --</option>
+                </select>
                 <button onclick="addProject()">➕ Add Project</button>
             </div>
+            
             <div class="admin-card">
-                <h3>Existing Projects</h3>
-                <div id="projectsList"></div>
+                <h3>Existing Projects (<span id="projectCount">0</span>)</h3>
+                <div id="projectGrid" class="project-grid"></div>
             </div>
         </div>
     </div>
-
+    
     <!-- APPEARANCE TAB -->
     <div id="tab-appearance" class="tab-content">
         <div class="admin-grid">
             <div class="admin-card">
                 <h3>Colors</h3>
-                <div class="style-option">
-                    <label>Primary Color:</label>
-                    <input type="color" id="primaryColor" value="#c17b4c">
-                </div>
-                <div class="style-option">
-                    <label>Background Color:</label>
-                    <input type="color" id="bgColor" value="#f5f0e8">
-                </div>
-                <div class="style-option">
-                    <label>Text Color:</label>
-                    <input type="color" id="textColor" value="#2c2418">
-                </div>
-                <button onclick="saveColors()">Apply Colors</button>
+                <label>Primary Color:</label>
+                <input type="color" id="primaryColor" value="#c17b4c">
+                <label>Background Color:</label>
+                <input type="color" id="bgColor" value="#f5f0e8">
+                <label>Text Color:</label>
+                <input type="color" id="textColor" value="#2c2418">
+                <button onclick="saveColors()">Save Colors</button>
             </div>
+            
             <div class="admin-card">
                 <h3>Fonts</h3>
-                <div class="style-option">
-                    <label>Heading Font:</label>
-                    <select id="headingFont">
-                        <option value="'Playfair Display', serif">Playfair Display</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
-                        <option value="'Montserrat', sans-serif">Montserrat</option>
-                    </select>
-                </div>
-                <div class="style-option">
-                    <label>Body Font:</label>
-                    <select id="bodyFont">
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Roboto', sans-serif">Roboto</option>
-                        <option value="'Open Sans', sans-serif">Open Sans</option>
-                    </select>
-                </div>
-                <button onclick="saveFonts()">Apply Fonts</button>
+                <label>Heading Font:</label>
+                <select id="headingFont">
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                </select>
+                <label>Body Font:</label>
+                <select id="bodyFont">
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                </select>
+                <button onclick="saveFonts()">Save Fonts</button>
             </div>
         </div>
     </div>
-
+    
     <!-- CONTENT TAB -->
     <div id="tab-content" class="tab-content">
         <div class="admin-grid">
@@ -382,17 +278,18 @@
                 <input type="text" id="heroSubtitle" placeholder="Hero Subtitle">
                 <button onclick="saveTexts()">Save Hero Text</button>
             </div>
+            
             <div class="admin-card">
                 <h3>About Section</h3>
                 <textarea id="aboutText" rows="6" placeholder="About text"></textarea>
                 <button onclick="saveAboutText()">Save About Text</button>
             </div>
+            
             <div class="admin-card">
-                <h3>Statistics</h3>
-                <p>Total Projects: <strong id="totalProjectsStat">0</strong></p>
-                <p>Total Images: <strong id="totalImagesStat">0</strong></p>
-                <button onclick="exportData()" class="secondary">📥 Export Data</button>
-                <button onclick="clearAllData()" class="danger" style="margin-left: 1rem;">🗑️ Reset All</button>
+                <h3>Data Management</h3>
+                <button onclick="exportData()">📥 Export Backup</button>
+                <button onclick="importData()" style="margin-left: 1rem;">📤 Import Backup</button>
+                <button onclick="resetAllData()" class="danger" style="margin-top: 1rem; width: 100%;">⚠️ Reset Everything</button>
             </div>
         </div>
     </div>
@@ -401,178 +298,231 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
-    // Data Structure
+    // Data structure
     let siteData = {
-        images: [],
-        projects: [],
+        images: [],    // Store { id, url, name, date }
+        projects: [],  // Store { title, desc, imageId, imageUrl }
+        colors: { primary: "#c17b4c", bg: "#f5f0e8", text: "#2c2418" },
+        fonts: { heading: "'Playfair Display', serif", body: "'Inter', sans-serif" },
         texts: {
             heroTitle: "Galleria delle Idee<br>EdilCost",
             heroSubtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
             aboutText: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>."
-        },
-        colors: {
-            primary: "#c17b4c",
-            bg: "#f5f0e8",
-            text: "#2c2418"
-        },
-        fonts: {
-            heading: "'Playfair Display', serif",
-            body: "'Inter', sans-serif"
         }
     };
-
+    
     function loadData() {
         const stored = localStorage.getItem('progettoAdminData');
         if(stored) {
             siteData = JSON.parse(stored);
         } else {
-            // Demo data
+            // Add demo data
             siteData.projects = [
-                { title: "Villa Mediterranea", desc: "Complete renovation with pool", imgUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-                { title: "Modern Showroom", desc: "300sqm exhibition space", imgUrl: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+                { title: "Villa Mediterranea", desc: "Complete renovation with pool", imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", imageId: null }
             ];
-            saveAllData();
+            saveData();
         }
         renderGallery();
         renderProjects();
         populateFields();
-        updateStats();
+        updateImageSelect();
     }
-
-    function saveAllData() {
+    
+    function saveData() {
         localStorage.setItem('progettoAdminData', JSON.stringify(siteData));
-        showToast("Saved successfully!");
-        updateStats();
+        showToast("Saved!");
+        updateCounts();
     }
-
+    
     function showToast(msg) {
         const toast = document.getElementById('toastMsg');
         toast.innerText = msg;
         toast.style.display = 'block';
         setTimeout(() => toast.style.display = 'none', 2000);
     }
-
-    // Image Handling
-    function handleImageUpload(input) {
-        const files = Array.from(input.files);
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                siteData.images.push({
-                    url: e.target.result,
-                    name: file.name,
-                    date: new Date().toISOString()
-                });
-                saveAllData();
-                renderGallery();
-            };
-            reader.readAsDataURL(file);
-        });
-        input.value = '';
-    }
-
-    function renderGallery() {
-        const container = document.getElementById('galleryList');
-        if(!container) return;
+    
+    // IMAGE HANDLING
+    function uploadImage(input) {
+        const file = input.files[0];
+        if(!file) return;
         
-        if(siteData.images.length === 0) {
-            container.innerHTML = '<p style="color: #888;">No images uploaded yet.</p>';
+        if(file.size > 5 * 1024 * 1024) {
+            showToast("Image too large! Max 5MB");
             return;
         }
         
-        container.innerHTML = siteData.images.map((img, idx) => `
-            <div class="image-item">
-                <img src="${img.url}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                <span style="flex: 1; margin-left: 10px;">${img.name.substring(0, 30)}</span>
-                <button onclick="deleteImage(${idx})" style="background: #e94560; padding: 5px 10px;">Delete</button>
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const newImage = {
+                id: Date.now(),
+                url: e.target.result,
+                name: file.name,
+                date: new Date().toISOString()
+            };
+            siteData.images.push(newImage);
+            saveData();
+            renderGallery();
+            updateImageSelect();
+            showToast("Image uploaded: " + file.name);
+            
+            // Clear preview
+            document.getElementById('uploadPreview').style.display = 'none';
+            document.getElementById('imageInput').value = '';
+        };
+        reader.readAsDataURL(file);
+        
+        // Show preview
+        const preview = document.getElementById('uploadPreview');
+        const previewImg = document.getElementById('previewImg');
+        previewImg.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    }
+    
+    function renderGallery() {
+        const container = document.getElementById('imageGrid');
+        if(!container) return;
+        
+        if(siteData.images.length === 0) {
+            container.innerHTML = '<p style="color: #888; text-align: center;">No images uploaded. Click above to add images.</p>';
+            return;
+        }
+        
+        container.innerHTML = siteData.images.map(img => `
+            <div class="image-card">
+                <img src="${img.url}" alt="${img.name}">
+                <small>${img.name.substring(0, 20)}</small>
+                <button onclick="copyImageUrl(${img.id})" style="background: #2c3e50;">Copy URL</button>
+                <button onclick="deleteImage(${img.id})" class="danger">Delete</button>
             </div>
         `).join('');
     }
-
-    function deleteImage(idx) {
-        siteData.images.splice(idx, 1);
-        saveAllData();
+    
+    function deleteImage(id) {
+        siteData.images = siteData.images.filter(img => img.id !== id);
+        saveData();
         renderGallery();
+        updateImageSelect();
     }
-
-    // Projects
+    
+    function clearAllImages() {
+        if(confirm('Delete ALL images? This cannot be undone.')) {
+            siteData.images = [];
+            saveData();
+            renderGallery();
+            updateImageSelect();
+        }
+    }
+    
+    function copyImageUrl(id) {
+        const image = siteData.images.find(img => img.id === id);
+        if(image) {
+            navigator.clipboard.writeText(image.url);
+            showToast("Image URL copied!");
+        }
+    }
+    
+    // PROJECT HANDLING
     function addProject() {
         const title = document.getElementById('projectTitle').value;
         const desc = document.getElementById('projectDesc').value;
-        let imgUrl = document.getElementById('projectImgUrl').value;
+        const selectedImageId = document.getElementById('projectImageSelect').value;
         
         if(!title) {
             showToast("Please enter a project title");
             return;
         }
         
-        if(!imgUrl && siteData.images.length > 0) {
-            imgUrl = siteData.images[0].url;
+        let imageUrl = '';
+        if(selectedImageId) {
+            const image = siteData.images.find(img => img.id == selectedImageId);
+            if(image) imageUrl = image.url;
         }
         
-        siteData.projects.push({ title, desc, imgUrl });
+        siteData.projects.push({
+            id: Date.now(),
+            title: title,
+            desc: desc,
+            imageUrl: imageUrl,
+            imageId: selectedImageId || null
+        });
+        
         document.getElementById('projectTitle').value = '';
         document.getElementById('projectDesc').value = '';
-        document.getElementById('projectImgUrl').value = '';
-        saveAllData();
+        document.getElementById('projectImageSelect').value = '';
+        
+        saveData();
         renderProjects();
+        showToast("Project added!");
     }
-
+    
     function renderProjects() {
-        const container = document.getElementById('projectsList');
+        const container = document.getElementById('projectGrid');
         if(!container) return;
         
         if(siteData.projects.length === 0) {
-            container.innerHTML = '<p style="color: #888;">No projects yet.</p>';
+            container.innerHTML = '<p style="color: #888; text-align: center;">No projects yet. Add your first project!</p>';
             return;
         }
         
         container.innerHTML = siteData.projects.map((proj, idx) => `
-            <div class="project-item">
-                <div>
-                    <strong>${proj.title}</strong><br>
-                    <small>${proj.desc?.substring(0, 50) || ''}</small>
-                </div>
-                <button onclick="deleteProject(${idx})" style="background: #e94560; padding: 5px 10px;">Delete</button>
+            <div class="image-card">
+                ${proj.imageUrl ? `<img src="${proj.imageUrl}" style="width:100%; height:120px; object-fit:cover;">` : '<div style="height:120px; background:#2c3e50; display:flex; align-items:center; justify-content:center;">No Image</div>'}
+                <strong>${proj.title}</strong>
+                <small>${(proj.desc || '').substring(0, 40)}</small>
+                <button onclick="deleteProject(${idx})" class="danger">Delete</button>
             </div>
         `).join('');
     }
-
-    function deleteProject(idx) {
-        siteData.projects.splice(idx, 1);
-        saveAllData();
+    
+    function deleteProject(index) {
+        siteData.projects.splice(index, 1);
+        saveData();
         renderProjects();
     }
-
-    // Colors
+    
+    function updateImageSelect() {
+        const select = document.getElementById('projectImageSelect');
+        if(!select) return;
+        
+        select.innerHTML = '<option value="">-- Select an image from gallery --</option>';
+        
+        siteData.images.forEach(img => {
+            select.innerHTML += `<option value="${img.id}">${img.name.substring(0, 30)}</option>`;
+        });
+        
+        if(siteData.images.length === 0) {
+            select.innerHTML = '<option value="">No images available. Upload some first!</option>';
+        }
+    }
+    
+    // APPEARANCE
     function saveColors() {
         siteData.colors.primary = document.getElementById('primaryColor').value;
         siteData.colors.bg = document.getElementById('bgColor').value;
         siteData.colors.text = document.getElementById('textColor').value;
-        saveAllData();
-        showToast("Colors saved! Refresh your website to see changes.");
+        saveData();
+        showToast("Colors saved! Refresh your website.");
     }
-
-    // Fonts
+    
     function saveFonts() {
         siteData.fonts.heading = document.getElementById('headingFont').value;
         siteData.fonts.body = document.getElementById('bodyFont').value;
-        saveAllData();
-        showToast("Fonts saved! Refresh your website to see changes.");
+        saveData();
+        showToast("Fonts saved! Refresh your website.");
     }
-
-    // Texts
+    
+    // CONTENT
     function saveTexts() {
         siteData.texts.heroTitle = document.getElementById('heroTitle').value;
         siteData.texts.heroSubtitle = document.getElementById('heroSubtitle').value;
-        saveAllData();
+        saveData();
     }
-
+    
     function saveAboutText() {
         siteData.texts.aboutText = document.getElementById('aboutText').value;
-        saveAllData();
+        saveData();
     }
-
+    
     function populateFields() {
         document.getElementById('heroTitle').value = siteData.texts.heroTitle || '';
         document.getElementById('heroSubtitle').value = siteData.texts.heroSubtitle || '';
@@ -583,39 +533,62 @@
         document.getElementById('headingFont').value = siteData.fonts.heading;
         document.getElementById('bodyFont').value = siteData.fonts.body;
     }
-
-    function updateStats() {
-        document.getElementById('totalProjectsStat').innerText = siteData.projects.length;
-        document.getElementById('totalImagesStat').innerText = siteData.images.length;
+    
+    function updateCounts() {
+        document.getElementById('imageCount').innerText = siteData.images.length;
+        document.getElementById('projectCount').innerText = siteData.projects.length;
     }
-
+    
+    // DATA MANAGEMENT
     function exportData() {
         const dataStr = JSON.stringify(siteData, null, 2);
         const blob = new Blob([dataStr], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'website_backup.json';
+        a.download = 'website_backup_' + new Date().toISOString().split('T')[0] + '.json';
         a.click();
         URL.revokeObjectURL(url);
-        showToast("Data exported!");
+        showToast("Backup exported!");
     }
-
-    function clearAllData() {
-        if(confirm('⚠️ WARNING: This will delete ALL your data! Are you sure?')) {
+    
+    function importData() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const imported = JSON.parse(ev.target.result);
+                    siteData = imported;
+                    saveData();
+                    location.reload();
+                } catch(err) {
+                    showToast("Invalid backup file!");
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+    
+    function resetAllData() {
+        if(confirm('⚠️ WARNING: This will DELETE EVERYTHING! Are you sure?')) {
             localStorage.removeItem('progettoAdminData');
             location.reload();
         }
     }
-
-    // UI Functions
+    
+    // UI
     function showTab(tabName) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.getElementById(`tab-${tabName}`).classList.add('active');
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
     }
-
+    
     function attemptLogin() {
         const user = document.getElementById('adminUser').value;
         const pass = document.getElementById('adminPass').value;
@@ -627,18 +600,20 @@
             document.getElementById('loginError').innerText = 'Wrong credentials! Use admin / admin123';
         }
     }
-
+    
     function logout() {
         document.getElementById('loginOverlay').style.display = 'flex';
         document.getElementById('adminContainer').style.display = 'none';
     }
-
+    
     // Make functions global
     window.attemptLogin = attemptLogin;
     window.logout = logout;
     window.showTab = showTab;
-    window.handleImageUpload = handleImageUpload;
+    window.uploadImage = uploadImage;
     window.deleteImage = deleteImage;
+    window.clearAllImages = clearAllImages;
+    window.copyImageUrl = copyImageUrl;
     window.addProject = addProject;
     window.deleteProject = deleteProject;
     window.saveColors = saveColors;
@@ -646,7 +621,8 @@
     window.saveTexts = saveTexts;
     window.saveAboutText = saveAboutText;
     window.exportData = exportData;
-    window.clearAllData = clearAllData;
+    window.importData = importData;
+    window.resetAllData = resetAllData;
 </script>
 </body>
 </html>
