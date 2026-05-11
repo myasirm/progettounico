@@ -136,18 +136,34 @@
         }
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
             margin-top: 1rem;
+            margin-bottom: 1.5rem;
         }
         .item-card {
             background: #0f3460;
             border-radius: 10px;
             padding: 1rem;
         }
-        .btn-primary { background: #c17b4c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
-        .btn-danger { background: #e94560; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
-        .btn-secondary { background: #2c3e50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+        .item-card input, .item-card textarea, .item-card select {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #2c3e50;
+            background: #1a1a2e;
+            color: white;
+        }
+        .item-card textarea { min-height: 60px; }
+        .item-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+        
+        .btn-primary { background: #c17b4c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .btn-primary:hover { background: #a8633a; transform: translateY(-2px); }
+        .btn-danger { background: #e94560; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 8px; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-secondary { background: #2c3e50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-right: 1rem; }
+        .btn-secondary:hover { background: #34495e; }
         
         .toast-msg {
             position: fixed;
@@ -158,6 +174,12 @@
             border-radius: 10px;
             z-index: 2000;
             display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
@@ -203,84 +225,96 @@
             </div>
         </div>
         
+        <!-- HERO SECTION -->
         <div id="heroSection" class="section-editor">
             <h2 class="section-title">Hero Section</h2>
-            <div class="form-group"><label>Main Title</label><input type="text" id="heroTitle"></div>
-            <div class="form-group"><label>Subtitle</label><input type="text" id="heroSubtitle"></div>
-            <div class="form-group"><label>Button Text</label><input type="text" id="heroBtnText"></div>
-            <div class="form-group"><label>Background Image</label><input type="text" id="heroBgImage"></div>
-            <button class="btn-primary" onclick="saveHero()">Save</button>
+            <div class="form-group"><label>Main Title</label><input type="text" id="heroTitle" placeholder="Progetto Unico Group"></div>
+            <div class="form-group"><label>Subtitle</label><input type="text" id="heroSubtitle" placeholder="Your subtitle here"></div>
+            <div class="form-group"><label>Button Text</label><input type="text" id="heroBtnText" placeholder="Scopri di Più"></div>
+            <div class="form-group"><label>Background Image URL</label><input type="text" id="heroBgImage" placeholder="https://..."></div>
+            <button class="btn-primary" onclick="saveHero()">Save Hero</button>
         </div>
         
+        <!-- ABOUT SECTION -->
         <div id="aboutSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Group Story</h2>
             <div class="form-group"><label>Section Title</label><input type="text" id="aboutTitle"></div>
-            <div class="form-group"><label>Story Text</label><textarea id="aboutText" rows="8"></textarea></div>
+            <div class="form-group"><label>Story Text (HTML allowed)</label><textarea id="aboutText" rows="6"></textarea></div>
             <div class="form-group"><label>Mission Text</label><textarea id="missionText" rows="4"></textarea></div>
-            <button class="btn-primary" onclick="saveAbout()">Save</button>
+            <button class="btn-primary" onclick="saveAbout()">Save Story</button>
         </div>
         
+        <!-- COMPANIES SECTION -->
         <div id="companiesSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Group Companies</h2>
             <div id="companiesList"></div>
-            <button class="btn-secondary" onclick="addCompany()">+ Add Company</button>
-            <button class="btn-primary" onclick="saveCompanies()" style="margin-top:1rem;">Save Companies</button>
+            <button class="btn-secondary" onclick="addCompany()">+ Add New Company</button>
+            <button class="btn-primary" onclick="saveCompanies()">Save All Companies</button>
         </div>
         
+        <!-- SERVICES SECTION -->
         <div id="servicesSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Services</h2>
             <div class="form-group"><label>Section Title</label><input type="text" id="servicesTitle"></div>
             <div id="servicesList"></div>
-            <button class="btn-secondary" onclick="addService()">+ Add Service</button>
-            <button class="btn-primary" onclick="saveServices()" style="margin-top:1rem;">Save Services</button>
+            <button class="btn-secondary" onclick="addService()">+ Add New Service</button>
+            <button class="btn-primary" onclick="saveServices()">Save All Services</button>
         </div>
         
+        <!-- PROJECTS SECTION -->
         <div id="projectsSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Projects</h2>
             <div class="form-group"><label>Section Title</label><input type="text" id="projectsTitle"></div>
             <div id="projectsList"></div>
-            <button class="btn-secondary" onclick="addProject()">+ Add Project</button>
-            <button class="btn-primary" onclick="saveProjects()" style="margin-top:1rem;">Save Projects</button>
+            <button class="btn-secondary" onclick="addProject()">+ Add New Project</button>
+            <button class="btn-primary" onclick="saveProjects()">Save All Projects</button>
         </div>
         
+        <!-- BRANDS SECTION -->
         <div id="brandsSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Partner Brands</h2>
             <div class="form-group"><label>Section Title</label><input type="text" id="brandsTitle"></div>
             <div id="brandsList"></div>
-            <button class="btn-secondary" onclick="addBrand()">+ Add Brand</button>
-            <button class="btn-primary" onclick="saveBrands()" style="margin-top:1rem;">Save Brands</button>
+            <button class="btn-secondary" onclick="addBrand()">+ Add New Brand</button>
+            <button class="btn-primary" onclick="saveBrands()">Save All Brands</button>
         </div>
         
+        <!-- CONTACT SECTION -->
         <div id="contactSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Contact</h2>
+            <h2 class="section-title">Contact Information</h2>
             <div class="form-group"><label>Address</label><input type="text" id="contactAddress"></div>
             <div class="form-group"><label>Phone</label><input type="text" id="contactPhone"></div>
             <div class="form-group"><label>Email</label><input type="email" id="contactEmail"></div>
-            <div class="form-group"><label>Facebook</label><input type="text" id="socialFacebook"></div>
-            <div class="form-group"><label>Instagram</label><input type="text" id="socialInstagram"></div>
-            <button class="btn-primary" onclick="saveContact()">Save</button>
+            <div class="form-group"><label>Facebook URL</label><input type="text" id="socialFacebook"></div>
+            <div class="form-group"><label>Instagram URL</label><input type="text" id="socialInstagram"></div>
+            <button class="btn-primary" onclick="saveContact()">Save Contact</button>
         </div>
         
+        <!-- FOOTER SECTION -->
         <div id="footerSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Footer</h2>
             <div class="form-group"><label>Footer Text</label><textarea id="footerText" rows="3"></textarea></div>
-            <div class="form-group"><label>Copyright</label><input type="text" id="copyrightText"></div>
-            <button class="btn-primary" onclick="saveFooter()">Save</button>
+            <div class="form-group"><label>Copyright Text</label><input type="text" id="copyrightText"></div>
+            <button class="btn-primary" onclick="saveFooter()">Save Footer</button>
         </div>
         
+        <!-- DESIGN SECTION -->
         <div id="designSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Design</h2>
-            <div class="form-group"><label>Primary Color</label><input type="color" id="primaryColor"></div>
-            <div class="form-group"><label>Secondary Color</label><input type="color" id="secondaryColor"></div>
-            <button class="btn-primary" onclick="saveDesign()">Save</button>
+            <h2 class="section-title">Design Settings</h2>
+            <div class="form-group"><label>Primary Color</label><input type="color" id="primaryColor" value="#c17b4c"></div>
+            <div class="form-group"><label>Secondary Color</label><input type="color" id="secondaryColor" value="#667eea"></div>
+            <button class="btn-primary" onclick="saveDesign()">Save Design</button>
         </div>
         
+        <!-- BACKUP SECTION -->
         <div id="backupSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Backup</h2>
-            <button class="btn-primary" onclick="exportData()">Download Backup</button>
-            <input type="file" id="importFile" accept=".json" style="margin:1rem 0">
-            <button class="btn-secondary" onclick="importData()">Restore Backup</button>
-            <button class="btn-danger" onclick="resetAll()" style="margin-top:1rem;">Reset All</button>
+            <h2 class="section-title">Backup & Restore</h2>
+            <button class="btn-primary" onclick="exportData()">📥 Download Backup</button>
+            <div style="margin: 1rem 0;">
+                <input type="file" id="importFile" accept=".json">
+                <button class="btn-secondary" onclick="importData()" style="margin-top: 0.5rem;">📤 Restore from Backup</button>
+            </div>
+            <button class="btn-danger" onclick="resetAll()">⚠️ Reset Everything to Default</button>
         </div>
     </div>
 </div>
@@ -288,40 +322,78 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
+    // Complete Website Data Structure
     let websiteData = {
-        hero: { title: "Progetto Unico Group", subtitle: "Galleria delle Idee · Ideal Casa Srl · EdilCost", btnText: "Scopri di Più", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
-        about: { title: "La Nostra Storia", text: "Progetto Unico Group nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni.", mission: "La nostra missione è trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." },
+        hero: { 
+            title: "Progetto Unico Group", 
+            subtitle: "Galleria delle Idee · Ideal Casa Srl · EdilCost", 
+            btnText: "Scopri di Più", 
+            bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" 
+        },
+        about: { 
+            title: "La Nostra Storia", 
+            text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni.", 
+            mission: "Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." 
+        },
         companies: [
-            { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi e soluzioni d'arredo uniche.", color: "#c17b4c" },
-            { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali con standard qualitativi eccellenti.", color: "#667eea" },
-            { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo.", color: "#27ae60" }
+            { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi e soluzioni d'arredo uniche." },
+            { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali con standard qualitativi eccellenti." },
+            { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo." }
         ],
-        services: { title: "I Nostri Servizi", items: [
-            { icon: "fas fa-pen-ruler", title: "Progettazione", desc: "Design personalizzato su misura" },
-            { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento e stile" },
-            { icon: "fas fa-hard-hat", title: "Ristrutturazioni", desc: "Lavori edili completi" }
-        ]},
-        projects: { title: "Progetti Realizzati", items: [
-            { title: "Villa di Lusso", desc: "Progetto completo di design e realizzazione", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" }
-        ]},
-        brands: { title: "Brand Partner", items: [
-            { name: "Italian Design", logo: "fas fa-gem" }
-        ]},
-        contact: { address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "#", instagram: "#" } },
-        footer: { text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", copyright: "© 2025 Tutti i diritti riservati" },
+        services: { 
+            title: "I Nostri Servizi", 
+            items: [
+                { icon: "fas fa-pen-ruler", title: "Progettazione Integrata", desc: "Design coordinato tra architettura e interior" },
+                { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura e consulenza stile" },
+                { icon: "fas fa-hard-hat", title: "Ristrutturazioni Complete", desc: "Lavori edili e impiantistici chiavi in mano" }
+            ]
+        },
+        projects: { 
+            title: "Progetti Realizzati", 
+            items: [
+                { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                { title: "Showroom Galleria", desc: "Nuovo spazio espositivo di 300mq nel centro storico", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+            ]
+        },
+        brands: { 
+            title: "Brand Partner", 
+            items: [
+                { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Il meglio del made in Italy" },
+                { icon: "fas fa-globe", name: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali" }
+            ]
+        },
+        contact: { 
+            address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", 
+            phone: "+39.0831 341520", 
+            email: "info@galleriadelleidee.com", 
+            social: { facebook: "#", instagram: "#" } 
+        },
+        footer: { 
+            text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", 
+            copyright: "© 2025 Tutti i diritti riservati" 
+        },
         design: { primaryColor: "#c17b4c", secondaryColor: "#667eea" }
     };
     
-    function showToast(msg) {
+    // Toast notification
+    function showToast(msg, isError = false) {
         const toast = document.getElementById('toastMsg');
         toast.textContent = msg;
+        toast.style.backgroundColor = isError ? '#e94560' : '#27ae60';
         toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2000);
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.style.backgroundColor = '#27ae60';
+        }, 2000);
     }
     
+    // Load data from localStorage
     function loadData() {
-        const saved = localStorage.getItem('progettoCMS_v3');
-        if(saved) websiteData = JSON.parse(saved);
+        const saved = localStorage.getItem('progettoCMS_v4');
+        if(saved) {
+            websiteData = JSON.parse(saved);
+            showToast("Data loaded successfully!");
+        }
         populateFields();
         renderCompaniesList();
         renderServicesList();
@@ -329,17 +401,21 @@
         renderBrandsList();
     }
     
+    // Save data to localStorage
     function saveData() {
-        localStorage.setItem('progettoCMS_v3', JSON.stringify(websiteData));
-        showToast("Saved!");
+        localStorage.setItem('progettoCMS_v4', JSON.stringify(websiteData));
+        showToast("Changes saved!");
     }
     
+    // Publish to website
     function publishToWebsite() {
         saveHero(); saveAbout(); saveCompanies(); saveServices(); saveProjects(); saveBrands(); saveContact(); saveFooter(); saveDesign();
-        showToast("✅ Published!");
+        localStorage.setItem('progettoCMS_v4', JSON.stringify(websiteData));
+        showToast("✅ Published! Website updated.");
         setTimeout(() => window.open('index.html', '_blank'), 500);
     }
     
+    // Populate form fields
     function populateFields() {
         document.getElementById('heroTitle').value = websiteData.hero.title;
         document.getElementById('heroSubtitle').value = websiteData.hero.subtitle;
@@ -362,6 +438,7 @@
         document.getElementById('secondaryColor').value = websiteData.design.secondaryColor;
     }
     
+    // Save functions for simple sections
     function saveHero() {
         websiteData.hero.title = document.getElementById('heroTitle').value;
         websiteData.hero.subtitle = document.getElementById('heroSubtitle').value;
@@ -377,83 +454,385 @@
         saveData();
     }
     
+    function saveContact() {
+        websiteData.contact.address = document.getElementById('contactAddress').value;
+        websiteData.contact.phone = document.getElementById('contactPhone').value;
+        websiteData.contact.email = document.getElementById('contactEmail').value;
+        websiteData.contact.social.facebook = document.getElementById('socialFacebook').value;
+        websiteData.contact.social.instagram = document.getElementById('socialInstagram').value;
+        saveData();
+    }
+    
+    function saveFooter() {
+        websiteData.footer.text = document.getElementById('footerText').value;
+        websiteData.footer.copyright = document.getElementById('copyrightText').value;
+        saveData();
+    }
+    
+    function saveDesign() {
+        websiteData.design.primaryColor = document.getElementById('primaryColor').value;
+        websiteData.design.secondaryColor = document.getElementById('secondaryColor').value;
+        saveData();
+    }
+    
+    // ============ COMPANIES MANAGEMENT ============
     function renderCompaniesList() {
         const container = document.getElementById('companiesList');
         if(!container) return;
         container.innerHTML = '<div class="items-grid" id="companiesGrid"></div>';
         const grid = document.getElementById('companiesGrid');
-        websiteData.companies.forEach((c, i) => {
-            grid.innerHTML += `<div class="item-card">
-                <i class="${c.icon}" style="font-size:2rem; color:#c17b4c"></i>
-                <input type="text" id="comp_name_${i}" value="${c.name}" style="width:100%; margin:10px 0">
-                <input type="text" id="comp_role_${i}" value="${c.role}" style="width:100%; margin:10px 0">
-                <textarea id="comp_desc_${i}" style="width:100%">${c.desc}</textarea>
-                <button class="btn-danger" onclick="deleteCompany(${i})">Delete</button>
-            </div>`;
+        
+        websiteData.companies.forEach((company, index) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <i class="${company.icon}" style="font-size: 2rem; color: #c17b4c;"></i>
+                    <input type="text" id="comp_name_${index}" value="${escapeHtml(company.name)}" placeholder="Company Name">
+                    <input type="text" id="comp_role_${index}" value="${escapeHtml(company.role)}" placeholder="Role">
+                    <select id="comp_icon_${index}">
+                        <option value="fas fa-palette" ${company.icon === 'fas fa-palette' ? 'selected' : ''}>🎨 Palette (Design)</option>
+                        <option value="fas fa-home" ${company.icon === 'fas fa-home' ? 'selected' : ''}>🏠 Home (Construction)</option>
+                        <option value="fas fa-hard-hat" ${company.icon === 'fas fa-hard-hat' ? 'selected' : ''}>👷 Hard Hat (Edilizia)</option>
+                        <option value="fas fa-building" ${company.icon === 'fas fa-building' ? 'selected' : ''}>🏢 Building</option>
+                        <option value="fas fa-gem" ${company.icon === 'fas fa-gem' ? 'selected' : ''}>💎 Gem</option>
+                    </select>
+                    <textarea id="comp_desc_${index}" placeholder="Description">${escapeHtml(company.desc)}</textarea>
+                    <button class="btn-danger" onclick="deleteCompany(${index})">Delete Company</button>
+                </div>
+            `;
         });
     }
     
     function saveCompanies() {
         const newCompanies = [];
         for(let i = 0; i < websiteData.companies.length; i++) {
-            let name = document.getElementById(`comp_name_${i}`)?.value;
-            if(name) newCompanies.push({
-                name, role: document.getElementById(`comp_role_${i}`)?.value,
-                icon: websiteData.companies[i].icon, desc: document.getElementById(`comp_desc_${i}`)?.value
-            });
+            const name = document.getElementById(`comp_name_${i}`)?.value;
+            if(name) {
+                newCompanies.push({
+                    name: name,
+                    role: document.getElementById(`comp_role_${i}`)?.value || "",
+                    icon: document.getElementById(`comp_icon_${i}`)?.value || "fas fa-building",
+                    desc: document.getElementById(`comp_desc_${i}`)?.value || ""
+                });
+            }
         }
         websiteData.companies = newCompanies;
         saveData();
         renderCompaniesList();
+        showToast("Companies saved!");
     }
     
     function addCompany() {
-        websiteData.companies.push({ name: "New Company", role: "Role", icon: "fas fa-building", desc: "Description" });
+        websiteData.companies.push({ 
+            name: "New Company", 
+            role: "Role", 
+            icon: "fas fa-building", 
+            desc: "Company description here" 
+        });
         renderCompaniesList();
+        showToast("New company added. Click 'Save All Companies' to save.");
     }
     
-    function deleteCompany(i) { websiteData.companies.splice(i,1); renderCompaniesList(); }
-    function renderServicesList() { /* Similar implementation */ }
-    function saveServices() { /* Similar */ }
-    function addService() { websiteData.services.items.push({ icon: "fas fa-star", title: "New", desc: "" }); renderServicesList(); }
-    function renderProjectsList() { /* Similar */ }
-    function saveProjects() { /* Similar */ }
-    function addProject() { websiteData.projects.items.push({ title: "New", desc: "", image: "" }); renderProjectsList(); }
-    function renderBrandsList() { /* Similar */ }
-    function saveBrands() { /* Similar */ }
-    function addBrand() { websiteData.brands.items.push({ name: "New Brand", logo: "fas fa-star" }); renderBrandsList(); }
-    function saveContact() { /* Similar */ }
-    function saveFooter() { /* Similar */ }
-    function saveDesign() { /* Similar */ }
-    function exportData() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(websiteData)])); a.download = 'backup.json'; a.click(); }
-    function importData() { const file = document.getElementById('importFile').files[0]; if(file) { const r = new FileReader(); r.onload = e => { websiteData = JSON.parse(e.target.result); saveData(); location.reload(); }; r.readAsText(file); } }
-    function resetAll() { if(confirm('Reset all?')) { localStorage.removeItem('progettoCMS_v3'); location.reload(); } }
+    function deleteCompany(index) {
+        if(confirm('Delete this company?')) {
+            websiteData.companies.splice(index, 1);
+            renderCompaniesList();
+            saveData();
+            showToast("Company deleted!");
+        }
+    }
     
+    // ============ SERVICES MANAGEMENT ============
+    function renderServicesList() {
+        const container = document.getElementById('servicesList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="servicesGrid"></div>';
+        const grid = document.getElementById('servicesGrid');
+        
+        websiteData.services.items.forEach((service, index) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <i class="${service.icon}" style="font-size: 2rem; color: #c17b4c;"></i>
+                    <input type="text" id="service_title_${index}" value="${escapeHtml(service.title)}" placeholder="Service Title">
+                    <textarea id="service_desc_${index}" placeholder="Description">${escapeHtml(service.desc)}</textarea>
+                    <select id="service_icon_${index}">
+                        <option value="fas fa-pen-ruler" ${service.icon === 'fas fa-pen-ruler' ? 'selected' : ''}>✏️ Design</option>
+                        <option value="fas fa-palette" ${service.icon === 'fas fa-palette' ? 'selected' : ''}>🎨 Art</option>
+                        <option value="fas fa-hard-hat" ${service.icon === 'fas fa-hard-hat' ? 'selected' : ''}>👷 Construction</option>
+                        <option value="fas fa-home" ${service.icon === 'fas fa-home' ? 'selected' : ''}>🏠 Home</option>
+                        <option value="fas fa-couch" ${service.icon === 'fas fa-couch' ? 'selected' : ''}>🛋️ Furniture</option>
+                        <option value="fas fa-tile" ${service.icon === 'fas fa-tile' ? 'selected' : ''}>🧱 Tile</option>
+                        <option value="fas fa-spa" ${service.icon === 'fas fa-spa' ? 'selected' : ''}>🌸 Spa</option>
+                    </select>
+                    <button class="btn-danger" onclick="deleteService(${index})">Delete Service</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveServices() {
+        const newServices = [];
+        for(let i = 0; i < websiteData.services.items.length; i++) {
+            const title = document.getElementById(`service_title_${i}`)?.value;
+            if(title) {
+                newServices.push({
+                    title: title,
+                    desc: document.getElementById(`service_desc_${i}`)?.value || "",
+                    icon: document.getElementById(`service_icon_${i}`)?.value || "fas fa-star"
+                });
+            }
+        }
+        websiteData.services.items = newServices;
+        websiteData.services.title = document.getElementById('servicesTitle').value;
+        saveData();
+        renderServicesList();
+        showToast("Services saved!");
+    }
+    
+    function addService() {
+        websiteData.services.items.push({ 
+            icon: "fas fa-star", 
+            title: "New Service", 
+            desc: "Service description here" 
+        });
+        renderServicesList();
+        showToast("New service added. Click 'Save All Services' to save.");
+    }
+    
+    function deleteService(index) {
+        if(confirm('Delete this service?')) {
+            websiteData.services.items.splice(index, 1);
+            renderServicesList();
+            saveData();
+            showToast("Service deleted!");
+        }
+    }
+    
+    // ============ PROJECTS MANAGEMENT ============
+    function renderProjectsList() {
+        const container = document.getElementById('projectsList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="projectsGrid"></div>';
+        const grid = document.getElementById('projectsGrid');
+        
+        websiteData.projects.items.forEach((project, index) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    ${project.image ? `<img src="${project.image}" alt="${escapeHtml(project.title)}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">` : '<div style="height:150px; background:#2c3e50; display:flex; align-items:center; justify-content:center; border-radius:8px;">No Image</div>'}
+                    <input type="text" id="project_title_${index}" value="${escapeHtml(project.title)}" placeholder="Project Title">
+                    <textarea id="project_desc_${index}" placeholder="Description">${escapeHtml(project.desc)}</textarea>
+                    <input type="text" id="project_image_${index}" value="${project.image}" placeholder="Image URL (https://...)">
+                    <button class="btn-danger" onclick="deleteProject(${index})">Delete Project</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveProjects() {
+        const newProjects = [];
+        for(let i = 0; i < websiteData.projects.items.length; i++) {
+            const title = document.getElementById(`project_title_${i}`)?.value;
+            if(title) {
+                newProjects.push({
+                    title: title,
+                    desc: document.getElementById(`project_desc_${i}`)?.value || "",
+                    image: document.getElementById(`project_image_${i}`)?.value || ""
+                });
+            }
+        }
+        websiteData.projects.items = newProjects;
+        websiteData.projects.title = document.getElementById('projectsTitle').value;
+        saveData();
+        renderProjectsList();
+        showToast("Projects saved!");
+    }
+    
+    function addProject() {
+        websiteData.projects.items.push({ 
+            title: "New Project", 
+            desc: "Project description here", 
+            image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" 
+        });
+        renderProjectsList();
+        showToast("New project added. Click 'Save All Projects' to save.");
+    }
+    
+    function deleteProject(index) {
+        if(confirm('Delete this project?')) {
+            websiteData.projects.items.splice(index, 1);
+            renderProjectsList();
+            saveData();
+            showToast("Project deleted!");
+        }
+    }
+    
+    // ============ BRANDS MANAGEMENT ============
+    function renderBrandsList() {
+        const container = document.getElementById('brandsList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="brandsGrid"></div>';
+        const grid = document.getElementById('brandsGrid');
+        
+        websiteData.brands.items.forEach((brand, index) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <i class="${brand.icon}" style="font-size: 2rem; color: #c17b4c;"></i>
+                    <input type="text" id="brand_name_${index}" value="${escapeHtml(brand.name)}" placeholder="Brand Name">
+                    <textarea id="brand_desc_${index}" placeholder="Description">${escapeHtml(brand.desc)}</textarea>
+                    <select id="brand_icon_${index}">
+                        <option value="fas fa-gem" ${brand.icon === 'fas fa-gem' ? 'selected' : ''}>💎 Gem</option>
+                        <option value="fas fa-globe" ${brand.icon === 'fas fa-globe' ? 'selected' : ''}>🌍 Globe</option>
+                        <option value="fas fa-trophy" ${brand.icon === 'fas fa-trophy' ? 'selected' : ''}>🏆 Trophy</option>
+                        <option value="fas fa-star" ${brand.icon === 'fas fa-star' ? 'selected' : ''}>⭐ Star</option>
+                    </select>
+                    <button class="btn-danger" onclick="deleteBrand(${index})">Delete Brand</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveBrands() {
+        const newBrands = [];
+        for(let i = 0; i < websiteData.brands.items.length; i++) {
+            const name = document.getElementById(`brand_name_${i}`)?.value;
+            if(name) {
+                newBrands.push({
+                    name: name,
+                    desc: document.getElementById(`brand_desc_${i}`)?.value || "",
+                    icon: document.getElementById(`brand_icon_${i}`)?.value || "fas fa-gem"
+                });
+            }
+        }
+        websiteData.brands.items = newBrands;
+        websiteData.brands.title = document.getElementById('brandsTitle').value;
+        saveData();
+        renderBrandsList();
+        showToast("Brands saved!");
+    }
+    
+    function addBrand() {
+        websiteData.brands.items.push({ 
+            icon: "fas fa-gem", 
+            name: "New Brand", 
+            desc: "Brand description here" 
+        });
+        renderBrandsList();
+        showToast("New brand added. Click 'Save All Brands' to save.");
+    }
+    
+    function deleteBrand(index) {
+        if(confirm('Delete this brand?')) {
+            websiteData.brands.items.splice(index, 1);
+            renderBrandsList();
+            saveData();
+            showToast("Brand deleted!");
+        }
+    }
+    
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+        if(!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Backup functions
+    function exportData() {
+        const dataStr = JSON.stringify(websiteData, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `progetto_backup_${new Date().toISOString().slice(0,19)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Backup downloaded!");
+    }
+    
+    function importData() {
+        const file = document.getElementById('importFile').files[0];
+        if(!file) { showToast("Select a backup file first!", true); return; }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                websiteData = imported;
+                saveData();
+                location.reload();
+            } catch(err) {
+                showToast("Invalid backup file!", true);
+            }
+        };
+        reader.readAsText(file);
+    }
+    
+    function resetAll() {
+        if(confirm('⚠️ WARNING: This will reset EVERYTHING to default! Are you sure?')) {
+            localStorage.removeItem('progettoCMS_v4');
+            location.reload();
+        }
+    }
+    
+    // UI Navigation
     document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function() {
             const section = this.dataset.section;
             document.querySelectorAll('.section-editor').forEach(el => el.style.display = 'none');
-            document.getElementById(`${section}Section`).style.display = 'block';
+            const targetSection = document.getElementById(`${section}Section`);
+            if(targetSection) targetSection.style.display = 'block';
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById('currentSection').innerHTML = this.textContent.trim();
+            
+            const titles = {
+                hero: 'Hero Section', about: 'Group Story', companies: 'Group Companies',
+                services: 'Services', projects: 'Projects', brands: 'Brands',
+                contact: 'Contact', footer: 'Footer', design: 'Design Settings', backup: 'Backup & Restore'
+            };
+            document.getElementById('currentSection').innerHTML = titles[section] || section;
         });
     });
     
+    // Login/Logout
     function attemptLogin() {
-        if(document.getElementById('adminUser').value === 'admin' && document.getElementById('adminPass').value === 'admin123') {
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+        if(user === 'admin' && pass === 'admin123') {
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('adminContainer').style.display = 'block';
             loadData();
-        } else document.getElementById('loginError').innerText = 'Wrong credentials!';
+        } else {
+            document.getElementById('loginError').innerText = 'Wrong credentials! Use admin / admin123';
+        }
     }
-    function logout() { document.getElementById('loginOverlay').style.display = 'flex'; document.getElementById('adminContainer').style.display = 'none'; }
     
-    window.attemptLogin = attemptLogin; window.logout = logout; window.saveHero = saveHero; window.saveAbout = saveAbout;
-    window.saveCompanies = saveCompanies; window.saveServices = saveServices; window.saveProjects = saveProjects;
-    window.saveBrands = saveBrands; window.saveContact = saveContact; window.saveFooter = saveFooter; window.saveDesign = saveDesign;
-    window.addCompany = addCompany; window.addService = addService; window.addProject = addProject; window.addBrand = addBrand;
-    window.deleteCompany = deleteCompany; window.exportData = exportData; window.importData = importData; window.resetAll = resetAll;
+    function logout() {
+        document.getElementById('loginOverlay').style.display = 'flex';
+        document.getElementById('adminContainer').style.display = 'none';
+    }
+    
+    // Make all functions global for onclick handlers
+    window.attemptLogin = attemptLogin;
+    window.logout = logout;
+    window.saveHero = saveHero;
+    window.saveAbout = saveAbout;
+    window.saveCompanies = saveCompanies;
+    window.saveServices = saveServices;
+    window.saveProjects = saveProjects;
+    window.saveBrands = saveBrands;
+    window.saveContact = saveContact;
+    window.saveFooter = saveFooter;
+    window.saveDesign = saveDesign;
+    window.addCompany = addCompany;
+    window.addService = addService;
+    window.addProject = addProject;
+    window.addBrand = addBrand;
+    window.deleteCompany = deleteCompany;
+    window.deleteService = deleteService;
+    window.deleteProject = deleteProject;
+    window.deleteBrand = deleteBrand;
+    window.exportData = exportData;
+    window.importData = importData;
+    window.resetAll = resetAll;
     window.publishToWebsite = publishToWebsite;
 </script>
 </body>
