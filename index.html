@@ -9,15 +9,22 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        :root {
+            --primary-color: #c17b4c;
+            --secondary-color: #667eea;
+            --bg-color: #faf9f7;
+            --text-color: #2c2418;
+        }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: #faf9f7;
-            color: #2c2418;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
         
         h1, h2, h3, .logo-text { font-family: 'Playfair Display', serif; }
         
-        /* Navigation */
         nav {
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(10px);
@@ -40,7 +47,7 @@
         .logo h1 {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #c17b4c;
+            color: var(--primary-color);
         }
         
         .logo p {
@@ -56,14 +63,13 @@
         
         .nav-links a {
             text-decoration: none;
-            color: #2c2418;
+            color: var(--text-color);
             font-weight: 500;
             transition: 0.3s;
         }
         
-        .nav-links a:hover { color: #c17b4c; }
+        .nav-links a:hover { color: var(--primary-color); }
         
-        /* Hero Section */
         .hero {
             min-height: 85vh;
             background-size: cover;
@@ -125,22 +131,23 @@
         
         .btn-primary {
             display: inline-block;
-            background: #c17b4c;
+            background: var(--primary-color);
             color: white;
             padding: 1rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
         
         .btn-primary:hover {
-            background: #a8633a;
+            background: var(--secondary-color);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(193,123,76,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
-        /* Section Styles */
         .section {
             padding: 5rem 0;
         }
@@ -156,7 +163,7 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 3rem;
-            color: #c17b4c;
+            color: var(--primary-color);
             position: relative;
         }
         
@@ -168,10 +175,9 @@
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: #c17b4c;
+            background: var(--primary-color);
         }
         
-        /* Companies Grid - The 3 Branches */
         .companies-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -197,7 +203,7 @@
         .company-icon {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, #c17b4c20, #c17b4c10);
+            background: linear-gradient(135deg, var(--primary-color)20, var(--primary-color)10);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -207,18 +213,18 @@
         
         .company-icon i {
             font-size: 3rem;
-            color: #c17b4c;
+            color: var(--primary-color);
         }
         
         .company-card h3 {
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
-            color: #2c2418;
+            color: var(--text-color);
         }
         
         .company-role {
             display: inline-block;
-            background: #c17b4c;
+            background: var(--primary-color);
             color: white;
             padding: 0.3rem 1rem;
             border-radius: 50px;
@@ -226,12 +232,6 @@
             margin-bottom: 1rem;
         }
         
-        .company-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        /* Story Section */
         .story-content {
             max-width: 1000px;
             margin: 0 auto;
@@ -245,18 +245,12 @@
         }
         
         .mission-box {
-            background: linear-gradient(135deg, #c17b4c10, #c17b4c05);
+            background: linear-gradient(135deg, var(--primary-color)10, var(--primary-color)05);
             padding: 2rem;
             border-radius: 20px;
-            border-left: 4px solid #c17b4c;
+            border-left: 4px solid var(--primary-color);
         }
         
-        .mission-box h3 {
-            color: #c17b4c;
-            margin-bottom: 1rem;
-        }
-        
-        /* Services Grid */
         .services-grid, .projects-grid, .brands-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -279,7 +273,7 @@
         
         .service-card i, .brand-card i {
             font-size: 2.5rem;
-            color: #c17b4c;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
         
@@ -291,7 +285,6 @@
             margin-bottom: 1rem;
         }
         
-        /* Contact Section */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -316,14 +309,14 @@
         }
         
         .contact-item:hover {
-            background: #c17b4c10;
+            background: var(--primary-color)10;
             transform: translateX(5px);
         }
         
         .contact-item i {
             width: 45px;
             height: 45px;
-            background: #c17b4c;
+            background: var(--primary-color);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -340,7 +333,7 @@
         .social-links a {
             width: 45px;
             height: 45px;
-            background: #c17b4c;
+            background: var(--primary-color);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -352,22 +345,22 @@
         
         .social-links a:hover {
             transform: translateY(-5px);
-            background: #a8633a;
+            background: var(--secondary-color);
         }
         
         .contact-showroom {
-            background: linear-gradient(135deg, #c17b4c, #a8633a);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             border-radius: 20px;
+            padding: 2rem;
         }
         
-        /* Footer */
         footer {
-            background: #1a1a2e;
+            background: var(--text-color);
             color: white;
             padding: 3rem 0 1rem;
             margin-top: 3rem;
@@ -392,13 +385,11 @@
             font-size: 0.8rem;
         }
         
-        /* Responsive */
         @media (max-width: 968px) {
             .companies-grid { grid-template-columns: 1fr; }
             .contact-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.5rem; }
             .hero-branches { gap: 1rem; }
-            .branch-badge { font-size: 0.7rem; }
             .nav-links { display: none; }
         }
     </style>
@@ -422,39 +413,28 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero" id="heroSection">
     <div class="hero-content">
         <h1 id="heroTitle">Progetto Unico Group</h1>
-        <div class="hero-branches" id="heroBranches">
-            <span class="branch-badge">🏛️ Galleria delle Idee</span>
-            <span class="branch-badge">🏠 Ideal Casa Srl</span>
-            <span class="branch-badge">👷 EdilCost</span>
-        </div>
+        <div class="hero-branches" id="heroBranches"></div>
         <p id="heroSubtitle">Tre eccellenze, un'unica visione per la tua casa dei sogni</p>
         <a href="#contact" class="btn-primary" id="heroBtn">Richiedi Consulenza</a>
     </div>
 </section>
 
-<!-- About / Group Story -->
 <section class="section" id="about">
     <div class="container">
         <h2 class="section-title" id="aboutTitle">La Nostra Storia</h2>
         <div class="story-content">
-            <div class="story-text" id="aboutText">
-                <strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. 
-                Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni, 
-                dall'idea progettuale alla realizzazione finale.
-            </div>
-            <div class="mission-box" id="missionBox">
+            <div class="story-text" id="aboutText"></div>
+            <div class="mission-box">
                 <h3>✨ La Nostra Missione</h3>
-                <p id="missionText">Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza.</p>
+                <p id="missionText"></p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- The 3 Companies / Branches -->
 <section class="section" id="companies">
     <div class="container">
         <h2 class="section-title">Le Nostre Realtà</h2>
@@ -462,7 +442,6 @@
     </div>
 </section>
 
-<!-- Services -->
 <section class="section" id="services">
     <div class="container">
         <h2 class="section-title" id="servicesTitle">I Nostri Servizi</h2>
@@ -470,7 +449,6 @@
     </div>
 </section>
 
-<!-- Projects -->
 <section class="section" id="projects">
     <div class="container">
         <h2 class="section-title" id="projectsTitle">Progetti Realizzati</h2>
@@ -478,7 +456,6 @@
     </div>
 </section>
 
-<!-- Brands -->
 <section class="section" id="brands">
     <div class="container">
         <h2 class="section-title" id="brandsTitle">Brand Partner</h2>
@@ -486,7 +463,6 @@
     </div>
 </section>
 
-<!-- Contact -->
 <section class="section" id="contact">
     <div class="container">
         <h2 class="section-title">Contattaci</h2>
@@ -494,15 +470,15 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span id="contactAddress">Via Francesco Rodio, 4 – 72017 - Ostuni (BR)</span>
+                    <span id="contactAddress"></span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
-                    <span id="contactPhone">+39.0831 341520</span>
+                    <span id="contactPhone"></span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <span id="contactEmail">info@galleriadelleidee.com</span>
+                    <span id="contactEmail"></span>
                 </div>
                 <div class="social-links" id="socialLinks"></div>
             </div>
@@ -518,17 +494,12 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer>
     <div class="container">
         <div class="footer-content">
-            <div class="footer-brands">
-                <span>🏛️ Galleria delle Idee</span>
-                <span>🏠 Ideal Casa Srl</span>
-                <span>👷 EdilCost</span>
-            </div>
-            <p id="footerText">Progetto Unico Group · Unione di eccellenze italiane</p>
-            <div class="copyright" id="copyrightText">© 2025 Progetto Unico Group · Tutti i diritti riservati</div>
+            <div class="footer-brands" id="footerBrands"></div>
+            <p id="footerText"></p>
+            <div class="copyright" id="copyrightText"></div>
         </div>
     </div>
 </footer>
@@ -536,61 +507,62 @@
 <script>
     let websiteData = null;
     
+    function applyDesignSettings() {
+        const root = document.documentElement;
+        if(websiteData && websiteData.design) {
+            root.style.setProperty('--primary-color', websiteData.design.primaryColor);
+            root.style.setProperty('--secondary-color', websiteData.design.secondaryColor);
+            root.style.setProperty('--bg-color', websiteData.design.bgColor);
+            root.style.setProperty('--text-color', websiteData.design.textColor);
+            document.body.style.background = websiteData.design.bgColor;
+            document.body.style.color = websiteData.design.textColor;
+        }
+    }
+    
     function loadWebsiteData() {
-        const saved = localStorage.getItem('progettoCMS_v3');
+        const saved = localStorage.getItem('progettoCMS_final');
+        console.log("Loading data from localStorage:", saved ? "Found" : "Not found");
+        
         if(saved) {
             websiteData = JSON.parse(saved);
-            applyDesign();
+            console.log("Data loaded:", websiteData);
+            applyDesignSettings();
             renderWebsite();
         } else {
+            console.log("No saved data, using defaults");
             loadDefaultData();
         }
     }
     
     function loadDefaultData() {
         websiteData = {
-            hero: { title: "Progetto Unico Group", subtitle: "Tre eccellenze, un'unica visione per la tua casa dei sogni", btnText: "Richiedi Consulenza", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
-            about: { title: "La Nostra Storia", text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni, dall'idea progettuale alla realizzazione finale.", mission: "Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." },
+            hero: { title: "Progetto Unico Group", subtitle: "Galleria delle Idee · Ideal Casa Srl · EdilCost", btnText: "Scopri di Più", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
+            about: { title: "La Nostra Storia", text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni.", mission: "Trasformare ogni spazio in un'opera d'arte." },
             companies: [
-                { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi e soluzioni d'arredo uniche. Il nostro showroom è il luogo dove sogni e realtà si incontrano.", color: "#c17b4c" },
-                { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali con standard qualitativi eccellenti. Dalla progettazione alla consegna chiavi in mano.", color: "#667eea" },
-                { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo. Ristrutturazioni complete e lavori edili di alta qualità.", color: "#27ae60" }
+                { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo." },
+                { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Progetti residenziali di alta qualità." },
+                { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Competenza nel settore edile." }
             ],
             services: { title: "I Nostri Servizi", items: [
-                { icon: "fas fa-pen-ruler", title: "Progettazione Integrata", desc: "Design coordinato tra architettura e interior" },
-                { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura e consulenza stile" },
-                { icon: "fas fa-hard-hat", title: "Ristrutturazioni Complete", desc: "Lavori edili e impiantistici chiavi in mano" },
-                { icon: "fas fa-tile", title: "Pavimenti & Rivestimenti", desc: "Selezione dei migliori materiali" },
-                { icon: "fas fa-couch", title: "Arredo su Misura", desc: "Mobili e complementi personalizzati" },
-                { icon: "fas fa-spa", title: "Wellness & Spa", desc: "Creazione di zone benessere domestiche" }
+                { icon: "fas fa-pen-ruler", title: "Progettazione", desc: "Design personalizzato" },
+                { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura" }
             ]},
             projects: { title: "Progetti Realizzati", items: [
-                { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-                { title: "Showroom Galleria", desc: "Nuovo spazio espositivo di 300mq nel centro storico", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+                { title: "Villa Mediterranea", desc: "Completa ristrutturazione", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" }
             ]},
             brands: { title: "Brand Partner", items: [
-                { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Made in Italy excellence" }
+                { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Made in Italy" }
             ]},
-            contact: { address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "https://facebook.com", instagram: "https://instagram.com" } },
-            footer: { text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", copyright: "© 2025 Tutti i diritti riservati" },
-            design: { primaryColor: "#c17b4c", secondaryColor: "#667eea" }
+            contact: { address: "Via Francesco Rodio, 4 – Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "#", instagram: "#" } },
+            footer: { text: "Progetto Unico Group", copyright: "© 2025 Tutti i diritti riservati" },
+            design: { primaryColor: "#c17b4c", secondaryColor: "#667eea", bgColor: "#faf9f7", textColor: "#2c2418" }
         };
         renderWebsite();
     }
     
-    function applyDesign() {
-        document.documentElement.style.setProperty('--primary-color', websiteData.design.primaryColor);
-        const style = document.createElement('style');
-        style.textContent = `
-            .btn-primary, .company-role, .contact-item i, .social-links a { background: ${websiteData.design.primaryColor}; }
-            .section-title, .company-card h3, .service-card i, .brand-card i { color: ${websiteData.design.primaryColor}; }
-            .section-title::after, .mission-box { border-left-color: ${websiteData.design.primaryColor}; }
-            .btn-primary:hover { background: ${websiteData.design.secondaryColor}; }
-        `;
-        document.head.appendChild(style);
-    }
-    
     function renderWebsite() {
+        if(!websiteData) return;
+        
         // Hero
         document.getElementById('heroTitle').innerHTML = websiteData.hero.title;
         document.getElementById('heroSubtitle').innerHTML = websiteData.hero.subtitle;
@@ -599,8 +571,9 @@
         
         // Hero Branches
         if(websiteData.companies) {
-            const branchesHtml = websiteData.companies.map(c => `<span class="branch-badge">${c.icon === 'fas fa-palette' ? '🎨' : c.icon === 'fas fa-home' ? '🏠' : '👷'} ${c.name}</span>`).join('');
-            document.getElementById('heroBranches').innerHTML = branchesHtml;
+            document.getElementById('heroBranches').innerHTML = websiteData.companies.map(c => 
+                `<span class="branch-badge">${c.icon === 'fas fa-palette' ? '🎨' : c.icon === 'fas fa-home' ? '🏠' : '👷'} ${c.name}</span>`
+            ).join('');
         }
         
         // About
@@ -608,17 +581,15 @@
         document.getElementById('aboutText').innerHTML = websiteData.about.text;
         document.getElementById('missionText').innerHTML = websiteData.about.mission;
         
-        // Companies Grid
-        if(websiteData.companies) {
-            document.getElementById('companiesGrid').innerHTML = websiteData.companies.map(c => `
-                <div class="company-card">
-                    <div class="company-icon"><i class="${c.icon}"></i></div>
-                    <h3>${c.name}</h3>
-                    <div class="company-role">${c.role}</div>
-                    <p>${c.desc}</p>
-                </div>
-            `).join('');
-        }
+        // Companies
+        document.getElementById('companiesGrid').innerHTML = websiteData.companies.map(c => `
+            <div class="company-card">
+                <div class="company-icon"><i class="${c.icon}"></i></div>
+                <h3>${c.name}</h3>
+                <div class="company-role">${c.role}</div>
+                <p>${c.desc}</p>
+            </div>
+        `).join('');
         
         // Services
         document.getElementById('servicesTitle').innerHTML = websiteData.services.title;
@@ -634,7 +605,7 @@
         document.getElementById('projectsTitle').innerHTML = websiteData.projects.title;
         document.getElementById('projectsGrid').innerHTML = websiteData.projects.items.map(p => `
             <div class="project-card">
-                <img src="${p.image}" alt="${p.title}">
+                <img src="${p.image}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/400x300'">
                 <h3>${p.title}</h3>
                 <p>${p.desc}</p>
             </div>
@@ -661,6 +632,7 @@
         document.getElementById('socialLinks').innerHTML = socialHtml;
         
         // Footer
+        document.getElementById('footerBrands').innerHTML = websiteData.companies.map(c => `<span>${c.name}</span>`).join(' · ');
         document.getElementById('footerText').innerHTML = websiteData.footer.text;
         document.getElementById('copyrightText').innerHTML = websiteData.footer.copyright;
     }
@@ -669,13 +641,36 @@
     document.querySelectorAll('.nav-links a, .btn-primary').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
             if(target) target.scrollIntoView({ behavior: 'smooth' });
         });
     });
     
+    // Listen for storage changes (real-time updates)
+    window.addEventListener('storage', function(e) {
+        if(e.key === 'progettoCMS_final') {
+            console.log("Storage changed, reloading data...");
+            loadWebsiteData();
+        }
+    });
+    
+    // Load data on page load
     loadWebsiteData();
-    window.addEventListener('storage', (e) => { if(e.key === 'progettoCMS_v3') loadWebsiteData(); });
+    
+    // Auto-refresh every 2 seconds to catch changes
+    setInterval(function() {
+        const saved = localStorage.getItem('progettoCMS_final');
+        if(saved) {
+            const newData = JSON.parse(saved);
+            if(JSON.stringify(newData) !== JSON.stringify(websiteData)) {
+                console.log("Changes detected, updating...");
+                websiteData = newData;
+                applyDesignSettings();
+                renderWebsite();
+            }
+        }
+    }, 2000);
 </script>
 </body>
 </html>
