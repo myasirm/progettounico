@@ -25,6 +25,168 @@
         
         h1, h2, h3, .logo-text { font-family: 'Playfair Display', serif; }
         
+        /* Admin Button - Floating action button to access admin panel */
+        .admin-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        
+        .admin-fab:hover {
+            transform: scale(1.1);
+            background: var(--secondary-color);
+        }
+        
+        /* Admin Modal */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+        
+        .admin-modal-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2c3e50;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-tab {
+            padding: 0.5rem 1rem;
+            background: #2c3e50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        
+        .admin-tab.active {
+            background: var(--primary-color);
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active-section {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #aaa;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #2c3e50;
+            border-radius: 8px;
+            background: #0f3460;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-secondary {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-danger {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .item-card {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        
+        .item-card input, .item-card textarea {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            background: #1a1a2e;
+            border: 1px solid #2c3e50;
+            color: white;
+        }
+        
+        .close-modal {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
         nav {
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(10px);
@@ -129,7 +291,7 @@
             opacity: 0.95;
         }
         
-        .btn-primary {
+        .btn-primary-website {
             display: inline-block;
             background: var(--primary-color);
             color: white;
@@ -142,7 +304,7 @@
             cursor: pointer;
         }
         
-        .btn-primary:hover {
+        .btn-primary-website:hover {
             background: var(--secondary-color);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -377,12 +539,25 @@
             margin: 1rem 0;
             font-size: 0.9rem;
             opacity: 0.8;
+            flex-wrap: wrap;
         }
         
         .copyright {
             margin-top: 2rem;
             opacity: 0.6;
             font-size: 0.8rem;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            z-index: 10001;
+            display: none;
         }
         
         @media (max-width: 968px) {
@@ -396,6 +571,167 @@
 </head>
 <body>
 
+<!-- Floating Admin Button -->
+<div class="admin-fab" onclick="openAdminPanel()">
+    <i class="fas fa-crown"></i>
+</div>
+
+<!-- Admin Modal -->
+<div id="adminModal" class="admin-modal">
+    <div class="admin-modal-content">
+        <div class="admin-header">
+            <h2>Progetto Unico CMS Admin</h2>
+            <button class="close-modal" onclick="closeAdminPanel()">Close</button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('hero')">Hero</button>
+            <button class="admin-tab" onclick="showAdminTab('about')">About</button>
+            <button class="admin-tab" onclick="showAdminTab('companies')">Companies</button>
+            <button class="admin-tab" onclick="showAdminTab('services')">Services</button>
+            <button class="admin-tab" onclick="showAdminTab('projects')">Projects</button>
+            <button class="admin-tab" onclick="showAdminTab('brands')">Brands</button>
+            <button class="admin-tab" onclick="showAdminTab('contact')">Contact</button>
+            <button class="admin-tab" onclick="showAdminTab('design')">Design</button>
+        </div>
+        
+        <!-- Hero Tab -->
+        <div id="heroTab" class="admin-section active-section">
+            <h3>Hero Section</h3>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="heroTitleInput" placeholder="Progetto Unico Group">
+            </div>
+            <div class="form-group">
+                <label>Subtitle</label>
+                <input type="text" id="heroSubtitleInput" placeholder="Your subtitle">
+            </div>
+            <div class="form-group">
+                <label>Button Text</label>
+                <input type="text" id="heroBtnInput" placeholder="Scopri di Più">
+            </div>
+            <div class="form-group">
+                <label>Background Image URL</label>
+                <input type="text" id="heroBgInput" placeholder="https://...">
+            </div>
+            <button class="btn-primary" onclick="saveHeroData()">Save Hero</button>
+        </div>
+        
+        <!-- About Tab -->
+        <div id="aboutTab" class="admin-section">
+            <h3>About Section</h3>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="aboutTitleInput">
+            </div>
+            <div class="form-group">
+                <label>Story Text</label>
+                <textarea id="aboutTextInput" rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Mission Text</label>
+                <textarea id="missionTextInput" rows="4"></textarea>
+            </div>
+            <button class="btn-primary" onclick="saveAboutData()">Save About</button>
+        </div>
+        
+        <!-- Companies Tab -->
+        <div id="companiesTab" class="admin-section">
+            <h3>Group Companies</h3>
+            <div id="companiesAdminList"></div>
+            <button class="btn-secondary" onclick="addCompanyAdmin()">+ Add Company</button>
+            <button class="btn-primary" onclick="saveCompaniesData()">Save Companies</button>
+        </div>
+        
+        <!-- Services Tab -->
+        <div id="servicesTab" class="admin-section">
+            <h3>Services</h3>
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" id="servicesTitleInput">
+            </div>
+            <div id="servicesAdminList"></div>
+            <button class="btn-secondary" onclick="addServiceAdmin()">+ Add Service</button>
+            <button class="btn-primary" onclick="saveServicesData()">Save Services</button>
+        </div>
+        
+        <!-- Projects Tab -->
+        <div id="projectsTab" class="admin-section">
+            <h3>Projects</h3>
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" id="projectsTitleInput">
+            </div>
+            <div id="projectsAdminList"></div>
+            <button class="btn-secondary" onclick="addProjectAdmin()">+ Add Project</button>
+            <button class="btn-primary" onclick="saveProjectsData()">Save Projects</button>
+        </div>
+        
+        <!-- Brands Tab -->
+        <div id="brandsTab" class="admin-section">
+            <h3>Brands</h3>
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" id="brandsTitleInput">
+            </div>
+            <div id="brandsAdminList"></div>
+            <button class="btn-secondary" onclick="addBrandAdmin()">+ Add Brand</button>
+            <button class="btn-primary" onclick="saveBrandsData()">Save Brands</button>
+        </div>
+        
+        <!-- Contact Tab -->
+        <div id="contactTab" class="admin-section">
+            <h3>Contact</h3>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="contactAddressInput">
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" id="contactPhoneInput">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="contactEmailInput">
+            </div>
+            <div class="form-group">
+                <label>Facebook URL</label>
+                <input type="text" id="facebookInput">
+            </div>
+            <div class="form-group">
+                <label>Instagram URL</label>
+                <input type="text" id="instagramInput">
+            </div>
+            <button class="btn-primary" onclick="saveContactData()">Save Contact</button>
+        </div>
+        
+        <!-- Design Tab -->
+        <div id="designTab" class="admin-section">
+            <h3>Design Settings</h3>
+            <div class="form-group">
+                <label>Primary Color</label>
+                <input type="color" id="primaryColorInput" value="#c17b4c">
+            </div>
+            <div class="form-group">
+                <label>Secondary Color</label>
+                <input type="color" id="secondaryColorInput" value="#667eea">
+            </div>
+            <div class="form-group">
+                <label>Background Color</label>
+                <input type="color" id="bgColorInput" value="#faf9f7">
+            </div>
+            <div class="form-group">
+                <label>Text Color</label>
+                <input type="color" id="textColorInput" value="#2c2418">
+            </div>
+            <button class="btn-primary" onclick="saveDesignData()">Save Design</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- Website Content -->
 <nav>
     <div class="nav-container">
         <div class="logo">
@@ -418,7 +754,7 @@
         <h1 id="heroTitle">Progetto Unico Group</h1>
         <div class="hero-branches" id="heroBranches"></div>
         <p id="heroSubtitle">Tre eccellenze, un'unica visione per la tua casa dei sogni</p>
-        <a href="#contact" class="btn-primary" id="heroBtn">Richiedi Consulenza</a>
+        <a href="#contact" class="btn-primary-website" id="heroBtn">Richiedi Consulenza</a>
     </div>
 </section>
 
@@ -505,64 +841,65 @@
 </footer>
 
 <script>
-    let websiteData = null;
+    // Default Data
+    let websiteData = {
+        hero: { title: "Progetto Unico Group", subtitle: "Galleria delle Idee · Ideal Casa Srl · EdilCost", btnText: "Scopri di Più", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
+        about: { title: "La Nostra Storia", text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni.", mission: "Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." },
+        companies: [
+            { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi." },
+            { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali di alta qualità." },
+            { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo." }
+        ],
+        services: { title: "I Nostri Servizi", items: [
+            { icon: "fas fa-pen-ruler", title: "Progettazione Integrata", desc: "Design coordinato tra architettura e interior" },
+            { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura e consulenza stile" },
+            { icon: "fas fa-hard-hat", title: "Ristrutturazioni Complete", desc: "Lavori edili e impiantistici chiavi in mano" }
+        ]},
+        projects: { title: "Progetti Realizzati", items: [
+            { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+            { title: "Showroom Galleria", desc: "Nuovo spazio espositivo di 300mq nel centro storico", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+        ]},
+        brands: { title: "Brand Partner", items: [
+            { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Il meglio del made in Italy" },
+            { icon: "fas fa-globe", name: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali" }
+        ]},
+        contact: { address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "#", instagram: "#" } },
+        footer: { text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", copyright: "© 2025 Tutti i diritti riservati" },
+        design: { primaryColor: "#c17b4c", secondaryColor: "#667eea", bgColor: "#faf9f7", textColor: "#2c2418" }
+    };
     
-    function applyDesignSettings() {
-        const root = document.documentElement;
-        if(websiteData && websiteData.design) {
-            root.style.setProperty('--primary-color', websiteData.design.primaryColor);
-            root.style.setProperty('--secondary-color', websiteData.design.secondaryColor);
-            root.style.setProperty('--bg-color', websiteData.design.bgColor);
-            root.style.setProperty('--text-color', websiteData.design.textColor);
-            document.body.style.background = websiteData.design.bgColor;
-            document.body.style.color = websiteData.design.textColor;
-        }
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2000);
     }
     
-    function loadWebsiteData() {
+    function loadData() {
         const saved = localStorage.getItem('progettoCMS_final');
-        console.log("Loading data from localStorage:", saved ? "Found" : "Not found");
-        
         if(saved) {
             websiteData = JSON.parse(saved);
-            console.log("Data loaded:", websiteData);
-            applyDesignSettings();
-            renderWebsite();
-        } else {
-            console.log("No saved data, using defaults");
-            loadDefaultData();
+            showToast("Data loaded!");
         }
+        applyDesign();
+        renderWebsite();
+        populateAdminForms();
     }
     
-    function loadDefaultData() {
-        websiteData = {
-            hero: { title: "Progetto Unico Group", subtitle: "Galleria delle Idee · Ideal Casa Srl · EdilCost", btnText: "Scopri di Più", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
-            about: { title: "La Nostra Storia", text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni.", mission: "Trasformare ogni spazio in un'opera d'arte." },
-            companies: [
-                { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo." },
-                { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Progetti residenziali di alta qualità." },
-                { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Competenza nel settore edile." }
-            ],
-            services: { title: "I Nostri Servizi", items: [
-                { icon: "fas fa-pen-ruler", title: "Progettazione", desc: "Design personalizzato" },
-                { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura" }
-            ]},
-            projects: { title: "Progetti Realizzati", items: [
-                { title: "Villa Mediterranea", desc: "Completa ristrutturazione", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" }
-            ]},
-            brands: { title: "Brand Partner", items: [
-                { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Made in Italy" }
-            ]},
-            contact: { address: "Via Francesco Rodio, 4 – Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "#", instagram: "#" } },
-            footer: { text: "Progetto Unico Group", copyright: "© 2025 Tutti i diritti riservati" },
-            design: { primaryColor: "#c17b4c", secondaryColor: "#667eea", bgColor: "#faf9f7", textColor: "#2c2418" }
-        };
-        renderWebsite();
+    function applyDesign() {
+        const root = document.documentElement;
+        root.style.setProperty('--primary-color', websiteData.design.primaryColor);
+        root.style.setProperty('--secondary-color', websiteData.design.secondaryColor);
+        root.style.setProperty('--bg-color', websiteData.design.bgColor);
+        root.style.setProperty('--text-color', websiteData.design.textColor);
+    }
+    
+    function saveData() {
+        localStorage.setItem('progettoCMS_final', JSON.stringify(websiteData));
+        showToast("Saved! Refresh to see changes.");
     }
     
     function renderWebsite() {
-        if(!websiteData) return;
-        
         // Hero
         document.getElementById('heroTitle').innerHTML = websiteData.hero.title;
         document.getElementById('heroSubtitle').innerHTML = websiteData.hero.subtitle;
@@ -570,11 +907,9 @@
         document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${websiteData.hero.bgImage})`;
         
         // Hero Branches
-        if(websiteData.companies) {
-            document.getElementById('heroBranches').innerHTML = websiteData.companies.map(c => 
-                `<span class="branch-badge">${c.icon === 'fas fa-palette' ? '🎨' : c.icon === 'fas fa-home' ? '🏠' : '👷'} ${c.name}</span>`
-            ).join('');
-        }
+        document.getElementById('heroBranches').innerHTML = websiteData.companies.map(c => 
+            `<span class="branch-badge">${c.icon === 'fas fa-palette' ? '🎨' : c.icon === 'fas fa-home' ? '🏠' : '👷'} ${c.name}</span>`
+        ).join('');
         
         // About
         document.getElementById('aboutTitle').innerHTML = websiteData.about.title;
@@ -605,7 +940,7 @@
         document.getElementById('projectsTitle').innerHTML = websiteData.projects.title;
         document.getElementById('projectsGrid').innerHTML = websiteData.projects.items.map(p => `
             <div class="project-card">
-                <img src="${p.image}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/400x300'">
+                <img src="${p.image}" alt="${p.title}">
                 <h3>${p.title}</h3>
                 <p>${p.desc}</p>
             </div>
@@ -637,8 +972,284 @@
         document.getElementById('copyrightText').innerHTML = websiteData.footer.copyright;
     }
     
+    function populateAdminForms() {
+        document.getElementById('heroTitleInput').value = websiteData.hero.title;
+        document.getElementById('heroSubtitleInput').value = websiteData.hero.subtitle;
+        document.getElementById('heroBtnInput').value = websiteData.hero.btnText;
+        document.getElementById('heroBgInput').value = websiteData.hero.bgImage;
+        document.getElementById('aboutTitleInput').value = websiteData.about.title;
+        document.getElementById('aboutTextInput').value = websiteData.about.text;
+        document.getElementById('missionTextInput').value = websiteData.about.mission;
+        document.getElementById('servicesTitleInput').value = websiteData.services.title;
+        document.getElementById('projectsTitleInput').value = websiteData.projects.title;
+        document.getElementById('brandsTitleInput').value = websiteData.brands.title;
+        document.getElementById('contactAddressInput').value = websiteData.contact.address;
+        document.getElementById('contactPhoneInput').value = websiteData.contact.phone;
+        document.getElementById('contactEmailInput').value = websiteData.contact.email;
+        document.getElementById('facebookInput').value = websiteData.contact.social.facebook;
+        document.getElementById('instagramInput').value = websiteData.contact.social.instagram;
+        document.getElementById('primaryColorInput').value = websiteData.design.primaryColor;
+        document.getElementById('secondaryColorInput').value = websiteData.design.secondaryColor;
+        document.getElementById('bgColorInput').value = websiteData.design.bgColor;
+        document.getElementById('textColorInput').value = websiteData.design.textColor;
+        
+        renderCompaniesAdmin();
+        renderServicesAdmin();
+        renderProjectsAdmin();
+        renderBrandsAdmin();
+    }
+    
+    // Admin Functions
+    function openAdminPanel() {
+        document.getElementById('adminModal').style.display = 'block';
+        populateAdminForms();
+    }
+    
+    function closeAdminPanel() {
+        document.getElementById('adminModal').style.display = 'none';
+    }
+    
+    function showAdminTab(tab) {
+        document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active-section'));
+        document.getElementById(`${tab}Tab`).classList.add('active-section');
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+    
+    function saveHeroData() {
+        websiteData.hero.title = document.getElementById('heroTitleInput').value;
+        websiteData.hero.subtitle = document.getElementById('heroSubtitleInput').value;
+        websiteData.hero.btnText = document.getElementById('heroBtnInput').value;
+        websiteData.hero.bgImage = document.getElementById('heroBgInput').value;
+        saveData();
+        renderWebsite();
+    }
+    
+    function saveAboutData() {
+        websiteData.about.title = document.getElementById('aboutTitleInput').value;
+        websiteData.about.text = document.getElementById('aboutTextInput').value;
+        websiteData.about.mission = document.getElementById('missionTextInput').value;
+        saveData();
+        renderWebsite();
+    }
+    
+    function renderCompaniesAdmin() {
+        const container = document.getElementById('companiesAdminList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="companiesAdminGrid"></div>';
+        const grid = document.getElementById('companiesAdminGrid');
+        websiteData.companies.forEach((c, i) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <input type="text" id="admin_comp_name_${i}" value="${c.name}" placeholder="Name">
+                    <input type="text" id="admin_comp_role_${i}" value="${c.role}" placeholder="Role">
+                    <textarea id="admin_comp_desc_${i}" placeholder="Desc">${c.desc}</textarea>
+                    <button class="btn-danger" onclick="deleteCompanyAdmin(${i})">Delete</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveCompaniesData() {
+        const newCompanies = [];
+        for(let i = 0; i < websiteData.companies.length; i++) {
+            const name = document.getElementById(`admin_comp_name_${i}`)?.value;
+            if(name) {
+                newCompanies.push({
+                    name: name,
+                    role: document.getElementById(`admin_comp_role_${i}`)?.value || "",
+                    icon: websiteData.companies[i].icon,
+                    desc: document.getElementById(`admin_comp_desc_${i}`)?.value || ""
+                });
+            }
+        }
+        websiteData.companies = newCompanies;
+        saveData();
+        renderWebsite();
+        renderCompaniesAdmin();
+        showToast("Companies saved!");
+    }
+    
+    function addCompanyAdmin() {
+        websiteData.companies.push({ name: "New Company", role: "Role", icon: "fas fa-building", desc: "Description" });
+        renderCompaniesAdmin();
+    }
+    
+    function deleteCompanyAdmin(index) {
+        websiteData.companies.splice(index, 1);
+        renderCompaniesAdmin();
+        saveData();
+        renderWebsite();
+    }
+    
+    function renderServicesAdmin() {
+        const container = document.getElementById('servicesAdminList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="servicesAdminGrid"></div>';
+        const grid = document.getElementById('servicesAdminGrid');
+        websiteData.services.items.forEach((s, i) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <input type="text" id="admin_service_title_${i}" value="${s.title}" placeholder="Title">
+                    <textarea id="admin_service_desc_${i}" placeholder="Desc">${s.desc}</textarea>
+                    <button class="btn-danger" onclick="deleteServiceAdmin(${i})">Delete</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveServicesData() {
+        const newServices = [];
+        for(let i = 0; i < websiteData.services.items.length; i++) {
+            const title = document.getElementById(`admin_service_title_${i}`)?.value;
+            if(title) {
+                newServices.push({
+                    title: title,
+                    desc: document.getElementById(`admin_service_desc_${i}`)?.value || "",
+                    icon: websiteData.services.items[i].icon
+                });
+            }
+        }
+        websiteData.services.items = newServices;
+        websiteData.services.title = document.getElementById('servicesTitleInput').value;
+        saveData();
+        renderWebsite();
+        renderServicesAdmin();
+        showToast("Services saved!");
+    }
+    
+    function addServiceAdmin() {
+        websiteData.services.items.push({ icon: "fas fa-star", title: "New Service", desc: "Description" });
+        renderServicesAdmin();
+    }
+    
+    function deleteServiceAdmin(index) {
+        websiteData.services.items.splice(index, 1);
+        renderServicesAdmin();
+        saveData();
+        renderWebsite();
+    }
+    
+    function renderProjectsAdmin() {
+        const container = document.getElementById('projectsAdminList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="projectsAdminGrid"></div>';
+        const grid = document.getElementById('projectsAdminGrid');
+        websiteData.projects.items.forEach((p, i) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <input type="text" id="admin_project_title_${i}" value="${p.title}" placeholder="Title">
+                    <textarea id="admin_project_desc_${i}" placeholder="Desc">${p.desc}</textarea>
+                    <input type="text" id="admin_project_image_${i}" value="${p.image}" placeholder="Image URL">
+                    <button class="btn-danger" onclick="deleteProjectAdmin(${i})">Delete</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveProjectsData() {
+        const newProjects = [];
+        for(let i = 0; i < websiteData.projects.items.length; i++) {
+            const title = document.getElementById(`admin_project_title_${i}`)?.value;
+            if(title) {
+                newProjects.push({
+                    title: title,
+                    desc: document.getElementById(`admin_project_desc_${i}`)?.value || "",
+                    image: document.getElementById(`admin_project_image_${i}`)?.value || ""
+                });
+            }
+        }
+        websiteData.projects.items = newProjects;
+        websiteData.projects.title = document.getElementById('projectsTitleInput').value;
+        saveData();
+        renderWebsite();
+        renderProjectsAdmin();
+        showToast("Projects saved!");
+    }
+    
+    function addProjectAdmin() {
+        websiteData.projects.items.push({ title: "New Project", desc: "Description", image: "" });
+        renderProjectsAdmin();
+    }
+    
+    function deleteProjectAdmin(index) {
+        websiteData.projects.items.splice(index, 1);
+        renderProjectsAdmin();
+        saveData();
+        renderWebsite();
+    }
+    
+    function renderBrandsAdmin() {
+        const container = document.getElementById('brandsAdminList');
+        if(!container) return;
+        container.innerHTML = '<div class="items-grid" id="brandsAdminGrid"></div>';
+        const grid = document.getElementById('brandsAdminGrid');
+        websiteData.brands.items.forEach((b, i) => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <input type="text" id="admin_brand_name_${i}" value="${b.name}" placeholder="Name">
+                    <textarea id="admin_brand_desc_${i}" placeholder="Desc">${b.desc}</textarea>
+                    <button class="btn-danger" onclick="deleteBrandAdmin(${i})">Delete</button>
+                </div>
+            `;
+        });
+    }
+    
+    function saveBrandsData() {
+        const newBrands = [];
+        for(let i = 0; i < websiteData.brands.items.length; i++) {
+            const name = document.getElementById(`admin_brand_name_${i}`)?.value;
+            if(name) {
+                newBrands.push({
+                    name: name,
+                    desc: document.getElementById(`admin_brand_desc_${i}`)?.value || "",
+                    icon: websiteData.brands.items[i].icon
+                });
+            }
+        }
+        websiteData.brands.items = newBrands;
+        websiteData.brands.title = document.getElementById('brandsTitleInput').value;
+        saveData();
+        renderWebsite();
+        renderBrandsAdmin();
+        showToast("Brands saved!");
+    }
+    
+    function addBrandAdmin() {
+        websiteData.brands.items.push({ icon: "fas fa-gem", name: "New Brand", desc: "Description" });
+        renderBrandsAdmin();
+    }
+    
+    function deleteBrandAdmin(index) {
+        websiteData.brands.items.splice(index, 1);
+        renderBrandsAdmin();
+        saveData();
+        renderWebsite();
+    }
+    
+    function saveContactData() {
+        websiteData.contact.address = document.getElementById('contactAddressInput').value;
+        websiteData.contact.phone = document.getElementById('contactPhoneInput').value;
+        websiteData.contact.email = document.getElementById('contactEmailInput').value;
+        websiteData.contact.social.facebook = document.getElementById('facebookInput').value;
+        websiteData.contact.social.instagram = document.getElementById('instagramInput').value;
+        saveData();
+        renderWebsite();
+    }
+    
+    function saveDesignData() {
+        websiteData.design.primaryColor = document.getElementById('primaryColorInput').value;
+        websiteData.design.secondaryColor = document.getElementById('secondaryColorInput').value;
+        websiteData.design.bgColor = document.getElementById('bgColorInput').value;
+        websiteData.design.textColor = document.getElementById('textColorInput').value;
+        saveData();
+        applyDesign();
+        renderWebsite();
+        showToast("Design updated!");
+    }
+    
     // Smooth scroll
-    document.querySelectorAll('.nav-links a, .btn-primary').forEach(anchor => {
+    document.querySelectorAll('.nav-links a, .btn-primary-website').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
@@ -647,30 +1258,8 @@
         });
     });
     
-    // Listen for storage changes (real-time updates)
-    window.addEventListener('storage', function(e) {
-        if(e.key === 'progettoCMS_final') {
-            console.log("Storage changed, reloading data...");
-            loadWebsiteData();
-        }
-    });
-    
     // Load data on page load
-    loadWebsiteData();
-    
-    // Auto-refresh every 2 seconds to catch changes
-    setInterval(function() {
-        const saved = localStorage.getItem('progettoCMS_final');
-        if(saved) {
-            const newData = JSON.parse(saved);
-            if(JSON.stringify(newData) !== JSON.stringify(websiteData)) {
-                console.log("Changes detected, updating...");
-                websiteData = newData;
-                applyDesignSettings();
-                renderWebsite();
-            }
-        }
-    }, 2000);
+    loadData();
 </script>
 </body>
 </html>
