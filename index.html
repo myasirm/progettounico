@@ -3,58 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galleria delle Idee · EdilCost · Progetto Unico</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Galleria delle Idee · Creative Design Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style id="dynamicStyles">
-        /* Default styles - will be overridden by CMS */
-        :root {
-            --primary-color: #c17b4c;
-            --secondary-color: #667eea;
-            --bg-color: #f5f0e8;
-            --text-color: #2c2418;
-            --heading-font: 'Playfair Display', serif;
-            --body-font: 'Inter', sans-serif;
-            --border-radius: 50px;
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: var(--body-font); 
-            background: var(--bg-color); 
-            color: var(--text-color);
-            line-height: 1.6;
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-        h1, h2, h3, h4, h5, h6 { font-family: var(--heading-font); }
         
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveDots 20s linear infinite;
+        }
+        
+        @keyframes moveDots {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Floating Shapes */
+        .shape {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
         
         /* Hero Section */
         .hero {
             min-height: 90vh;
-            background-size: cover;
-            background-position: center;
             display: flex;
             align-items: center;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            color: white;
+            justify-content: center;
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         .hero-badge {
             display: inline-block;
             background: rgba(255,255,255,0.2);
@@ -63,41 +137,80 @@
             border-radius: 50px;
             font-size: 0.9rem;
             margin-bottom: 2rem;
+            color: white;
+            animation: pulse 2s infinite;
         }
-        .hero-content h1 {
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .hero h1 {
             font-size: 4rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
         }
-        .hero-content p {
+        
+        .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            opacity: 0.95;
+            color: rgba(255,255,255,0.95);
         }
+        
         .btn-primary {
             display: inline-block;
-            background: var(--primary-color);
-            color: white;
             padding: 1rem 2.5rem;
-            border-radius: var(--border-radius);
+            background: white;
+            color: #667eea;
             text-decoration: none;
+            border-radius: 50px;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
+        
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         /* Section Styles */
         .section {
             padding: 5rem 0;
+            position: relative;
         }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 3rem;
-            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 3px;
         }
         
         /* About Section */
@@ -105,19 +218,26 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
-            font-size: 1.1rem;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
+        
         .company-logos {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
             flex-wrap: wrap;
         }
+        
         .company-logos span {
-            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50px;
             font-weight: 600;
-            color: var(--primary-color);
         }
         
         /* Services Grid */
@@ -127,27 +247,34 @@
             gap: 2rem;
             margin-top: 2rem;
         }
+        
         .service-card, .project-card, .brand-card {
             background: white;
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
+        
         .service-card:hover, .project-card:hover, .brand-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
+        
         .service-card i, .brand-card i {
             font-size: 3rem;
-            color: var(--primary-color);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
         }
+        
         .project-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-bottom: 1rem;
         }
         
@@ -157,92 +284,134 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
         }
+        
         .contact-info {
             background: white;
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
+        
         .contact-item {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: 0.3s;
         }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, #667eea10, #764ba210);
+        }
+        
         .contact-item i {
             width: 40px;
             height: 40px;
-            background: var(--primary-color);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        
         .social-links {
             display: flex;
             gap: 1rem;
             margin-top: 2rem;
         }
+        
         .social-links a {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s;
+            text-decoration: none;
+            transition: 0.3s;
         }
+        
         .social-links a:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px) rotate(360deg);
         }
         
         /* Footer */
         footer {
-            background: var(--text-color);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
             padding: 3rem 0 1rem;
             margin-top: 3rem;
         }
+        
         .footer-content {
             text-align: center;
         }
+        
         .footer-tagline {
             font-size: 1.2rem;
             margin-bottom: 1rem;
             font-style: italic;
         }
+        
         .copyright {
             margin-top: 2rem;
             opacity: 0.8;
-            font-size: 0.9rem;
         }
         
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2rem; }
+            .hero h1 { font-size: 2rem; }
             .contact-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- Hero Section -->
-<section class="hero" id="heroSection">
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-badge" id="heroBadge">Loading...</div>
-            <h1 id="heroTitle">Loading...</h1>
-            <p id="heroSubtitle">Loading...</p>
-            <a href="#" class="btn-primary" id="heroBtn">Loading...</a>
+<div class="animated-bg"></div>
+<div class="shape" style="top: 10%; left: 10%; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+<div class="shape" style="bottom: 10%; right: 10%; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; animation-delay: -5s;"></div>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">✨ Galleria delle Idee</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
         </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="heroSection" style="background-size: cover; background-position: center;">
+    <div class="hero-content">
+        <div class="hero-badge" id="heroBadge">✨ Welcome to Our Studio</div>
+        <h1 id="heroTitle">Create Beautiful Spaces</h1>
+        <p id="heroSubtitle">Transform your dreams into reality with our expert design team</p>
+        <a href="#" class="btn-primary" id="heroBtn">Start Your Journey →</a>
     </div>
 </section>
 
 <!-- About Section -->
-<section class="section" id="aboutSection">
+<section class="section" id="about">
     <div class="container">
-        <h2 class="section-title" id="aboutTitle">Loading...</h2>
+        <h2 class="section-title" id="aboutTitle">About Us</h2>
         <div class="about-content">
             <div id="aboutText">Loading...</div>
             <div class="company-logos" id="companyLogos"></div>
@@ -251,33 +420,33 @@
 </section>
 
 <!-- Services Section -->
-<section class="section" id="servicesSection">
+<section class="section" id="services">
     <div class="container">
-        <h2 class="section-title" id="servicesTitle">Loading...</h2>
+        <h2 class="section-title" id="servicesTitle">Our Services</h2>
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 </section>
 
 <!-- Projects Section -->
-<section class="section" id="projectsSection">
+<section class="section" id="projects">
     <div class="container">
-        <h2 class="section-title" id="projectsTitle">Loading...</h2>
+        <h2 class="section-title" id="projectsTitle">Featured Projects</h2>
         <div class="projects-grid" id="projectsGrid"></div>
     </div>
 </section>
 
 <!-- Brands Section -->
-<section class="section" id="brandsSection">
+<section class="section" id="brands">
     <div class="container">
-        <h2 class="section-title" id="brandsTitle">Loading...</h2>
+        <h2 class="section-title" id="brandsTitle">Our Partners</h2>
         <div class="brands-grid" id="brandsGrid"></div>
     </div>
 </section>
 
 <!-- Contact Section -->
-<section class="section" id="contactSection">
+<section class="section" id="contact">
     <div class="container">
-        <h2 class="section-title" id="contactTitle">Loading...</h2>
+        <h2 class="section-title" id="contactTitle">Get In Touch</h2>
         <div class="contact-grid">
             <div class="contact-info">
                 <div class="contact-item">
@@ -298,7 +467,13 @@
                 </div>
                 <div class="social-links" id="socialLinks"></div>
             </div>
-            <div class="contact-map" id="contactMap"></div>
+            <div class="contact-info" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                <div style="text-align: center;">
+                    <i class="fas fa-heart" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p>Let's create something amazing together!</p>
+                    <p style="margin-top: 1rem;">✨ ✨ ✨</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -307,7 +482,7 @@
 <footer>
     <div class="container">
         <div class="footer-content">
-            <div class="footer-tagline" id="footerTagline">Loading...</div>
+            <div class="footer-tagline" id="footerTagline">✨ Creating Beautiful Spaces ✨</div>
             <p id="footerText">Loading...</p>
             <div class="copyright" id="copyrightText">Loading...</div>
         </div>
@@ -315,172 +490,109 @@
 </footer>
 
 <script>
-    // Load data from localStorage
     let websiteData = null;
     
     function loadWebsiteData() {
-        const saved = localStorage.getItem('progettoCMSData');
+        const saved = localStorage.getItem('progettoCMSData_V2');
         if(saved) {
             websiteData = JSON.parse(saved);
-            applyDesignSettings();
+            applyDesign();
             renderWebsite();
         } else {
-            // Load default data if no saved data exists
-            fetchDefaultData();
+            loadDefaultData();
         }
     }
     
-    function fetchDefaultData() {
-        // Default data structure (same as admin panel defaults)
+    function loadDefaultData() {
         websiteData = {
-            hero: {
-                badge: "Progetto Unico Group · Ideal Casa Srl",
-                title: "Galleria delle Idee<br>EdilCost",
-                subtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
-                btnText: "Richiedi Consulenza",
-                bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600"
-            },
-            about: {
-                title: "Chi Siamo",
-                text: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>. Lo showroom è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso. <strong>Qualunque sia la sua idea di casa.</strong><br><br><em>Fabio & Paolo Buongiorno</em>",
-                companyNames: ["PROGETTO UNICO GROUP", "EDILCOST", "IDEAL CASA SRL", "GALLERIA DELLE IDEE"]
-            },
-            services: {
-                title: "I Nostri Servizi",
-                items: [
-                    { icon: "fas fa-pen-ruler", title: "Consulenza", desc: "Oltre 30 anni di esperienza a tua disposizione" },
-                    { icon: "fas fa-palette", title: "Interior Design", desc: "Trasformiamo gli spazi con linee funzionali" },
-                    { icon: "fas fa-tile", title: "Pavimenti e Rivestimenti", desc: "Ceramiche dai migliori brand italiani" },
-                    { icon: "fas fa-toilet", title: "Arredo Bagno", desc: "Soluzioni eleganti e personalizzate" },
-                    { icon: "fas fa-faucet", title: "Rubinetteria", desc: "Design e qualità per la tua casa" },
-                    { icon: "fas fa-spa", title: "Wellness e Spa", desc: "Crea il tuo angolo di benessere" }
-                ]
-            },
-            projects: {
-                title: "I Nostri Progetti",
-                items: [
-                    { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-                    { title: "Showroom Gallery", desc: "Nuovo spazio espositivo di 300mq", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
-                ]
-            },
-            brands: {
-                title: "I Nostri Brand",
-                items: [
-                    { icon: "fas fa-gem", title: "Ceramiche Italiane", desc: "Il meglio del made in Italy" },
-                    { icon: "fas fa-globe-europe", title: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali" },
-                    { icon: "fas fa-bath", title: "Wellness Luxury", desc: "Eccellenza per Spa e benessere" }
-                ]
-            },
-            contact: {
-                title: "Contattaci",
-                address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)",
-                phone: "+39.0831 341520",
-                email: "info@galleriadelleidee.com",
-                website: "www.galleriadelleideeostuni.com",
-                map: "",
-                social: {
-                    facebook: "https://www.facebook.com/galleriadelleideeostuni",
-                    instagram: "https://www.instagram.com/galleriadelleidee/",
-                    linkedin: ""
-                }
-            },
-            footer: {
-                text: "Progetto Unico Group · Ideal Casa Srl · EdilCost · Galleria delle Idee",
-                copyright: "© 2025 Tutti i diritti riservati",
-                tagline: "Qualunque sia la tua idea di casa, noi la realizziamo."
-            },
-            design: {
-                primaryColor: "#c17b4c",
-                secondaryColor: "#667eea",
-                bgColor: "#f5f0e8",
-                textColor: "#2c2418",
-                headingFont: "'Playfair Display', serif",
-                bodyFont: "'Inter', sans-serif",
-                borderRadius: "50"
-            }
+            hero: { badge: "✨ Creative Design Studio", title: "Create Beautiful Spaces", subtitle: "Transform your dreams into reality", btnText: "Start Your Journey →", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
+            about: { title: "About Us", text: "We are a creative design studio passionate about creating beautiful spaces that inspire and delight. With over 10 years of experience, we've helped hundreds of clients transform their spaces into works of art.", companyNames: ["Creative", "Innovative", "Inspiring"] },
+            services: { title: "Our Services", items: [
+                { icon: "fas fa-pen-ruler", title: "Design Consultancy", desc: "Expert guidance for your space" },
+                { icon: "fas fa-palette", title: "Interior Design", desc: "Beautiful functional spaces" },
+                { icon: "fas fa-couch", title: "Furniture Design", desc: "Custom pieces for your home" }
+            ]},
+            projects: { title: "Featured Projects", items: [
+                { title: "Modern Villa", desc: "Complete renovation project", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                { title: "Office Space", desc: "Creative workspace design", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400" }
+            ]},
+            brands: { title: "Our Partners", items: [
+                { icon: "fas fa-gem", title: "Luxury Brands", desc: "Premium quality materials" },
+                { icon: "fas fa-globe", title: "Global Partners", desc: "Worldwide network" }
+            ]},
+            contact: { title: "Get In Touch", address: "Via Roma, 1 - Milan, Italy", phone: "+39 123 456 789", email: "info@creativestudio.com", website: "www.creativestudio.com", social: { facebook: "#", instagram: "#", linkedin: "#" } },
+            footer: { text: "Creative Design Studio", copyright: "© 2025 All rights reserved", tagline: "✨ Creating Beautiful Spaces ✨" },
+            design: { primaryColor: "#667eea", secondaryColor: "#764ba2", bgColor: "#ffffff", accentColor: "#f093fb" }
         };
         renderWebsite();
     }
     
-    function applyDesignSettings() {
-        const root = document.documentElement;
-        root.style.setProperty('--primary-color', websiteData.design.primaryColor);
-        root.style.setProperty('--secondary-color', websiteData.design.secondaryColor);
-        root.style.setProperty('--bg-color', websiteData.design.bgColor);
-        root.style.setProperty('--text-color', websiteData.design.textColor);
-        root.style.setProperty('--heading-font', websiteData.design.headingFont);
-        root.style.setProperty('--body-font', websiteData.design.bodyFont);
-        root.style.setProperty('--border-radius', websiteData.design.borderRadius + 'px');
+    function applyDesign() {
+        document.body.style.background = websiteData.design.bgColor;
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn-primary { background: ${websiteData.design.primaryColor}; }
+            .service-card i, .brand-card i { background: linear-gradient(135deg, ${websiteData.design.primaryColor}, ${websiteData.design.secondaryColor}); -webkit-background-clip: text; }
+            .section-title { background: linear-gradient(135deg, ${websiteData.design.primaryColor}, ${websiteData.design.secondaryColor}); -webkit-background-clip: text; }
+        `;
+        document.head.appendChild(style);
     }
     
     function renderWebsite() {
-        // Hero Section
+        // Hero
         document.getElementById('heroBadge').innerHTML = websiteData.hero.badge;
         document.getElementById('heroTitle').innerHTML = websiteData.hero.title;
         document.getElementById('heroSubtitle').innerHTML = websiteData.hero.subtitle;
         document.getElementById('heroBtn').innerHTML = websiteData.hero.btnText;
-        document.querySelector('.hero').style.backgroundImage = `url(${websiteData.hero.bgImage})`;
+        document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${websiteData.hero.bgImage})`;
         
-        // About Section
+        // About
         document.getElementById('aboutTitle').innerHTML = websiteData.about.title;
         document.getElementById('aboutText').innerHTML = websiteData.about.text;
+        document.getElementById('companyLogos').innerHTML = websiteData.about.companyNames.map(n => `<span>${n}</span>`).join('');
         
-        const companyLogos = document.getElementById('companyLogos');
-        companyLogos.innerHTML = websiteData.about.companyNames.map(name => `<span>${name}</span>`).join('');
-        
-        // Services Section
+        // Services
         document.getElementById('servicesTitle').innerHTML = websiteData.services.title;
-        const servicesGrid = document.getElementById('servicesGrid');
-        servicesGrid.innerHTML = websiteData.services.items.map(service => `
+        document.getElementById('servicesGrid').innerHTML = websiteData.services.items.map(s => `
             <div class="service-card">
-                <i class="${service.icon}"></i>
-                <h3>${service.title}</h3>
-                <p>${service.desc}</p>
+                <i class="${s.icon}"></i>
+                <h3>${s.title}</h3>
+                <p>${s.desc}</p>
             </div>
         `).join('');
         
-        // Projects Section
+        // Projects
         document.getElementById('projectsTitle').innerHTML = websiteData.projects.title;
-        const projectsGrid = document.getElementById('projectsGrid');
-        projectsGrid.innerHTML = websiteData.projects.items.map(project => `
+        document.getElementById('projectsGrid').innerHTML = websiteData.projects.items.map(p => `
             <div class="project-card">
-                <img src="${project.image}" alt="${project.title}">
-                <h3>${project.title}</h3>
-                <p>${project.desc}</p>
+                <img src="${p.image}" alt="${p.title}">
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
             </div>
         `).join('');
         
-        // Brands Section
+        // Brands
         document.getElementById('brandsTitle').innerHTML = websiteData.brands.title;
-        const brandsGrid = document.getElementById('brandsGrid');
-        brandsGrid.innerHTML = websiteData.brands.items.map(brand => `
+        document.getElementById('brandsGrid').innerHTML = websiteData.brands.items.map(b => `
             <div class="brand-card">
-                <i class="${brand.icon}"></i>
-                <h3>${brand.title}</h3>
-                <p>${brand.desc}</p>
+                <i class="${b.icon}"></i>
+                <h3>${b.title}</h3>
+                <p>${b.desc}</p>
             </div>
         `).join('');
         
-        // Contact Section
+        // Contact
         document.getElementById('contactTitle').innerHTML = websiteData.contact.title;
         document.getElementById('contactAddress').innerHTML = websiteData.contact.address;
         document.getElementById('contactPhone').innerHTML = websiteData.contact.phone;
         document.getElementById('contactEmail').innerHTML = websiteData.contact.email;
         document.getElementById('contactWebsite').innerHTML = websiteData.contact.website;
         
-        const socialLinks = document.getElementById('socialLinks');
         let socialHtml = '';
         if(websiteData.contact.social.facebook) socialHtml += `<a href="${websiteData.contact.social.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>`;
         if(websiteData.contact.social.instagram) socialHtml += `<a href="${websiteData.contact.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
         if(websiteData.contact.social.linkedin) socialHtml += `<a href="${websiteData.contact.social.linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>`;
-        socialLinks.innerHTML = socialHtml;
-        
-        const contactMap = document.getElementById('contactMap');
-        if(websiteData.contact.map) {
-            contactMap.innerHTML = `<iframe src="${websiteData.contact.map}" width="100%" height="300" style="border:0; border-radius:15px;" allowfullscreen></iframe>`;
-        } else {
-            contactMap.innerHTML = '';
-        }
+        document.getElementById('socialLinks').innerHTML = socialHtml;
         
         // Footer
         document.getElementById('footerTagline').innerHTML = websiteData.footer.tagline;
@@ -488,15 +600,23 @@
         document.getElementById('copyrightText').innerHTML = websiteData.footer.copyright;
     }
     
-    // Auto-refresh when localStorage changes (for real-time updates)
-    window.addEventListener('storage', function(e) {
-        if(e.key === 'progettoCMSData') {
-            loadWebsiteData();
-        }
+    // Smooth scroll for navigation
+    document.querySelectorAll('.nav-links a, .hero .btn-primary').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if(target) target.scrollIntoView({ behavior: 'smooth' });
+        });
     });
     
-    // Load data on page load
+    // Load data
     loadWebsiteData();
+    
+    // Listen for storage changes
+    window.addEventListener('storage', function(e) {
+        if(e.key === 'progettoCMSData_V2') loadWebsiteData();
+    });
 </script>
 </body>
 </html>
