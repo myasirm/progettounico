@@ -3,889 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progetto Unico · Complete CMS Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Galleria delle Idee · EdilCost · Progetto Unico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0f0f1a; color: #fff; }
+    <style id="dynamicStyles">
+        /* Default styles - will be overridden by CMS */
+        :root {
+            --primary-color: #c17b4c;
+            --secondary-color: #667eea;
+            --bg-color: #f5f0e8;
+            --text-color: #2c2418;
+            --heading-font: 'Playfair Display', serif;
+            --body-font: 'Inter', sans-serif;
+            --border-radius: 50px;
+        }
         
-        /* Login */
-        .login-overlay {
-            position: fixed;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: var(--body-font); 
+            background: var(--bg-color); 
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--heading-font); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+        
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        .company-logos span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* Services Grid */
+        .services-grid, .projects-grid, .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .service-card, .project-card, .brand-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .service-card:hover, .project-card:hover, .brand-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-card i, .brand-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .project-card img {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
         }
-        .login-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
         }
-        .login-card input {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-        }
-        .login-card button {
-            width: 100%;
-            padding: 1rem;
-            background: #667eea;
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
             color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        /* Admin Dashboard */
-        .admin-container { display: none; }
-        .admin-sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 280px;
-            height: 100vh;
-            background: #1a1a2e;
-            overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-        }
-        .admin-logo {
-            padding: 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid #2c3e50;
-        }
-        .admin-logo h2 { color: #667eea; }
-        .admin-menu { padding: 1rem 0; }
-        .menu-item {
-            padding: 1rem 1.5rem;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            color: #aaa;
+            justify-content: center;
+            transition: transform 0.3s;
         }
-        .menu-item:hover, .menu-item.active {
-            background: #667eea;
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text-color);
             color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
         }
-        .menu-item i { width: 25px; }
-        
-        .admin-content {
-            margin-left: 280px;
-            padding: 2rem;
-        }
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #2c3e50;
-        }
-        .view-site-btn, .logout-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            font-weight: 600;
-        }
-        .view-site-btn { background: #2c3e50; color: white; text-decoration: none; margin-right: 1rem; }
-        .logout-btn { background: #e94560; color: white; }
-        
-        .section-editor {
-            background: #1a1a2e;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #667eea;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #aaa;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #2c3e50;
-            border-radius: 8px;
-            background: #0f3460;
-            color: white;
-            font-family: inherit;
-        }
-        .form-group textarea { min-height: 100px; }
-        
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .item-card {
-            background: #0f3460;
-            border-radius: 10px;
-            padding: 1rem;
-            position: relative;
-        }
-        .item-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-        }
-        .item-card h4 { margin-bottom: 0.5rem; }
-        .item-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .btn-primary { background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
-        .btn-danger { background: #e94560; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
-        .btn-secondary { background: #2c3e50; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
-        
-        .upload-area {
-            border: 2px dashed #667eea;
-            padding: 2rem;
+        .footer-content {
             text-align: center;
-            border-radius: 10px;
-            cursor: pointer;
+        }
+        .footer-tagline {
+            font-size: 1.2rem;
             margin-bottom: 1rem;
+            font-style: italic;
         }
-        .toast-msg {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #667eea;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            z-index: 2000;
-            display: none;
+        .copyright {
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
-            .admin-sidebar { width: 70px; }
-            .admin-sidebar span { display: none; }
-            .admin-content { margin-left: 70px; }
-            .menu-item { justify-content: center; }
-            .menu-item i { margin: 0; }
+            .hero-content h1 { font-size: 2rem; }
+            .contact-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div id="loginOverlay" class="login-overlay">
-    <div class="login-card">
-        <i class="fas fa-crown" style="font-size: 3rem; color: #667eea;"></i>
-        <h2>CMS Admin Panel</h2>
-        <input type="text" id="adminUser" placeholder="Username" value="admin">
-        <input type="password" id="adminPass" placeholder="Password" value="admin123">
-        <button onclick="attemptLogin()">Login to Dashboard</button>
-        <div id="loginError" style="color: red; margin-top: 1rem;"></div>
+<!-- Hero Section -->
+<section class="hero" id="heroSection">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge" id="heroBadge">Loading...</div>
+            <h1 id="heroTitle">Loading...</h1>
+            <p id="heroSubtitle">Loading...</p>
+            <a href="#" class="btn-primary" id="heroBtn">Loading...</a>
+        </div>
     </div>
-</div>
+</section>
 
-<div id="adminContainer" class="admin-container">
-    <div class="admin-sidebar">
-        <div class="admin-logo">
-            <h2><i class="fas fa-crown"></i> <span>Progetto CMS</span></h2>
-        </div>
-        <div class="admin-menu">
-            <div class="menu-item active" onclick="showSection('hero')">
-                <i class="fas fa-home"></i> <span>Hero Section</span>
-            </div>
-            <div class="menu-item" onclick="showSection('about')">
-                <i class="fas fa-info-circle"></i> <span>Chi Siamo</span>
-            </div>
-            <div class="menu-item" onclick="showSection('services')">
-                <i class="fas fa-concierge-bell"></i> <span>Servizi</span>
-            </div>
-            <div class="menu-item" onclick="showSection('projects')">
-                <i class="fas fa-hard-hat"></i> <span>Progetti</span>
-            </div>
-            <div class="menu-item" onclick="showSection('brands')">
-                <i class="fas fa-trademark"></i> <span>Brand</span>
-            </div>
-            <div class="menu-item" onclick="showSection('contact')">
-                <i class="fas fa-address-card"></i> <span>Contatti</span>
-            </div>
-            <div class="menu-item" onclick="showSection('footer')">
-                <i class="fas fa-copyright"></i> <span>Footer</span>
-            </div>
-            <div class="menu-item" onclick="showSection('design')">
-                <i class="fas fa-palette"></i> <span>Design & Style</span>
-            </div>
-            <div class="menu-item" onclick="showSection('backup')">
-                <i class="fas fa-database"></i> <span>Backup</span>
-            </div>
+<!-- About Section -->
+<section class="section" id="aboutSection">
+    <div class="container">
+        <h2 class="section-title" id="aboutTitle">Loading...</h2>
+        <div class="about-content">
+            <div id="aboutText">Loading...</div>
+            <div class="company-logos" id="companyLogos"></div>
         </div>
     </div>
-    
-    <div class="admin-content">
-        <div class="admin-header">
-            <h1 id="currentSection">Hero Section</h1>
-            <div>
-                <a href="index.html" target="_blank" class="view-site-btn"><i class="fas fa-external-link-alt"></i> View Site</a>
-                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            </div>
-        </div>
-        
-        <!-- HERO SECTION -->
-        <div id="heroSection" class="section-editor">
-            <h2 class="section-title">Hero Section</h2>
-            <div class="form-group">
-                <label>Hero Badge Text</label>
-                <input type="text" id="heroBadge" placeholder="e.g., Progetto Unico Group">
-            </div>
-            <div class="form-group">
-                <label>Hero Title (use &lt;br&gt; for line break)</label>
-                <input type="text" id="heroTitle" placeholder="Main title">
-            </div>
-            <div class="form-group">
-                <label>Hero Subtitle</label>
-                <input type="text" id="heroSubtitle" placeholder="Subtitle">
-            </div>
-            <div class="form-group">
-                <label>Hero Button Text</label>
-                <input type="text" id="heroBtnText" placeholder="Button text">
-            </div>
-            <div class="form-group">
-                <label>Background Image URL</label>
-                <input type="text" id="heroBgImage" placeholder="https://...">
-            </div>
-            <button class="btn-primary" onclick="saveHero()">Save Hero Section</button>
-        </div>
-        
-        <!-- ABOUT SECTION -->
-        <div id="aboutSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Chi Siamo (About Us)</h2>
-            <div class="form-group">
-                <label>Section Title</label>
-                <input type="text" id="aboutTitle" placeholder="Chi Siamo">
-            </div>
-            <div class="form-group">
-                <label>Main About Text (HTML allowed)</label>
-                <textarea id="aboutText" rows="6" placeholder="About content..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Company Names (comma separated)</label>
-                <input type="text" id="companyNames" placeholder="PROGETTO UNICO GROUP, EDILCOST, IDEAL CASA SRL">
-            </div>
-            <button class="btn-primary" onclick="saveAbout()">Save About Section</button>
-        </div>
-        
-        <!-- SERVICES SECTION -->
-        <div id="servicesSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Servizi (Services)</h2>
-            <div class="form-group">
-                <label>Section Title</label>
-                <input type="text" id="servicesTitle" placeholder="I Nostri Servizi">
-            </div>
-            <div id="servicesList"></div>
-            <button class="btn-secondary" onclick="addService()">+ Add New Service</button>
-            <button class="btn-primary" onclick="saveServices()" style="margin-top: 1rem;">Save All Services</button>
-        </div>
-        
-        <!-- PROJECTS SECTION -->
-        <div id="projectsSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Progetti (Projects)</h2>
-            <div class="form-group">
-                <label>Section Title</label>
-                <input type="text" id="projectsTitle" placeholder="I Nostri Progetti">
-            </div>
-            <div id="projectsList"></div>
-            <button class="btn-secondary" onclick="addProject()">+ Add New Project</button>
-            <button class="btn-primary" onclick="saveProjects()" style="margin-top: 1rem;">Save All Projects</button>
-        </div>
-        
-        <!-- BRANDS SECTION -->
-        <div id="brandsSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Brand (Brands)</h2>
-            <div class="form-group">
-                <label>Section Title</label>
-                <input type="text" id="brandsTitle" placeholder="I Nostri Brand">
-            </div>
-            <div id="brandsList"></div>
-            <button class="btn-secondary" onclick="addBrand()">+ Add New Brand</button>
-            <button class="btn-primary" onclick="saveBrands()" style="margin-top: 1rem;">Save All Brands</button>
-        </div>
-        
-        <!-- CONTACT SECTION -->
-        <div id="contactSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Contatti (Contact)</h2>
-            <div class="form-group">
-                <label>Section Title</label>
-                <input type="text" id="contactTitle" placeholder="Contattaci">
-            </div>
-            <div class="form-group">
-                <label>Address</label>
-                <input type="text" id="contactAddress" placeholder="Full address">
-            </div>
-            <div class="form-group">
-                <label>Phone</label>
-                <input type="text" id="contactPhone" placeholder="Phone number">
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="contactEmail" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <label>Website</label>
-                <input type="text" id="contactWebsite" placeholder="Website URL">
-            </div>
-            <div class="form-group">
-                <label>Google Maps Embed URL (optional)</label>
-                <input type="text" id="contactMap" placeholder="Google Maps iframe src">
-            </div>
-            <div class="form-group">
-                <label>Social Media Links</label>
-                <input type="text" id="socialFacebook" placeholder="Facebook URL">
-                <input type="text" id="socialInstagram" placeholder="Instagram URL" style="margin-top: 0.5rem;">
-                <input type="text" id="socialLinkedin" placeholder="LinkedIn URL" style="margin-top: 0.5rem;">
-            </div>
-            <button class="btn-primary" onclick="saveContact()">Save Contact Section</button>
-        </div>
-        
-        <!-- FOOTER SECTION -->
-        <div id="footerSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Footer</h2>
-            <div class="form-group">
-                <label>Footer Text</label>
-                <textarea id="footerText" rows="3" placeholder="Footer content..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Copyright Text</label>
-                <input type="text" id="copyrightText" placeholder="© 2025...">
-            </div>
-            <div class="form-group">
-                <label>Tagline</label>
-                <input type="text" id="footerTagline" placeholder="Company tagline">
-            </div>
-            <button class="btn-primary" onclick="saveFooter()">Save Footer</button>
-        </div>
-        
-        <!-- DESIGN SECTION -->
-        <div id="designSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Design & Style</h2>
-            <div class="form-group">
-                <label>Primary Color</label>
-                <input type="color" id="primaryColor" value="#c17b4c">
-            </div>
-            <div class="form-group">
-                <label>Secondary Color</label>
-                <input type="color" id="secondaryColor" value="#667eea">
-            </div>
-            <div class="form-group">
-                <label>Background Color</label>
-                <input type="color" id="bgColor" value="#f5f0e8">
-            </div>
-            <div class="form-group">
-                <label>Text Color</label>
-                <input type="color" id="textColor" value="#2c2418">
-            </div>
-            <div class="form-group">
-                <label>Heading Font</label>
-                <select id="headingFont">
-                    <option value="'Playfair Display', serif">Playfair Display</option>
-                    <option value="'Poppins', sans-serif">Poppins</option>
-                    <option value="'Montserrat', sans-serif">Montserrat</option>
-                    <option value="'Inter', sans-serif">Inter</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Body Font</label>
-                <select id="bodyFont">
-                    <option value="'Inter', sans-serif">Inter</option>
-                    <option value="'Roboto', sans-serif">Roboto</option>
-                    <option value="'Open Sans', sans-serif">Open Sans</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Button Border Radius (px)</label>
-                <input type="number" id="borderRadius" value="50" min="0" max="50">
-            </div>
-            <button class="btn-primary" onclick="saveDesign()">Save Design Settings</button>
-        </div>
-        
-        <!-- BACKUP SECTION -->
-        <div id="backupSection" class="section-editor" style="display:none;">
-            <h2 class="section-title">Backup & Restore</h2>
-            <div class="form-group">
-                <label>Export Website Data</label>
-                <button class="btn-primary" onclick="exportData()">📥 Download Backup</button>
-            </div>
-            <div class="form-group">
-                <label>Import Backup File</label>
-                <input type="file" id="importFile" accept=".json">
-                <button class="btn-secondary" onclick="importData()">📤 Restore from Backup</button>
-            </div>
-            <div class="form-group">
-                <label style="color: #e94560;">Danger Zone</label>
-                <button class="btn-danger" onclick="resetAll()">⚠️ Reset Everything to Default</button>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
-<div id="toastMsg" class="toast-msg"></div>
+<!-- Services Section -->
+<section class="section" id="servicesSection">
+    <div class="container">
+        <h2 class="section-title" id="servicesTitle">Loading...</h2>
+        <div class="services-grid" id="servicesGrid"></div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="section" id="projectsSection">
+    <div class="container">
+        <h2 class="section-title" id="projectsTitle">Loading...</h2>
+        <div class="projects-grid" id="projectsGrid"></div>
+    </div>
+</section>
+
+<!-- Brands Section -->
+<section class="section" id="brandsSection">
+    <div class="container">
+        <h2 class="section-title" id="brandsTitle">Loading...</h2>
+        <div class="brands-grid" id="brandsGrid"></div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section" id="contactSection">
+    <div class="container">
+        <h2 class="section-title" id="contactTitle">Loading...</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="contactAddress">Loading...</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span id="contactPhone">Loading...</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span id="contactEmail">Loading...</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <span id="contactWebsite">Loading...</span>
+                </div>
+                <div class="social-links" id="socialLinks"></div>
+            </div>
+            <div class="contact-map" id="contactMap"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-tagline" id="footerTagline">Loading...</div>
+            <p id="footerText">Loading...</p>
+            <div class="copyright" id="copyrightText">Loading...</div>
+        </div>
+    </div>
+</footer>
 
 <script>
-    // Complete website data structure
-    let websiteData = {
-        hero: {
-            badge: "Progetto Unico Group · Ideal Casa Srl",
-            title: "Galleria delle Idee<br>EdilCost",
-            subtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
-            btnText: "Richiedi Consulenza",
-            bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600"
-        },
-        about: {
-            title: "Chi Siamo",
-            text: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>. Lo showroom è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso. <strong>Qualunque sia la sua idea di casa.</strong><br><br><em>Fabio & Paolo Buongiorno</em>",
-            companyNames: ["PROGETTO UNICO GROUP", "EDILCOST", "IDEAL CASA SRL", "GALLERIA DELLE IDEE"]
-        },
-        services: {
-            title: "I Nostri Servizi",
-            items: [
-                { icon: "fas fa-pen-ruler", title: "Consulenza", desc: "Oltre 30 anni di esperienza a tua disposizione" },
-                { icon: "fas fa-palette", title: "Interior Design", desc: "Trasformiamo gli spazi con linee funzionali" },
-                { icon: "fas fa-tile", title: "Pavimenti e Rivestimenti", desc: "Ceramiche dai migliori brand italiani" },
-                { icon: "fas fa-toilet", title: "Arredo Bagno", desc: "Soluzioni eleganti e personalizzate" },
-                { icon: "fas fa-faucet", title: "Rubinetteria", desc: "Design e qualità per la tua casa" },
-                { icon: "fas fa-spa", title: "Wellness e Spa", desc: "Crea il tuo angolo di benessere" }
-            ]
-        },
-        projects: {
-            title: "I Nostri Progetti",
-            items: [
-                { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-                { title: "Showroom Gallery", desc: "Nuovo spazio espositivo di 300mq", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
-            ]
-        },
-        brands: {
-            title: "I Nostri Brand",
-            items: [
-                { icon: "fas fa-gem", title: "Ceramiche Italiane", desc: "Il meglio del made in Italy" },
-                { icon: "fas fa-globe-europe", title: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali" },
-                { icon: "fas fa-bath", title: "Wellness Luxury", desc: "Eccellenza per Spa e benessere" }
-            ]
-        },
-        contact: {
-            title: "Contattaci",
-            address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)",
-            phone: "+39.0831 341520",
-            email: "info@galleriadelleidee.com",
-            website: "www.galleriadelleideeostuni.com",
-            map: "",
-            social: {
-                facebook: "https://www.facebook.com/galleriadelleideeostuni",
-                instagram: "https://www.instagram.com/galleriadelleidee/",
-                linkedin: ""
-            }
-        },
-        footer: {
-            text: "Progetto Unico Group · Ideal Casa Srl · EdilCost · Galleria delle Idee",
-            copyright: "© 2025 Tutti i diritti riservati",
-            tagline: "Qualunque sia la tua idea di casa, noi la realizziamo."
-        },
-        design: {
-            primaryColor: "#c17b4c",
-            secondaryColor: "#667eea",
-            bgColor: "#f5f0e8",
-            textColor: "#2c2418",
-            headingFont: "'Playfair Display', serif",
-            bodyFont: "'Inter', sans-serif",
-            borderRadius: "50"
-        }
-    };
+    // Load data from localStorage
+    let websiteData = null;
     
-    function loadData() {
+    function loadWebsiteData() {
         const saved = localStorage.getItem('progettoCMSData');
         if(saved) {
             websiteData = JSON.parse(saved);
+            applyDesignSettings();
+            renderWebsite();
+        } else {
+            // Load default data if no saved data exists
+            fetchDefaultData();
         }
-        populateAllFields();
-        renderServicesList();
-        renderProjectsList();
-        renderBrandsList();
-        showToast("Data loaded!");
     }
     
-    function saveData() {
-        localStorage.setItem('progettoCMSData', JSON.stringify(websiteData));
-        showToast("All changes saved!");
+    function fetchDefaultData() {
+        // Default data structure (same as admin panel defaults)
+        websiteData = {
+            hero: {
+                badge: "Progetto Unico Group · Ideal Casa Srl",
+                title: "Galleria delle Idee<br>EdilCost",
+                subtitle: "La tua nuova idea di Casa · Progettazione · Interior Design · Realizzazione",
+                btnText: "Richiedi Consulenza",
+                bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600"
+            },
+            about: {
+                title: "Chi Siamo",
+                text: "<strong>Progetto Unico</strong> è il gruppo che riunisce <strong>EdilCost</strong> e <strong>Ideal Casa Srl</strong>, quest'ultima proprietaria del brand <strong>Galleria delle Idee</strong>. Lo showroom è stato pensato per accogliere le necessità di chiunque varchi la porta d'ingresso. <strong>Qualunque sia la sua idea di casa.</strong><br><br><em>Fabio & Paolo Buongiorno</em>",
+                companyNames: ["PROGETTO UNICO GROUP", "EDILCOST", "IDEAL CASA SRL", "GALLERIA DELLE IDEE"]
+            },
+            services: {
+                title: "I Nostri Servizi",
+                items: [
+                    { icon: "fas fa-pen-ruler", title: "Consulenza", desc: "Oltre 30 anni di esperienza a tua disposizione" },
+                    { icon: "fas fa-palette", title: "Interior Design", desc: "Trasformiamo gli spazi con linee funzionali" },
+                    { icon: "fas fa-tile", title: "Pavimenti e Rivestimenti", desc: "Ceramiche dai migliori brand italiani" },
+                    { icon: "fas fa-toilet", title: "Arredo Bagno", desc: "Soluzioni eleganti e personalizzate" },
+                    { icon: "fas fa-faucet", title: "Rubinetteria", desc: "Design e qualità per la tua casa" },
+                    { icon: "fas fa-spa", title: "Wellness e Spa", desc: "Crea il tuo angolo di benessere" }
+                ]
+            },
+            projects: {
+                title: "I Nostri Progetti",
+                items: [
+                    { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                    { title: "Showroom Gallery", desc: "Nuovo spazio espositivo di 300mq", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
+                ]
+            },
+            brands: {
+                title: "I Nostri Brand",
+                items: [
+                    { icon: "fas fa-gem", title: "Ceramiche Italiane", desc: "Il meglio del made in Italy" },
+                    { icon: "fas fa-globe-europe", title: "Brand Internazionali", desc: "Selezione esclusiva di produttori globali" },
+                    { icon: "fas fa-bath", title: "Wellness Luxury", desc: "Eccellenza per Spa e benessere" }
+                ]
+            },
+            contact: {
+                title: "Contattaci",
+                address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)",
+                phone: "+39.0831 341520",
+                email: "info@galleriadelleidee.com",
+                website: "www.galleriadelleideeostuni.com",
+                map: "",
+                social: {
+                    facebook: "https://www.facebook.com/galleriadelleideeostuni",
+                    instagram: "https://www.instagram.com/galleriadelleidee/",
+                    linkedin: ""
+                }
+            },
+            footer: {
+                text: "Progetto Unico Group · Ideal Casa Srl · EdilCost · Galleria delle Idee",
+                copyright: "© 2025 Tutti i diritti riservati",
+                tagline: "Qualunque sia la tua idea di casa, noi la realizziamo."
+            },
+            design: {
+                primaryColor: "#c17b4c",
+                secondaryColor: "#667eea",
+                bgColor: "#f5f0e8",
+                textColor: "#2c2418",
+                headingFont: "'Playfair Display', serif",
+                bodyFont: "'Inter', sans-serif",
+                borderRadius: "50"
+            }
+        };
+        renderWebsite();
     }
     
-    function showToast(msg) {
-        const toast = document.getElementById('toastMsg');
-        toast.innerText = msg;
-        toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2000);
+    function applyDesignSettings() {
+        const root = document.documentElement;
+        root.style.setProperty('--primary-color', websiteData.design.primaryColor);
+        root.style.setProperty('--secondary-color', websiteData.design.secondaryColor);
+        root.style.setProperty('--bg-color', websiteData.design.bgColor);
+        root.style.setProperty('--text-color', websiteData.design.textColor);
+        root.style.setProperty('--heading-font', websiteData.design.headingFont);
+        root.style.setProperty('--body-font', websiteData.design.bodyFont);
+        root.style.setProperty('--border-radius', websiteData.design.borderRadius + 'px');
     }
     
-    function populateAllFields() {
-        // Hero
-        document.getElementById('heroBadge').value = websiteData.hero.badge;
-        document.getElementById('heroTitle').value = websiteData.hero.title;
-        document.getElementById('heroSubtitle').value = websiteData.hero.subtitle;
-        document.getElementById('heroBtnText').value = websiteData.hero.btnText;
-        document.getElementById('heroBgImage').value = websiteData.hero.bgImage;
+    function renderWebsite() {
+        // Hero Section
+        document.getElementById('heroBadge').innerHTML = websiteData.hero.badge;
+        document.getElementById('heroTitle').innerHTML = websiteData.hero.title;
+        document.getElementById('heroSubtitle').innerHTML = websiteData.hero.subtitle;
+        document.getElementById('heroBtn').innerHTML = websiteData.hero.btnText;
+        document.querySelector('.hero').style.backgroundImage = `url(${websiteData.hero.bgImage})`;
         
-        // About
-        document.getElementById('aboutTitle').value = websiteData.about.title;
-        document.getElementById('aboutText').value = websiteData.about.text;
-        document.getElementById('companyNames').value = websiteData.about.companyNames.join(', ');
+        // About Section
+        document.getElementById('aboutTitle').innerHTML = websiteData.about.title;
+        document.getElementById('aboutText').innerHTML = websiteData.about.text;
         
-        // Services
-        document.getElementById('servicesTitle').value = websiteData.services.title;
+        const companyLogos = document.getElementById('companyLogos');
+        companyLogos.innerHTML = websiteData.about.companyNames.map(name => `<span>${name}</span>`).join('');
         
-        // Projects
-        document.getElementById('projectsTitle').value = websiteData.projects.title;
+        // Services Section
+        document.getElementById('servicesTitle').innerHTML = websiteData.services.title;
+        const servicesGrid = document.getElementById('servicesGrid');
+        servicesGrid.innerHTML = websiteData.services.items.map(service => `
+            <div class="service-card">
+                <i class="${service.icon}"></i>
+                <h3>${service.title}</h3>
+                <p>${service.desc}</p>
+            </div>
+        `).join('');
         
-        // Brands
-        document.getElementById('brandsTitle').value = websiteData.brands.title;
+        // Projects Section
+        document.getElementById('projectsTitle').innerHTML = websiteData.projects.title;
+        const projectsGrid = document.getElementById('projectsGrid');
+        projectsGrid.innerHTML = websiteData.projects.items.map(project => `
+            <div class="project-card">
+                <img src="${project.image}" alt="${project.title}">
+                <h3>${project.title}</h3>
+                <p>${project.desc}</p>
+            </div>
+        `).join('');
         
-        // Contact
-        document.getElementById('contactTitle').value = websiteData.contact.title;
-        document.getElementById('contactAddress').value = websiteData.contact.address;
-        document.getElementById('contactPhone').value = websiteData.contact.phone;
-        document.getElementById('contactEmail').value = websiteData.contact.email;
-        document.getElementById('contactWebsite').value = websiteData.contact.website;
-        document.getElementById('contactMap').value = websiteData.contact.map || '';
-        document.getElementById('socialFacebook').value = websiteData.contact.social.facebook || '';
-        document.getElementById('socialInstagram').value = websiteData.contact.social.instagram || '';
-        document.getElementById('socialLinkedin').value = websiteData.contact.social.linkedin || '';
+        // Brands Section
+        document.getElementById('brandsTitle').innerHTML = websiteData.brands.title;
+        const brandsGrid = document.getElementById('brandsGrid');
+        brandsGrid.innerHTML = websiteData.brands.items.map(brand => `
+            <div class="brand-card">
+                <i class="${brand.icon}"></i>
+                <h3>${brand.title}</h3>
+                <p>${brand.desc}</p>
+            </div>
+        `).join('');
+        
+        // Contact Section
+        document.getElementById('contactTitle').innerHTML = websiteData.contact.title;
+        document.getElementById('contactAddress').innerHTML = websiteData.contact.address;
+        document.getElementById('contactPhone').innerHTML = websiteData.contact.phone;
+        document.getElementById('contactEmail').innerHTML = websiteData.contact.email;
+        document.getElementById('contactWebsite').innerHTML = websiteData.contact.website;
+        
+        const socialLinks = document.getElementById('socialLinks');
+        let socialHtml = '';
+        if(websiteData.contact.social.facebook) socialHtml += `<a href="${websiteData.contact.social.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>`;
+        if(websiteData.contact.social.instagram) socialHtml += `<a href="${websiteData.contact.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
+        if(websiteData.contact.social.linkedin) socialHtml += `<a href="${websiteData.contact.social.linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>`;
+        socialLinks.innerHTML = socialHtml;
+        
+        const contactMap = document.getElementById('contactMap');
+        if(websiteData.contact.map) {
+            contactMap.innerHTML = `<iframe src="${websiteData.contact.map}" width="100%" height="300" style="border:0; border-radius:15px;" allowfullscreen></iframe>`;
+        } else {
+            contactMap.innerHTML = '';
+        }
         
         // Footer
-        document.getElementById('footerText').value = websiteData.footer.text;
-        document.getElementById('copyrightText').value = websiteData.footer.copyright;
-        document.getElementById('footerTagline').value = websiteData.footer.tagline;
-        
-        // Design
-        document.getElementById('primaryColor').value = websiteData.design.primaryColor;
-        document.getElementById('secondaryColor').value = websiteData.design.secondaryColor;
-        document.getElementById('bgColor').value = websiteData.design.bgColor;
-        document.getElementById('textColor').value = websiteData.design.textColor;
-        document.getElementById('headingFont').value = websiteData.design.headingFont;
-        document.getElementById('bodyFont').value = websiteData.design.bodyFont;
-        document.getElementById('borderRadius').value = websiteData.design.borderRadius;
+        document.getElementById('footerTagline').innerHTML = websiteData.footer.tagline;
+        document.getElementById('footerText').innerHTML = websiteData.footer.text;
+        document.getElementById('copyrightText').innerHTML = websiteData.footer.copyright;
     }
     
-    // Services Management
-    function renderServicesList() {
-        const container = document.getElementById('servicesList');
-        if(!container) return;
-        container.innerHTML = '<div class="items-grid" id="servicesGrid"></div>';
-        const grid = document.getElementById('servicesGrid');
-        websiteData.services.items.forEach((item, index) => {
-            grid.innerHTML += `
-                <div class="item-card">
-                    <i class="${item.icon}" style="font-size: 2rem; color: #667eea;"></i>
-                    <input type="text" value="${item.title}" id="service_title_${index}" placeholder="Title" style="margin-top: 0.5rem;">
-                    <textarea id="service_desc_${index}" placeholder="Description">${item.desc}</textarea>
-                    <select id="service_icon_${index}">
-                        <option value="fas fa-pen-ruler" ${item.icon === 'fas fa-pen-ruler' ? 'selected' : ''}>✏️ Design</option>
-                        <option value="fas fa-palette" ${item.icon === 'fas fa-palette' ? 'selected' : ''}>🎨 Palette</option>
-                        <option value="fas fa-tile" ${item.icon === 'fas fa-tile' ? 'selected' : ''}>🧱 Tile</option>
-                        <option value="fas fa-toilet" ${item.icon === 'fas fa-toilet' ? 'selected' : ''}>🚽 Bathroom</option>
-                        <option value="fas fa-faucet" ${item.icon === 'fas fa-faucet' ? 'selected' : ''}>🚰 Faucet</option>
-                        <option value="fas fa-spa" ${item.icon === 'fas fa-spa' ? 'selected' : ''}>🌸 Spa</option>
-                        <option value="fas fa-couch" ${item.icon === 'fas fa-couch' ? 'selected' : ''}>🛋️ Furniture</option>
-                    </select>
-                    <button class="btn-danger" onclick="deleteService(${index})">Delete</button>
-                </div>
-            `;
-        });
-    }
-    
-    function addService() {
-        websiteData.services.items.push({ icon: "fas fa-star", title: "New Service", desc: "Service description" });
-        renderServicesList();
-    }
-    
-    function deleteService(index) {
-        websiteData.services.items.splice(index, 1);
-        renderServicesList();
-    }
-    
-    function saveServices() {
-        const newItems = [];
-        for(let i = 0; i < websiteData.services.items.length; i++) {
-            const title = document.getElementById(`service_title_${i}`)?.value;
-            const desc = document.getElementById(`service_desc_${i}`)?.value;
-            const icon = document.getElementById(`service_icon_${i}`)?.value;
-            if(title) {
-                newItems.push({ title, desc, icon });
-            }
+    // Auto-refresh when localStorage changes (for real-time updates)
+    window.addEventListener('storage', function(e) {
+        if(e.key === 'progettoCMSData') {
+            loadWebsiteData();
         }
-        websiteData.services.items = newItems;
-        websiteData.services.title = document.getElementById('servicesTitle').value;
-        saveData();
-        showToast("Services saved!");
-    }
+    });
     
-    // Projects Management
-    function renderProjectsList() {
-        const container = document.getElementById('projectsList');
-        if(!container) return;
-        container.innerHTML = '<div class="items-grid" id="projectsGrid"></div>';
-        const grid = document.getElementById('projectsGrid');
-        websiteData.projects.items.forEach((item, index) => {
-            grid.innerHTML += `
-                <div class="item-card">
-                    ${item.image ? `<img src="${item.image}" alt="${item.title}">` : '<div style="height:150px; background:#2c3e50; display:flex; align-items:center; justify-content:center;">No Image</div>'}
-                    <input type="text" value="${item.title}" id="project_title_${index}" placeholder="Title">
-                    <textarea id="project_desc_${index}" placeholder="Description">${item.desc}</textarea>
-                    <input type="text" value="${item.image}" id="project_image_${index}" placeholder="Image URL">
-                    <button class="btn-danger" onclick="deleteProject(${index})">Delete</button>
-                </div>
-            `;
-        });
-    }
-    
-    function addProject() {
-        websiteData.projects.items.push({ title: "New Project", desc: "Project description", image: "" });
-        renderProjectsList();
-    }
-    
-    function deleteProject(index) {
-        websiteData.projects.items.splice(index, 1);
-        renderProjectsList();
-    }
-    
-    function saveProjects() {
-        const newItems = [];
-        for(let i = 0; i < websiteData.projects.items.length; i++) {
-            const title = document.getElementById(`project_title_${i}`)?.value;
-            const desc = document.getElementById(`project_desc_${i}`)?.value;
-            const image = document.getElementById(`project_image_${i}`)?.value;
-            if(title) {
-                newItems.push({ title, desc, image });
-            }
-        }
-        websiteData.projects.items = newItems;
-        websiteData.projects.title = document.getElementById('projectsTitle').value;
-        saveData();
-        showToast("Projects saved!");
-    }
-    
-    // Brands Management
-    function renderBrandsList() {
-        const container = document.getElementById('brandsList');
-        if(!container) return;
-        container.innerHTML = '<div class="items-grid" id="brandsGrid"></div>';
-        const grid = document.getElementById('brandsGrid');
-        websiteData.brands.items.forEach((item, index) => {
-            grid.innerHTML += `
-                <div class="item-card">
-                    <i class="${item.icon}" style="font-size: 2rem; color: #667eea;"></i>
-                    <input type="text" value="${item.title}" id="brand_title_${index}" placeholder="Brand Name">
-                    <textarea id="brand_desc_${index}" placeholder="Description">${item.desc}</textarea>
-                    <select id="brand_icon_${index}">
-                        <option value="fas fa-gem" ${item.icon === 'fas fa-gem' ? 'selected' : ''}>💎 Gem</option>
-                        <option value="fas fa-globe-europe" ${item.icon === 'fas fa-globe-europe' ? 'selected' : ''}>🌍 Globe</option>
-                        <option value="fas fa-bath" ${item.icon === 'fas fa-bath' ? 'selected' : ''}>🛁 Bath</option>
-                        <option value="fas fa-tint" ${item.icon === 'fas fa-tint' ? 'selected' : ''}>💧 Drop</option>
-                    </select>
-                    <button class="btn-danger" onclick="deleteBrand(${index})">Delete</button>
-                </div>
-            `;
-        });
-    }
-    
-    function addBrand() {
-        websiteData.brands.items.push({ icon: "fas fa-star", title: "New Brand", desc: "Brand description" });
-        renderBrandsList();
-    }
-    
-    function deleteBrand(index) {
-        websiteData.brands.items.splice(index, 1);
-        renderBrandsList();
-    }
-    
-    function saveBrands() {
-        const newItems = [];
-        for(let i = 0; i < websiteData.brands.items.length; i++) {
-            const title = document.getElementById(`brand_title_${i}`)?.value;
-            const desc = document.getElementById(`brand_desc_${i}`)?.value;
-            const icon = document.getElementById(`brand_icon_${i}`)?.value;
-            if(title) {
-                newItems.push({ title, desc, icon });
-            }
-        }
-        websiteData.brands.items = newItems;
-        websiteData.brands.title = document.getElementById('brandsTitle').value;
-        saveData();
-        showToast("Brands saved!");
-    }
-    
-    // Save functions for other sections
-    function saveHero() {
-        websiteData.hero.badge = document.getElementById('heroBadge').value;
-        websiteData.hero.title = document.getElementById('heroTitle').value;
-        websiteData.hero.subtitle = document.getElementById('heroSubtitle').value;
-        websiteData.hero.btnText = document.getElementById('heroBtnText').value;
-        websiteData.hero.bgImage = document.getElementById('heroBgImage').value;
-        saveData();
-    }
-    
-    function saveAbout() {
-        websiteData.about.title = document.getElementById('aboutTitle').value;
-        websiteData.about.text = document.getElementById('aboutText').value;
-        websiteData.about.companyNames = document.getElementById('companyNames').value.split(',').map(s => s.trim());
-        saveData();
-    }
-    
-    function saveContact() {
-        websiteData.contact.title = document.getElementById('contactTitle').value;
-        websiteData.contact.address = document.getElementById('contactAddress').value;
-        websiteData.contact.phone = document.getElementById('contactPhone').value;
-        websiteData.contact.email = document.getElementById('contactEmail').value;
-        websiteData.contact.website = document.getElementById('contactWebsite').value;
-        websiteData.contact.map = document.getElementById('contactMap').value;
-        websiteData.contact.social = {
-            facebook: document.getElementById('socialFacebook').value,
-            instagram: document.getElementById('socialInstagram').value,
-            linkedin: document.getElementById('socialLinkedin').value
-        };
-        saveData();
-    }
-    
-    function saveFooter() {
-        websiteData.footer.text = document.getElementById('footerText').value;
-        websiteData.footer.copyright = document.getElementById('copyrightText').value;
-        websiteData.footer.tagline = document.getElementById('footerTagline').value;
-        saveData();
-    }
-    
-    function saveDesign() {
-        websiteData.design.primaryColor = document.getElementById('primaryColor').value;
-        websiteData.design.secondaryColor = document.getElementById('secondaryColor').value;
-        websiteData.design.bgColor = document.getElementById('bgColor').value;
-        websiteData.design.textColor = document.getElementById('textColor').value;
-        websiteData.design.headingFont = document.getElementById('headingFont').value;
-        websiteData.design.bodyFont = document.getElementById('bodyFont').value;
-        websiteData.design.borderRadius = document.getElementById('borderRadius').value;
-        saveData();
-        showToast("Design settings saved! Refresh your website.");
-    }
-    
-    // Backup functions
-    function exportData() {
-        const dataStr = JSON.stringify(websiteData, null, 2);
-        const blob = new Blob([dataStr], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'progetto_website_backup.json';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast("Backup downloaded!");
-    }
-    
-    function importData() {
-        const file = document.getElementById('importFile').files[0];
-        if(!file) { showToast("Select a backup file first"); return; }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                websiteData = JSON.parse(e.target.result);
-                saveData();
-                location.reload();
-            } catch(err) {
-                showToast("Invalid backup file!");
-            }
-        };
-        reader.readAsText(file);
-    }
-    
-    function resetAll() {
-        if(confirm('⚠️ WARNING: This will reset EVERYTHING to default! Are you sure?')) {
-            localStorage.removeItem('progettoCMSData');
-            location.reload();
-        }
-    }
-    
-    // UI Functions
-    function showSection(section) {
-        document.querySelectorAll('.section-editor').forEach(el => el.style.display = 'none');
-        document.getElementById(`${section}Section`).style.display = 'block';
-        document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-        event.target.closest('.menu-item').classList.add('active');
-        
-        const titles = {
-            hero: 'Hero Section',
-            about: 'Chi Siamo',
-            services: 'Servizi',
-            projects: 'Progetti',
-            brands: 'Brand',
-            contact: 'Contatti',
-            footer: 'Footer',
-            design: 'Design & Style',
-            backup: 'Backup & Restore'
-        };
-        document.getElementById('currentSection').innerText = titles[section];
-    }
-    
-    function attemptLogin() {
-        const user = document.getElementById('adminUser').value;
-        const pass = document.getElementById('adminPass').value;
-        if(user === 'admin' && pass === 'admin123') {
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('adminContainer').style.display = 'block';
-            loadData();
-        } else {
-            document.getElementById('loginError').innerText = 'Wrong credentials! Use admin / admin123';
-        }
-    }
-    
-    function logout() {
-        document.getElementById('loginOverlay').style.display = 'flex';
-        document.getElementById('adminContainer').style.display = 'none';
-    }
-    
-    // Make functions global
-    window.attemptLogin = attemptLogin;
-    window.logout = logout;
-    window.showSection = showSection;
-    window.saveHero = saveHero;
-    window.saveAbout = saveAbout;
-    window.saveServices = saveServices;
-    window.saveProjects = saveProjects;
-    window.saveBrands = saveBrands;
-    window.saveContact = saveContact;
-    window.saveFooter = saveFooter;
-    window.saveDesign = saveDesign;
-    window.addService = addService;
-    window.addProject = addProject;
-    window.addBrand = addBrand;
-    window.deleteService = deleteService;
-    window.deleteProject = deleteProject;
-    window.deleteBrand = deleteBrand;
-    window.exportData = exportData;
-    window.importData = importData;
-    window.resetAll = resetAll;
+    // Load data on page load
+    loadWebsiteData();
 </script>
 </body>
 </html>
