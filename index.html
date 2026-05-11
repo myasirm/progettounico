@@ -3,73 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galleria delle Idee · Creative Design Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Progetto Unico Group · Galleria delle Idee · Ideal Casa · EdilCost</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            background: #faf9f7;
+            color: #2c2418;
         }
         
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveDots 20s linear infinite;
-        }
-        
-        @keyframes moveDots {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-        
-        /* Floating Shapes */
-        .shape {
-            position: fixed;
-            z-index: -1;
-            opacity: 0.1;
-            animation: float 20s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-50px) rotate(180deg); }
-        }
+        h1, h2, h3, .logo-text { font-family: 'Playfair Display', serif; }
         
         /* Navigation */
         nav {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.98);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.05);
         }
         
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -77,12 +37,16 @@
             align-items: center;
         }
         
-        .logo {
-            font-size: 1.5rem;
+        .logo h1 {
+            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #c17b4c;
+        }
+        
+        .logo p {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #999;
         }
         
         .nav-links {
@@ -92,98 +56,97 @@
         
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: #2c2418;
             font-weight: 500;
             transition: 0.3s;
         }
         
-        .nav-links a:hover {
-            color: #667eea;
-            transform: translateY(-2px);
-        }
+        .nav-links a:hover { color: #c17b4c; }
         
         /* Hero Section */
         .hero {
-            min-height: 90vh;
+            min-height: 85vh;
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
-            justify-content: center;
             text-align: center;
             position: relative;
-            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
         }
         
         .hero-content {
+            position: relative;
             z-index: 2;
-            animation: fadeInUp 1s ease;
+            color: white;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
         }
         
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
+        .hero-branches {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .branch-badge {
+            background: rgba(255,255,255,0.15);
             backdrop-filter: blur(10px);
             padding: 0.5rem 1.5rem;
             border-radius: 50px;
             font-size: 0.9rem;
-            margin-bottom: 2rem;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            font-weight: 500;
         }
         
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            color: rgba(255,255,255,0.95);
+            opacity: 0.95;
         }
         
         .btn-primary {
             display: inline-block;
+            background: #c17b4c;
+            color: white;
             padding: 1rem 2.5rem;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
             border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
         
         .btn-primary:hover {
+            background: #a8633a;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(193,123,76,0.3);
         }
         
         /* Section Styles */
         .section {
             padding: 5rem 0;
-            position: relative;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -191,14 +154,10 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 3rem;
+            color: #c17b4c;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         .section-title::after {
@@ -209,35 +168,92 @@
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 3px;
+            background: #c17b4c;
         }
         
-        /* About Section */
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .company-logos {
-            display: flex;
-            justify-content: center;
+        /* Companies Grid - The 3 Branches */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 2rem;
-            flex-wrap: wrap;
         }
         
-        .company-logos span {
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .company-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .company-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #c17b4c20, #c17b4c10);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .company-icon i {
+            font-size: 3rem;
+            color: #c17b4c;
+        }
+        
+        .company-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #2c2418;
+        }
+        
+        .company-role {
+            display: inline-block;
+            background: #c17b4c;
             color: white;
+            padding: 0.3rem 1rem;
             border-radius: 50px;
-            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .company-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Story Section */
+        .story-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .mission-box {
+            background: linear-gradient(135deg, #c17b4c10, #c17b4c05);
+            padding: 2rem;
+            border-radius: 20px;
+            border-left: 4px solid #c17b4c;
+        }
+        
+        .mission-box h3 {
+            color: #c17b4c;
+            margin-bottom: 1rem;
         }
         
         /* Services Grid */
@@ -245,7 +261,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
         
         .service-card, .project-card, .brand-card {
@@ -253,20 +268,18 @@
             padding: 2rem;
             border-radius: 20px;
             text-align: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
         
         .service-card:hover, .project-card:hover, .brand-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
         
         .service-card i, .brand-card i {
-            font-size: 3rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            color: #c17b4c;
             margin-bottom: 1rem;
         }
         
@@ -289,7 +302,7 @@
             background: white;
             padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
         
         .contact-item {
@@ -298,20 +311,19 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background: #f8f9fa;
             border-radius: 10px;
             transition: 0.3s;
         }
         
         .contact-item:hover {
-            transform: translateX(10px);
-            background: linear-gradient(135deg, #667eea10, #764ba210);
+            background: #c17b4c10;
+            transform: translateX(5px);
         }
         
         .contact-item i {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 45px;
+            height: 45px;
+            background: #c17b4c;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -326,9 +338,9 @@
         }
         
         .social-links a {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 45px;
+            height: 45px;
+            background: #c17b4c;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -339,12 +351,23 @@
         }
         
         .social-links a:hover {
-            transform: translateY(-5px) rotate(360deg);
+            transform: translateY(-5px);
+            background: #a8633a;
+        }
+        
+        .contact-showroom {
+            background: linear-gradient(135deg, #c17b4c, #a8633a);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 20px;
         }
         
         /* Footer */
         footer {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: #1a1a2e;
             color: white;
             padding: 3rem 0 1rem;
             margin-top: 3rem;
@@ -354,124 +377,141 @@
             text-align: center;
         }
         
-        .footer-tagline {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-style: italic;
+        .footer-brands {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
         
         .copyright {
             margin-top: 2rem;
-            opacity: 0.8;
-        }
-        
-        /* Animations */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            opacity: 0.6;
+            font-size: 0.8rem;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
+        @media (max-width: 968px) {
+            .companies-grid { grid-template-columns: 1fr; }
             .contact-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-branches { gap: 1rem; }
+            .branch-badge { font-size: 0.7rem; }
             .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-<div class="animated-bg"></div>
-<div class="shape" style="top: 10%; left: 10%; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-<div class="shape" style="bottom: 10%; right: 10%; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; animation-delay: -5s;"></div>
-
 <nav>
     <div class="nav-container">
-        <div class="logo">✨ Galleria delle Idee</div>
+        <div class="logo">
+            <h1>PROGETTO UNICO</h1>
+            <p>GROUP</p>
+        </div>
         <div class="nav-links">
             <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <a href="#about">Il Gruppo</a>
+            <a href="#companies">Le Realtà</a>
+            <a href="#services">Servizi</a>
+            <a href="#projects">Progetti</a>
+            <a href="#contact">Contatti</a>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<section class="hero" id="heroSection" style="background-size: cover; background-position: center;">
+<section class="hero" id="heroSection">
     <div class="hero-content">
-        <div class="hero-badge" id="heroBadge">✨ Welcome to Our Studio</div>
-        <h1 id="heroTitle">Create Beautiful Spaces</h1>
-        <p id="heroSubtitle">Transform your dreams into reality with our expert design team</p>
-        <a href="#" class="btn-primary" id="heroBtn">Start Your Journey →</a>
+        <h1 id="heroTitle">Progetto Unico Group</h1>
+        <div class="hero-branches" id="heroBranches">
+            <span class="branch-badge">🏛️ Galleria delle Idee</span>
+            <span class="branch-badge">🏠 Ideal Casa Srl</span>
+            <span class="branch-badge">👷 EdilCost</span>
+        </div>
+        <p id="heroSubtitle">Tre eccellenze, un'unica visione per la tua casa dei sogni</p>
+        <a href="#contact" class="btn-primary" id="heroBtn">Richiedi Consulenza</a>
     </div>
 </section>
 
-<!-- About Section -->
+<!-- About / Group Story -->
 <section class="section" id="about">
     <div class="container">
-        <h2 class="section-title" id="aboutTitle">About Us</h2>
-        <div class="about-content">
-            <div id="aboutText">Loading...</div>
-            <div class="company-logos" id="companyLogos"></div>
+        <h2 class="section-title" id="aboutTitle">La Nostra Storia</h2>
+        <div class="story-content">
+            <div class="story-text" id="aboutText">
+                <strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. 
+                Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni, 
+                dall'idea progettuale alla realizzazione finale.
+            </div>
+            <div class="mission-box" id="missionBox">
+                <h3>✨ La Nostra Missione</h3>
+                <p id="missionText">Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Services Section -->
+<!-- The 3 Companies / Branches -->
+<section class="section" id="companies">
+    <div class="container">
+        <h2 class="section-title">Le Nostre Realtà</h2>
+        <div class="companies-grid" id="companiesGrid"></div>
+    </div>
+</section>
+
+<!-- Services -->
 <section class="section" id="services">
     <div class="container">
-        <h2 class="section-title" id="servicesTitle">Our Services</h2>
+        <h2 class="section-title" id="servicesTitle">I Nostri Servizi</h2>
         <div class="services-grid" id="servicesGrid"></div>
     </div>
 </section>
 
-<!-- Projects Section -->
+<!-- Projects -->
 <section class="section" id="projects">
     <div class="container">
-        <h2 class="section-title" id="projectsTitle">Featured Projects</h2>
+        <h2 class="section-title" id="projectsTitle">Progetti Realizzati</h2>
         <div class="projects-grid" id="projectsGrid"></div>
     </div>
 </section>
 
-<!-- Brands Section -->
+<!-- Brands -->
 <section class="section" id="brands">
     <div class="container">
-        <h2 class="section-title" id="brandsTitle">Our Partners</h2>
+        <h2 class="section-title" id="brandsTitle">Brand Partner</h2>
         <div class="brands-grid" id="brandsGrid"></div>
     </div>
 </section>
 
-<!-- Contact Section -->
+<!-- Contact -->
 <section class="section" id="contact">
     <div class="container">
-        <h2 class="section-title" id="contactTitle">Get In Touch</h2>
+        <h2 class="section-title">Contattaci</h2>
         <div class="contact-grid">
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span id="contactAddress">Loading...</span>
+                    <span id="contactAddress">Via Francesco Rodio, 4 – 72017 - Ostuni (BR)</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
-                    <span id="contactPhone">Loading...</span>
+                    <span id="contactPhone">+39.0831 341520</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <span id="contactEmail">Loading...</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-globe"></i>
-                    <span id="contactWebsite">Loading...</span>
+                    <span id="contactEmail">info@galleriadelleidee.com</span>
                 </div>
                 <div class="social-links" id="socialLinks"></div>
             </div>
-            <div class="contact-info" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-                <div style="text-align: center;">
-                    <i class="fas fa-heart" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                    <p>Let's create something amazing together!</p>
-                    <p style="margin-top: 1rem;">✨ ✨ ✨</p>
+            <div class="contact-showroom">
+                <div>
+                    <i class="fas fa-crown" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Visita il Nostro Showroom</h3>
+                    <p style="margin-top: 1rem;">Galleria delle Idee<br>Ostuni - Piazza della Libertà</p>
+                    <p style="margin-top: 1rem;">✨ Qualunque sia la tua idea di casa,<br>noi la realizziamo. ✨</p>
                 </div>
             </div>
         </div>
@@ -482,9 +522,13 @@
 <footer>
     <div class="container">
         <div class="footer-content">
-            <div class="footer-tagline" id="footerTagline">✨ Creating Beautiful Spaces ✨</div>
-            <p id="footerText">Loading...</p>
-            <div class="copyright" id="copyrightText">Loading...</div>
+            <div class="footer-brands">
+                <span>🏛️ Galleria delle Idee</span>
+                <span>🏠 Ideal Casa Srl</span>
+                <span>👷 EdilCost</span>
+            </div>
+            <p id="footerText">Progetto Unico Group · Unione di eccellenze italiane</p>
+            <div class="copyright" id="copyrightText">© 2025 Progetto Unico Group · Tutti i diritti riservati</div>
         </div>
     </div>
 </footer>
@@ -493,7 +537,7 @@
     let websiteData = null;
     
     function loadWebsiteData() {
-        const saved = localStorage.getItem('progettoCMSData_V2');
+        const saved = localStorage.getItem('progettoCMS_v3');
         if(saved) {
             websiteData = JSON.parse(saved);
             applyDesign();
@@ -505,51 +549,76 @@
     
     function loadDefaultData() {
         websiteData = {
-            hero: { badge: "✨ Creative Design Studio", title: "Create Beautiful Spaces", subtitle: "Transform your dreams into reality", btnText: "Start Your Journey →", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
-            about: { title: "About Us", text: "We are a creative design studio passionate about creating beautiful spaces that inspire and delight. With over 10 years of experience, we've helped hundreds of clients transform their spaces into works of art.", companyNames: ["Creative", "Innovative", "Inspiring"] },
-            services: { title: "Our Services", items: [
-                { icon: "fas fa-pen-ruler", title: "Design Consultancy", desc: "Expert guidance for your space" },
-                { icon: "fas fa-palette", title: "Interior Design", desc: "Beautiful functional spaces" },
-                { icon: "fas fa-couch", title: "Furniture Design", desc: "Custom pieces for your home" }
+            hero: { title: "Progetto Unico Group", subtitle: "Tre eccellenze, un'unica visione per la tua casa dei sogni", btnText: "Richiedi Consulenza", bgImage: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1600" },
+            about: { title: "La Nostra Storia", text: "<strong>Progetto Unico Group</strong> nasce dalla fusione di tre eccellenze nel settore dell'edilizia e del design d'interni. Con oltre 30 anni di esperienza, offriamo soluzioni complete per la realizzazione della tua casa dei sogni, dall'idea progettuale alla realizzazione finale.", mission: "Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." },
+            companies: [
+                { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi e soluzioni d'arredo uniche. Il nostro showroom è il luogo dove sogni e realtà si incontrano.", color: "#c17b4c" },
+                { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali con standard qualitativi eccellenti. Dalla progettazione alla consegna chiavi in mano.", color: "#667eea" },
+                { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo. Ristrutturazioni complete e lavori edili di alta qualità.", color: "#27ae60" }
+            ],
+            services: { title: "I Nostri Servizi", items: [
+                { icon: "fas fa-pen-ruler", title: "Progettazione Integrata", desc: "Design coordinato tra architettura e interior" },
+                { icon: "fas fa-palette", title: "Interior Design", desc: "Arredamento su misura e consulenza stile" },
+                { icon: "fas fa-hard-hat", title: "Ristrutturazioni Complete", desc: "Lavori edili e impiantistici chiavi in mano" },
+                { icon: "fas fa-tile", title: "Pavimenti & Rivestimenti", desc: "Selezione dei migliori materiali" },
+                { icon: "fas fa-couch", title: "Arredo su Misura", desc: "Mobili e complementi personalizzati" },
+                { icon: "fas fa-spa", title: "Wellness & Spa", desc: "Creazione di zone benessere domestiche" }
             ]},
-            projects: { title: "Featured Projects", items: [
-                { title: "Modern Villa", desc: "Complete renovation project", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
-                { title: "Office Space", desc: "Creative workspace design", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400" }
+            projects: { title: "Progetti Realizzati", items: [
+                { title: "Villa Mediterranea", desc: "Completa ristrutturazione con piscina e area wellness", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" },
+                { title: "Showroom Galleria", desc: "Nuovo spazio espositivo di 300mq nel centro storico", image: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=400" }
             ]},
-            brands: { title: "Our Partners", items: [
-                { icon: "fas fa-gem", title: "Luxury Brands", desc: "Premium quality materials" },
-                { icon: "fas fa-globe", title: "Global Partners", desc: "Worldwide network" }
+            brands: { title: "Brand Partner", items: [
+                { icon: "fas fa-gem", name: "Ceramiche Italiane", desc: "Made in Italy excellence" }
             ]},
-            contact: { title: "Get In Touch", address: "Via Roma, 1 - Milan, Italy", phone: "+39 123 456 789", email: "info@creativestudio.com", website: "www.creativestudio.com", social: { facebook: "#", instagram: "#", linkedin: "#" } },
-            footer: { text: "Creative Design Studio", copyright: "© 2025 All rights reserved", tagline: "✨ Creating Beautiful Spaces ✨" },
-            design: { primaryColor: "#667eea", secondaryColor: "#764ba2", bgColor: "#ffffff", accentColor: "#f093fb" }
+            contact: { address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", phone: "+39.0831 341520", email: "info@galleriadelleidee.com", social: { facebook: "https://facebook.com", instagram: "https://instagram.com" } },
+            footer: { text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", copyright: "© 2025 Tutti i diritti riservati" },
+            design: { primaryColor: "#c17b4c", secondaryColor: "#667eea" }
         };
         renderWebsite();
     }
     
     function applyDesign() {
-        document.body.style.background = websiteData.design.bgColor;
+        document.documentElement.style.setProperty('--primary-color', websiteData.design.primaryColor);
         const style = document.createElement('style');
         style.textContent = `
-            .btn-primary { background: ${websiteData.design.primaryColor}; }
-            .service-card i, .brand-card i { background: linear-gradient(135deg, ${websiteData.design.primaryColor}, ${websiteData.design.secondaryColor}); -webkit-background-clip: text; }
-            .section-title { background: linear-gradient(135deg, ${websiteData.design.primaryColor}, ${websiteData.design.secondaryColor}); -webkit-background-clip: text; }
+            .btn-primary, .company-role, .contact-item i, .social-links a { background: ${websiteData.design.primaryColor}; }
+            .section-title, .company-card h3, .service-card i, .brand-card i { color: ${websiteData.design.primaryColor}; }
+            .section-title::after, .mission-box { border-left-color: ${websiteData.design.primaryColor}; }
+            .btn-primary:hover { background: ${websiteData.design.secondaryColor}; }
         `;
         document.head.appendChild(style);
     }
     
     function renderWebsite() {
         // Hero
-        document.getElementById('heroBadge').innerHTML = websiteData.hero.badge;
         document.getElementById('heroTitle').innerHTML = websiteData.hero.title;
         document.getElementById('heroSubtitle').innerHTML = websiteData.hero.subtitle;
         document.getElementById('heroBtn').innerHTML = websiteData.hero.btnText;
-        document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${websiteData.hero.bgImage})`;
+        document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url(${websiteData.hero.bgImage})`;
+        
+        // Hero Branches
+        if(websiteData.companies) {
+            const branchesHtml = websiteData.companies.map(c => `<span class="branch-badge">${c.icon === 'fas fa-palette' ? '🎨' : c.icon === 'fas fa-home' ? '🏠' : '👷'} ${c.name}</span>`).join('');
+            document.getElementById('heroBranches').innerHTML = branchesHtml;
+        }
         
         // About
         document.getElementById('aboutTitle').innerHTML = websiteData.about.title;
         document.getElementById('aboutText').innerHTML = websiteData.about.text;
-        document.getElementById('companyLogos').innerHTML = websiteData.about.companyNames.map(n => `<span>${n}</span>`).join('');
+        document.getElementById('missionText').innerHTML = websiteData.about.mission;
+        
+        // Companies Grid
+        if(websiteData.companies) {
+            document.getElementById('companiesGrid').innerHTML = websiteData.companies.map(c => `
+                <div class="company-card">
+                    <div class="company-icon"><i class="${c.icon}"></i></div>
+                    <h3>${c.name}</h3>
+                    <div class="company-role">${c.role}</div>
+                    <p>${c.desc}</p>
+                </div>
+            `).join('');
+        }
         
         // Services
         document.getElementById('servicesTitle').innerHTML = websiteData.services.title;
@@ -576,47 +645,37 @@
         document.getElementById('brandsGrid').innerHTML = websiteData.brands.items.map(b => `
             <div class="brand-card">
                 <i class="${b.icon}"></i>
-                <h3>${b.title}</h3>
+                <h3>${b.name}</h3>
                 <p>${b.desc}</p>
             </div>
         `).join('');
         
         // Contact
-        document.getElementById('contactTitle').innerHTML = websiteData.contact.title;
         document.getElementById('contactAddress').innerHTML = websiteData.contact.address;
         document.getElementById('contactPhone').innerHTML = websiteData.contact.phone;
         document.getElementById('contactEmail').innerHTML = websiteData.contact.email;
-        document.getElementById('contactWebsite').innerHTML = websiteData.contact.website;
         
         let socialHtml = '';
         if(websiteData.contact.social.facebook) socialHtml += `<a href="${websiteData.contact.social.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>`;
         if(websiteData.contact.social.instagram) socialHtml += `<a href="${websiteData.contact.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
-        if(websiteData.contact.social.linkedin) socialHtml += `<a href="${websiteData.contact.social.linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>`;
         document.getElementById('socialLinks').innerHTML = socialHtml;
         
         // Footer
-        document.getElementById('footerTagline').innerHTML = websiteData.footer.tagline;
         document.getElementById('footerText').innerHTML = websiteData.footer.text;
         document.getElementById('copyrightText').innerHTML = websiteData.footer.copyright;
     }
     
-    // Smooth scroll for navigation
-    document.querySelectorAll('.nav-links a, .hero .btn-primary').forEach(anchor => {
+    // Smooth scroll
+    document.querySelectorAll('.nav-links a, .btn-primary').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const target = document.getElementById(targetId);
+            const target = document.querySelector(this.getAttribute('href'));
             if(target) target.scrollIntoView({ behavior: 'smooth' });
         });
     });
     
-    // Load data
     loadWebsiteData();
-    
-    // Listen for storage changes
-    window.addEventListener('storage', function(e) {
-        if(e.key === 'progettoCMSData_V2') loadWebsiteData();
-    });
+    window.addEventListener('storage', (e) => { if(e.key === 'progettoCMS_v3') loadWebsiteData(); });
 </script>
 </body>
 </html>
