@@ -32,12 +32,14 @@
             color: #333;
         }
         .login-card i { font-size: 3rem; color: #c17b4c; margin-bottom: 1rem; }
+        .login-card h2 { margin-bottom: 1.5rem; }
         .login-card input {
             width: 100%;
             padding: 1rem;
             margin: 0.5rem 0;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
+            font-size: 1rem;
         }
         .login-card button {
             width: 100%;
@@ -48,7 +50,10 @@
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
         }
+        .login-card button:hover { background: #a8633a; }
         
         .admin-container { display: none; }
         .admin-sidebar {
@@ -101,10 +106,14 @@
             border: none;
             font-weight: 600;
             margin-right: 1rem;
+            transition: 0.3s;
         }
         .publish-btn { background: #27ae60; color: white; }
+        .publish-btn:hover { background: #229954; transform: translateY(-2px); }
         .view-site-btn { background: #2c3e50; color: white; text-decoration: none; display: inline-block; }
+        .view-site-btn:hover { background: #34495e; transform: translateY(-2px); }
         .logout-btn { background: #e94560; color: white; }
+        .logout-btn:hover { background: #c0392b; transform: translateY(-2px); }
         
         .section-editor {
             background: #1a1a2e;
@@ -133,13 +142,15 @@
             border-radius: 8px;
             background: #0f3460;
             color: white;
+            font-size: 1rem;
         }
+        .form-group textarea { min-height: 100px; }
+        
         .items-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
-            margin-top: 1rem;
-            margin-bottom: 1.5rem;
+            margin: 1rem 0;
         }
         .item-card {
             background: #0f3460;
@@ -191,7 +202,7 @@
         <h2>Progetto Unico Group CMS</h2>
         <input type="text" id="adminUser" placeholder="Username" value="admin">
         <input type="password" id="adminPass" placeholder="Password" value="admin123">
-        <button onclick="attemptLogin()">Login</button>
+        <button onclick="attemptLogin()">Login to Dashboard</button>
         <div id="loginError" style="color: red; margin-top: 1rem;"></div>
     </div>
 </div>
@@ -219,8 +230,8 @@
         <div class="admin-header">
             <h1 id="currentSection">Hero Section</h1>
             <div>
-                <button class="publish-btn" onclick="publishToWebsite()"><i class="fas fa-globe"></i> Publish</button>
-                <a href="index.html" target="_blank" class="view-site-btn"><i class="fas fa-external-link-alt"></i> View Site</a>
+                <button class="publish-btn" onclick="publishToWebsite()"><i class="fas fa-globe"></i> Publish Changes</button>
+                <a href="index.html" target="_blank" class="view-site-btn"><i class="fas fa-external-link-alt"></i> View Website</a>
                 <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
@@ -239,7 +250,7 @@
         <div id="aboutSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Group Story</h2>
             <div class="form-group"><label>Section Title</label><input type="text" id="aboutTitle"></div>
-            <div class="form-group"><label>Story Text (HTML allowed)</label><textarea id="aboutText" rows="6"></textarea></div>
+            <div class="form-group"><label>Story Text</label><textarea id="aboutText" rows="6"></textarea></div>
             <div class="form-group"><label>Mission Text</label><textarea id="missionText" rows="4"></textarea></div>
             <button class="btn-primary" onclick="saveAbout()">Save Story</button>
         </div>
@@ -301,9 +312,11 @@
         <!-- DESIGN SECTION -->
         <div id="designSection" class="section-editor" style="display:none;">
             <h2 class="section-title">Design Settings</h2>
-            <div class="form-group"><label>Primary Color</label><input type="color" id="primaryColor" value="#c17b4c"></div>
-            <div class="form-group"><label>Secondary Color</label><input type="color" id="secondaryColor" value="#667eea"></div>
-            <button class="btn-primary" onclick="saveDesign()">Save Design</button>
+            <div class="form-group"><label>Primary Color (Gold/Orange)</label><input type="color" id="primaryColor" value="#c17b4c"></div>
+            <div class="form-group"><label>Secondary Color (Blue/Purple)</label><input type="color" id="secondaryColor" value="#667eea"></div>
+            <div class="form-group"><label>Background Color</label><input type="color" id="bgColor" value="#faf9f7"></div>
+            <div class="form-group"><label>Text Color</label><input type="color" id="textColor" value="#2c2418"></div>
+            <button class="btn-primary" onclick="saveDesign()">Save Design Settings</button>
         </div>
         
         <!-- BACKUP SECTION -->
@@ -336,8 +349,8 @@
             mission: "Trasformare ogni spazio in un'opera d'arte, unendo tradizione, innovazione e design italiano d'eccellenza." 
         },
         companies: [
-            { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi e soluzioni d'arredo uniche." },
-            { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali con standard qualitativi eccellenti." },
+            { name: "Galleria delle Idee", role: "Design & Showroom", icon: "fas fa-palette", desc: "Il cuore creativo del gruppo, dove le idee prendono forma attraverso design innovativi." },
+            { name: "Ideal Casa Srl", role: "Realizzazioni & Costruzioni", icon: "fas fa-home", desc: "Specializzata nella realizzazione di progetti residenziali e commerciali di alta qualità." },
             { name: "EdilCost", role: "Edilizia & Ristrutturazioni", icon: "fas fa-hard-hat", desc: "Esperienza e competenza nel settore edile, garantendo solidità e durata nel tempo." }
         ],
         services: { 
@@ -366,16 +379,22 @@
             address: "Via Francesco Rodio, 4 – 72017 - Ostuni (BR)", 
             phone: "+39.0831 341520", 
             email: "info@galleriadelleidee.com", 
-            social: { facebook: "#", instagram: "#" } 
+            social: { facebook: "https://facebook.com", instagram: "https://instagram.com" } 
         },
         footer: { 
             text: "Progetto Unico Group · Galleria delle Idee · Ideal Casa Srl · EdilCost", 
             copyright: "© 2025 Tutti i diritti riservati" 
         },
-        design: { primaryColor: "#c17b4c", secondaryColor: "#667eea" }
+        design: { 
+            primaryColor: "#c17b4c", 
+            secondaryColor: "#667eea",
+            bgColor: "#faf9f7",
+            textColor: "#2c2418"
+        }
     };
     
-    // Toast notification
+    let saveTimeout;
+    
     function showToast(msg, isError = false) {
         const toast = document.getElementById('toastMsg');
         toast.textContent = msg;
@@ -383,16 +402,14 @@
         toast.style.display = 'block';
         setTimeout(() => {
             toast.style.display = 'none';
-            toast.style.backgroundColor = '#27ae60';
         }, 2000);
     }
     
-    // Load data from localStorage
     function loadData() {
-        const saved = localStorage.getItem('progettoCMS_v4');
+        const saved = localStorage.getItem('progettoCMS_final');
         if(saved) {
             websiteData = JSON.parse(saved);
-            showToast("Data loaded successfully!");
+            showToast("✅ Data loaded from storage!");
         }
         populateFields();
         renderCompaniesList();
@@ -401,21 +418,33 @@
         renderBrandsList();
     }
     
-    // Save data to localStorage
     function saveData() {
-        localStorage.setItem('progettoCMS_v4', JSON.stringify(websiteData));
-        showToast("Changes saved!");
+        localStorage.setItem('progettoCMS_final', JSON.stringify(websiteData));
+        showToast("💾 Changes saved to admin panel!");
     }
     
-    // Publish to website
     function publishToWebsite() {
-        saveHero(); saveAbout(); saveCompanies(); saveServices(); saveProjects(); saveBrands(); saveContact(); saveFooter(); saveDesign();
-        localStorage.setItem('progettoCMS_v4', JSON.stringify(websiteData));
-        showToast("✅ Published! Website updated.");
-        setTimeout(() => window.open('index.html', '_blank'), 500);
+        // Save all current data first
+        saveHero();
+        saveAbout();
+        saveCompanies();
+        saveServices();
+        saveProjects();
+        saveBrands();
+        saveContact();
+        saveFooter();
+        saveDesign();
+        
+        // Force save again
+        localStorage.setItem('progettoCMS_final', JSON.stringify(websiteData));
+        showToast("🎉 Published! Your website now shows the latest changes.");
+        
+        // Open website in new tab
+        setTimeout(() => {
+            window.open('index.html', '_blank');
+        }, 500);
     }
     
-    // Populate form fields
     function populateFields() {
         document.getElementById('heroTitle').value = websiteData.hero.title;
         document.getElementById('heroSubtitle').value = websiteData.hero.subtitle;
@@ -436,9 +465,10 @@
         document.getElementById('copyrightText').value = websiteData.footer.copyright;
         document.getElementById('primaryColor').value = websiteData.design.primaryColor;
         document.getElementById('secondaryColor').value = websiteData.design.secondaryColor;
+        document.getElementById('bgColor').value = websiteData.design.bgColor;
+        document.getElementById('textColor').value = websiteData.design.textColor;
     }
     
-    // Save functions for simple sections
     function saveHero() {
         websiteData.hero.title = document.getElementById('heroTitle').value;
         websiteData.hero.subtitle = document.getElementById('heroSubtitle').value;
@@ -472,10 +502,13 @@
     function saveDesign() {
         websiteData.design.primaryColor = document.getElementById('primaryColor').value;
         websiteData.design.secondaryColor = document.getElementById('secondaryColor').value;
+        websiteData.design.bgColor = document.getElementById('bgColor').value;
+        websiteData.design.textColor = document.getElementById('textColor').value;
         saveData();
+        showToast("🎨 Design settings saved! Click Publish to see changes on website.");
     }
     
-    // ============ COMPANIES MANAGEMENT ============
+    // COMPANIES MANAGEMENT
     function renderCompaniesList() {
         const container = document.getElementById('companiesList');
         if(!container) return;
@@ -493,7 +526,6 @@
                         <option value="fas fa-home" ${company.icon === 'fas fa-home' ? 'selected' : ''}>🏠 Home (Construction)</option>
                         <option value="fas fa-hard-hat" ${company.icon === 'fas fa-hard-hat' ? 'selected' : ''}>👷 Hard Hat (Edilizia)</option>
                         <option value="fas fa-building" ${company.icon === 'fas fa-building' ? 'selected' : ''}>🏢 Building</option>
-                        <option value="fas fa-gem" ${company.icon === 'fas fa-gem' ? 'selected' : ''}>💎 Gem</option>
                     </select>
                     <textarea id="comp_desc_${index}" placeholder="Description">${escapeHtml(company.desc)}</textarea>
                     <button class="btn-danger" onclick="deleteCompany(${index})">Delete Company</button>
@@ -541,7 +573,7 @@
         }
     }
     
-    // ============ SERVICES MANAGEMENT ============
+    // SERVICES MANAGEMENT
     function renderServicesList() {
         const container = document.getElementById('servicesList');
         if(!container) return;
@@ -560,8 +592,6 @@
                         <option value="fas fa-hard-hat" ${service.icon === 'fas fa-hard-hat' ? 'selected' : ''}>👷 Construction</option>
                         <option value="fas fa-home" ${service.icon === 'fas fa-home' ? 'selected' : ''}>🏠 Home</option>
                         <option value="fas fa-couch" ${service.icon === 'fas fa-couch' ? 'selected' : ''}>🛋️ Furniture</option>
-                        <option value="fas fa-tile" ${service.icon === 'fas fa-tile' ? 'selected' : ''}>🧱 Tile</option>
-                        <option value="fas fa-spa" ${service.icon === 'fas fa-spa' ? 'selected' : ''}>🌸 Spa</option>
                     </select>
                     <button class="btn-danger" onclick="deleteService(${index})">Delete Service</button>
                 </div>
@@ -607,7 +637,7 @@
         }
     }
     
-    // ============ PROJECTS MANAGEMENT ============
+    // PROJECTS MANAGEMENT
     function renderProjectsList() {
         const container = document.getElementById('projectsList');
         if(!container) return;
@@ -620,7 +650,7 @@
                     ${project.image ? `<img src="${project.image}" alt="${escapeHtml(project.title)}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">` : '<div style="height:150px; background:#2c3e50; display:flex; align-items:center; justify-content:center; border-radius:8px;">No Image</div>'}
                     <input type="text" id="project_title_${index}" value="${escapeHtml(project.title)}" placeholder="Project Title">
                     <textarea id="project_desc_${index}" placeholder="Description">${escapeHtml(project.desc)}</textarea>
-                    <input type="text" id="project_image_${index}" value="${project.image}" placeholder="Image URL (https://...)">
+                    <input type="text" id="project_image_${index}" value="${project.image}" placeholder="Image URL">
                     <button class="btn-danger" onclick="deleteProject(${index})">Delete Project</button>
                 </div>
             `;
@@ -665,7 +695,7 @@
         }
     }
     
-    // ============ BRANDS MANAGEMENT ============
+    // BRANDS MANAGEMENT
     function renderBrandsList() {
         const container = document.getElementById('brandsList');
         if(!container) return;
@@ -728,7 +758,6 @@
         }
     }
     
-    // Helper function to escape HTML
     function escapeHtml(text) {
         if(!text) return '';
         const div = document.createElement('div');
@@ -736,7 +765,6 @@
         return div.innerHTML;
     }
     
-    // Backup functions
     function exportData() {
         const dataStr = JSON.stringify(websiteData, null, 2);
         const blob = new Blob([dataStr], {type: 'application/json'});
@@ -755,8 +783,7 @@
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
-                const imported = JSON.parse(e.target.result);
-                websiteData = imported;
+                websiteData = JSON.parse(e.target.result);
                 saveData();
                 location.reload();
             } catch(err) {
@@ -768,12 +795,12 @@
     
     function resetAll() {
         if(confirm('⚠️ WARNING: This will reset EVERYTHING to default! Are you sure?')) {
-            localStorage.removeItem('progettoCMS_v4');
+            localStorage.removeItem('progettoCMS_final');
             location.reload();
         }
     }
     
-    // UI Navigation
+    // Navigation
     document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', function() {
             const section = this.dataset.section;
@@ -792,7 +819,6 @@
         });
     });
     
-    // Login/Logout
     function attemptLogin() {
         const user = document.getElementById('adminUser').value;
         const pass = document.getElementById('adminPass').value;
@@ -810,7 +836,7 @@
         document.getElementById('adminContainer').style.display = 'none';
     }
     
-    // Make all functions global for onclick handlers
+    // Make all functions global
     window.attemptLogin = attemptLogin;
     window.logout = logout;
     window.saveHero = saveHero;
